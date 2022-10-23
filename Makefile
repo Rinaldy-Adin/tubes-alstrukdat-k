@@ -1,30 +1,27 @@
-TARGET = main
-
 CC = gcc
 
 DATADIR = ./data
-# SUBDIR = semihost stream arg_parser
 DIR_OBJ = ./obj
 
+TARGETS = ./main.c $(shell find . -name 'driver_*.c')
 INCS = $(shell find . -name '*.h')
-SRCS = $(shell find . -name '*.c')
+SRCS = $(filter-out $(TARGETS), $(shell find . -name '*.c'))
 NODIR_SRC = $(notdir $(SRCS))
 OBJS = $(addprefix $(DIR_OBJ)/, $(SRCS:c=o))
 
 .PHONY: clean echoes
 
-$(TARGET): $(OBJS)
-	$(CC) -o $@ $(OBJS)
+all: $(basename $(TARGETS))
 
-$(DIR_OBJ)/%.o: %.c $(INCS)
-	mkdir -p $(@D)
-	$(CC) -o $@ -c $<
+$(basename $(TARGETS)): $(SRCS)
+	$(CC) -o $@ $(SRCS) $(addsuffix .c, $@)
 
 clean:
-	rm $(TARGET)
+	rm -f $(basename $(TARGETS))
 	rm -rf $(DIR_OBJ)/*
 
 echoes:
+	@echo "TARGET files: $(basename $(TARGETS))"  
 	@echo "INC files: $(INCS)"  
 	@echo "SRC files: $(SRCS)"
 	@echo "OBJ files: $(OBJS)"
