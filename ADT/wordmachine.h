@@ -57,4 +57,10 @@ TIME wordToTime (Word w);
 void printWord (Word w);
 /* Mencetak Word w ke layar */
 
+char* readWord (Word w);
+/* Return word dalam bentuk string */
+
+boolean wordCmp (Word w1, Word w2);
+/* Mengembalikan true jika w1 = w2 */
+
 #endif

@@ -9,6 +9,7 @@
 
 #include "boolean.h"
 #include "makanan.h"
+#include "tree.h"
 
 /*  Kamus Umum */
 #define IDX_MIN 0
@@ -17,7 +18,11 @@
 /* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
-typedef Makanan ElType; /* type elemen list */
+//typedef Makanan ElType; /* type elemen list */
+typedef union {
+    Makanan m;
+    Tree t;
+} ElType;
 typedef int IdxType;
 typedef struct
 {
@@ -61,9 +66,6 @@ int listLength(ListDin l);
 /* *** Daya tampung container *** */
 
 /* *** Selektor INDEKS *** */
-IdxType getFirstIdx(ListDin l);
-/* Prekondisi : List l tidak kosong */
-/* Mengirimkan indeks elemen l pertama */
 IdxType getLastIdx(ListDin l);
 /* Prekondisi : List l tidak kosong */
 /* Mengirimkan indeks elemen l terakhir */

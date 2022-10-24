@@ -17,10 +17,9 @@ void CreateListDin(ListDin *l, int capacity) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    BUFFER(*l) = (int*) malloc(capacity*sizeof(int));
+    BUFFER(*l) = malloc(capacity*sizeof(int));
     NEFF(*l) = 0;
     CAPACITY(*l) = capacity;
-    return;
 }
 
 void dealocateList(ListDin *l) {
@@ -32,7 +31,6 @@ void dealocateList(ListDin *l) {
     free(BUFFER(*l));
     CAPACITY(*l)=0;
     NEFF(*l)=0;
-    return;
 }
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
@@ -48,15 +46,6 @@ int listLength(ListDin l) {
 }
 
 /* *** Selektor INDEKS *** */
-IdxType getFirstIdx(ListDin l) {
-    /* Prekondisi : List l tidak kosong */
-    /* Mengirimkan indeks elemen l pertama */
-    /* KAMUS LOKAL */
-
-    /* ALGORITMA*/
-    return 0;
-}
-
 IdxType getLastIdx(ListDin l) {
     /* Prekondisi : List l tidak kosong */
     /* Mengirimkan indeks elemen l terakhir */
@@ -133,7 +122,6 @@ void readList(ListDin *l) {
     for (i=0; i<n; i++){
         scanf("%d", &ELMT(*l,i));
     }
-    return;
 }
 
 void printList(ListDin l) {
@@ -153,12 +141,11 @@ void printList(ListDin l) {
    }
    else {
       printf("[");
-      for (i=getFirstIdx(l);i<getLastIdx(l);i++) {
+      for (i=0;i<getLastIdx(l);i++) {
          printf("%d,",ELMT(l,i));
       }
       printf("%d]", ELMT(l,getLastIdx(l)));
    }
-   return;
 }
 
 /* ********** SEARCHING ********** */
@@ -180,7 +167,7 @@ IdxType indexOf(ListDin l, ElType val) {
         found = false;
         i = IDX_MIN;
         while (i < listLength(l) && !(found)) {
-            if (ID(ELMT(l,i)) == ID(val)) {
+            if (wordCmp(ID(ELMT(l,i).m), ID(val.m))) {
                 found = true;
             } else {
                 i++;
@@ -209,7 +196,6 @@ void copyList(ListDin lIn, ListDin *lOut) {
     for (i=0;i<listLength(lIn);i++) {
         ELMT(*lOut,i) = ELMT(lIn,i);
     }
-    return;
 }
 
 
@@ -224,7 +210,6 @@ void insertLast(ListDin *l, ElType val) {
     /* ALGORITMA */
     ELMT(*l, listLength(*l)) = val;
     NEFF(*l)++;
-    return;
 }
 
 /* ********** MENGHAPUS ELEMEN ********** */
@@ -240,7 +225,6 @@ void deleteLast(ListDin *l, ElType *val) {
     /* ALGORITMA */
     *val = ELMT(*l,listLength(*l)-1);
     NEFF(*l)--;
-    return;
 }
 
 /* ********* MENGUBAH UKURAN ARRAY ********* */
@@ -262,7 +246,6 @@ void expandList(ListDin *l, int num) {
         ELMT(*l,i) = ELMT(tempList,i);
         NEFF(*l)++;
     }
-    return;
 }
 
 void shrinkList(ListDin *l, int num) {
@@ -283,7 +266,6 @@ void shrinkList(ListDin *l, int num) {
         ELMT(*l,i) = ELMT(tempList,i);
         NEFF(*l)++;
     }
-    return;
 }
 
 void compressList(ListDin *l) {
@@ -296,5 +278,4 @@ void compressList(ListDin *l) {
     if (NEFF(*l) < CAPACITY(*l)) {
         shrinkList(l, (CAPACITY(*l)-NEFF(*l)));
     }
-    return;
 }

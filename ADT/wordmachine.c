@@ -6,6 +6,7 @@
 /* Deskripsi: implementasi ADT ADT Mesin Kata */
 
 #include "wordmachine.h"
+#include "stdlib.h"
 
 Word currentWord;
 boolean endWord;
@@ -196,4 +197,34 @@ void printWord (Word w) {
     for (i=0; i<w.Length; i++) {
         printf("%c", w.TabWord[i]);
     }
+}
+
+char* readWord(Word w) {
+    /* Mengembalikan (null terminated) string dari Word w */
+    /* KAMUS LOKAL */
+    int i;
+    char* str;
+    /* ALGORITMA */
+    str = (char*) malloc((w.Length + 1) * sizeof(char));
+    for (i = 0; i < w.Length; i++) {
+        str[i] = w.TabWord[i];
+    }
+    str[w.Length] = '\0';
+    return str;
+}
+
+boolean wordCmp(Word w1, Word w2) {
+    /* Mengembalikan true jika w1 == w2 */
+    /* KAMUS LOKAL */
+    int i;
+    /* ALGORITMA */
+    if (w1.Length != w2.Length) {
+        return false;
+    }
+    for (i = 0; i < w1.Length; i++) {
+        if (w1.TabWord[i] != w2.TabWord[i]) {
+            return false;
+        }
+    }
+    return true;
 }
