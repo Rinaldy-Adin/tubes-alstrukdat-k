@@ -132,19 +132,20 @@ void printList(ListMakanan l) {
       printf("List makanan kosong");
    }
    else {
+      printf("Daftar Makanan\n");
+      printf("ID - Nama - Kedaluwarsa - Lama antar - Cara dapat (B = Buy, M = Mix, C = Chop, F = Fry, O = Boil)\n");
       for (i=IDX_MIN; i <= getLastIdx(l); i++) {
-         printf("ID : ");
+         printf("  %d. ", (i+1));
          printWord(ID(ELMT(l,i)));
-         printf("Nama : ");
+         printf(" - ");
          printWord(Nama(ELMT(l,i)));
-         printf("Lama kedaluwarsa : ");
+         printf(" - ");
          TulisTIME(Kadal(ELMT(l,i)));
-         printf("\n");
-         printf("Lama pengantaran : ");
+         printf(" - ");
          TulisTIME(DelTime(ELMT(l,i)));
+         printf(" - ");
+         printf("%c", Command(ELMT(l,i)));
          printf("\n");
-         printf("Cara mendapat : %c\n", Command(ELMT(l,i)));
-         printf("\n\n");
       }
    }
 }
