@@ -1,5 +1,3 @@
-/* File: time.h */
-/* Tanggal: 3 September 2022 */
 /* Definisi ADT TIME */
 
 #ifndef TIME_H
@@ -27,6 +25,8 @@ typedef struct {
 boolean IsTIMEValid (int D, int H, int M);
 /* Mengirim true jika H,M,S dapat membentuk T yang valid */
 /* dipakai untuk mentest SEBELUM membentuk sebuah Jam */
+boolean IsTimeZero(TIME *T);
+/* Mengirim true jika D,H,M dari Time T berbentuk 0:0:0 */
 
 /* *** Konstruktor: Membentuk sebuah TIME dari komponen-komponennya *** */
 void CreateTime (TIME * T, int DD, int HH, int MM);
@@ -92,6 +92,10 @@ TIME PrevMenit (TIME T);
 /* Mengirim 1 detik sebelum T dalam bentuk TIME */
 TIME PrevNMenit (TIME T, int N);
 /* Mengirim N detik sebelum T dalam bentuk TIME */
+TIME SkipTime(TIME T, int D, int H, int M);
+/* Memajukan Time sebanyak D hari, H jam, dan M menit */
+TIME RewindTime(TIME T, int D, int H, int M);
+/* Memundurkan Time sebanyak D hari, H jam, dan M menit */
 /* *** Kelompok Operator Aritmetika *** */
 long Durasi (TIME TAw, TIME TAkh);
 /* Mengirim TAkh-TAw dlm Detik, dengan kalkulasi */
