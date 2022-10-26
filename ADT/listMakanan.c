@@ -39,30 +39,30 @@ void loadMakanan(ListMakanan *l) {
     /* F.S. l terisi makanan dari file konfigurasi */
     /* KAMUS LOKAL */
     Makanan m;
-    ListDin id, nama, kadal, command, act;
+    String Nmakanan, id, nama, kadal, command, act;
     int N; // Jumlah makanan
     int i;
     char *filename = "pita.txt";
 
     /* ALGORITMA */
     CreateListMakanan(l);
-    STARTWORD(filename);    
+    STARTWORDFILE(filename);    
     if (endWord) {
         printf("File kosong\n");
     }
     else {
-        N = wordToInt(currentWord);
-        ADVWORD();
-        for (i=0; i<N; i++) {
-            readLine(&id);
-            readLine(&nama);
-            readLine(&kadal);
-            readLine(&act);
-            readLine(&command);
+         Nmakanan = createString(currentWord.TabWord);
+         N = stringToInt(Nmakanan);
+         for (i=0; i<N; i++) {
+            id = readLine();
+            nama = readLine();
+            kadal = readLine();
+            act = readLine();
+            command = readLine();
             
-            makeMakanan(&m,stringToCharArr(id),stringToCharArr(nama),stringToTime(kadal),ELMT(command,0).c, stringToTime(act));
+            makeMakanan(&m,id,nama,stringToTime(kadal), stringToTime(act), command);
             insertLastStat(l,m);
-        }
+         }
     }
 }
 
@@ -131,15 +131,15 @@ void printListStat(ListMakanan l) {
       printf("ID - Nama - Kedaluwarsa - Lama aksi - Cara dapat (B = Buy, M = Mix, C = Chop, F = Fry, O = Boil)\n");
       for (i=IDX_MIN; i <= getLastIdxStat(l); i++) {
          printf("  %d. ", (i+1));
-         printf("%s", ID(ELMTSTAT(l,i)));
+         printString(ID(ELMTSTAT(l,i)));
          printf(" - ");
-         printf("%s", Nama(ELMTSTAT(l,i)));
+         printString(Nama(ELMTSTAT(l,i)));
          printf(" - ");
          TulisTIME(Kadal(ELMTSTAT(l,i)));
          printf(" - ");
          TulisTIME(ActTime(ELMTSTAT(l,i)));
          printf(" - ");
-         printf("%c", Command(ELMTSTAT(l,i)));
+         printString(Command(ELMTSTAT(l,i)));
          printf("\n");
       }
    }
@@ -159,7 +159,7 @@ boolean isListEqualStat(ListMakanan l1, ListMakanan l2) {
       equal = true;
       i = IDX_MIN;
       while (i<listLengthStat(l1) && equal) {
-         if (!isStringEqual(charArrToString(ID(ELMTSTAT(l1,i))),charArrToString(ID(ELMTSTAT(l2,i))))) {
+         if (!stringsAreEqual((ID(ELMTSTAT(l1,i))),(ID(ELMTSTAT(l2,i))))) {
             equal = false;
          }
          else {

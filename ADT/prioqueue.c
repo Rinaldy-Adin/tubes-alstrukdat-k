@@ -60,7 +60,7 @@ void Dequeue(PrioQueue *Q, infotype *X) {
 
 // Fungsi internal
 boolean checkEq(infotype x, infotype y) {
-    return (Time(x) == Time(y)) && wordCmp(ID(Makanan(x)), ID(Makanan(y)));
+    return (Time(x) == Time(y)) && stringsAreEqual(ID(Makanan(x)), ID(Makanan(y)));
 }
 
 void Ambil(PrioQueue *Q, infotype X, infotype *result) {

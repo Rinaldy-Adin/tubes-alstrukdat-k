@@ -1,10 +1,10 @@
-#include "listMakanan.c"
+// #include "listMakanan.h"
 
-int main() {
-    /* KAMUS */
-    ListMakanan testMakan;
+// int main() {
+    // /* KAMUS */
+    // ListMakanan testMakan;
 
-    /* ALGORITMA */
-    loadMakanan(&testMakan);
-    printListStat(testMakan);
-}
+    // /* ALGORITMA */
+    // loadMakanan(&testMakan);
+    // printListStat(testMakan);
+// }

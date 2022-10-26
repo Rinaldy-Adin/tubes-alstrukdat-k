@@ -7,8 +7,9 @@
 #define LISTSTATIK_H
 
 #include "boolean.h"
-#include "makanan.c"
-#include "listdin.c"
+#include "makanan.h"
+#include "strlib.h"
+#include "wordmachine.h"
 
 /*  Kamus Umum */
 #define CAPACITYSTAT 100

@@ -1,197 +1,100 @@
-/* File: wordmachine.c */
-/* NIM: 13521172 */
-/* Nama: Nathan Tenka */
-/* Tanggal: 25 September 2022 */
-/* Topik praktikum: ADT ADT Mesin Kata */
-/* Deskripsi: implementasi ADT ADT Mesin Kata */
-
 #include "wordmachine.h"
-#include "stdlib.h"
 
-Word currentWord;
+#include <stdio.h>
+
+#include "boolean.h"
+#include "charmachine.h"
+
 boolean endWord;
-
-// boolean isWordFull(Word w) {
-//     /* Menentukan apakah Word w kapasitasnya sudah penuh */
-//     /* KAMUS LOKAL */
-
-//     /* ALGORITMA */
-//     return(w.TabWord[w.Length-1] != NULL);
-// }
-
-// void expandWord(Word *w) {
-//     /* Menambah ukuran array penampung kata. Hanya dipakai saat w penuh */
-//     /* KAMUS LOKAL */
-//     Word wCopy;
-//     int i;
-
-//     /* ALGORITMA */
-//     wCopy.TabWord = (char *) malloc((*w).Length*sizeof(char));
-//     wCopy.Length = (*w).Length;
-//     for (i=0; i<(*w).Length; i++) {
-//         wCopy.TabWord[i] = (*w).TabWord[i];
-//     }
-//     free((*w).TabWord);
-//     (*w).TabWord = (char *) malloc(wCopy.Length * 2 * sizeof(char));
-//     for (i=0; i<wCopy.Length; i++) {
-//         (*w).TabWord[i] = wCopy.TabWord[i];
-//     }
-// }
+Word currentWord;
 
 void IgnoreBlanks() {
-    /* Mengabaikan satu atau beberapa BLANK
-    I.S. : currentChar sembarang
-    F.S. : currentChar ≠ BLANK atau currentChar = MARK */
-    /* KAMUS LOKAL */
-
-    /* ALGORITMA */
+    /* Algoritma */
     while (currentChar == BLANK) {
         ADV();
     }
-    while (currentChar == NEWLINE) {
-        ADVNewline();
-    }
 }
+/* Mengabaikan satu atau beberapa BLANK
+   I.S. : currentChar sembarang
+   F.S. : currentChar ≠ BLANK atau currentChar = MARK */
 
-
-void STARTWORD(char* filename) {
-    /* I.S. : currentChar sembarang
-    F.S. : EndWord = true, dan currentChar = MARK;
-            atau EndWord = false, currentWord adalah kata yang sudah diakuisisi,
-            currentChar karakter pertama sesudah karakter terakhir kata */
-    /* KAMUS LOKAL */
-
-    /* ALGORITMA */
-    START(filename);
+void STARTWORD() {
+    /* Algoritma */
+    START();
+    endWord = false;
     IgnoreBlanks();
     if (currentChar == MARK) {
         endWord = true;
+    } else {
+        endWord = false;
+        CopyWord();
     }
-    else {
+}
+/* I.S. : currentChar sembarang
+   F.S. : endWord = true, dan currentChar = MARK;
+          atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
+          currentChar karakter pertama sesudah karakter terakhir kata */
+
+void STARTWORDFILE(char* filename) {
+    /* Algoritma */
+    STARTFILE(filename);
+    endWord = false;
+    IgnoreBlanks();
+    if (currentChar == MARK) {
+        endWord = true;
+    } else {
         endWord = false;
         CopyWord();
     }
 }
 
-void ADVWORD() {
-    /* I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi
-    F.S. : currentWord adalah kata terakhir yang sudah diakuisisi,
-            currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
-            Jika currentChar = MARK, EndWord = true.
-    Proses : Akuisisi kata menggunakan procedure SalinWord */
-    /* KAMUS LOKAL */
+/* I.S. : currentChar sembarang, file dengan nama filename ada
+   F.S. : endWord = true, dan currentChar = MARK;
+          atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
+          currentChar karakter pertama sesudah karakter terakhir kata */
 
-    /* ALGORITMA */
+void ADVWORD() {
     IgnoreBlanks();
+
     if (currentChar == MARK) {
         endWord = true;
-    }
-    else {
+    } else {
         CopyWord();
+        IgnoreBlanks();
     }
 }
+/* I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi
+   F.S. : currentWord adalah kata terakhir yang sudah diakuisisi,
+          currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
+          Jika currentChar = MARK, endWord = true.
+   Proses : Akuisisi kata menggunakan procedure SalinWord */
 
 void CopyWord() {
-    /* Mengakuisisi kata, menyimpan dalam currentWord
-    I.S. : currentChar adalah karakter pertama dari kata
-    F.S. : currentWord berisi kata yang sudah diakuisisi;
-            currentChar = NEWLINE atau currentChar = MARK;
-            currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
-            Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
-    /* KAMUS LOKAL */
-    int i;
-
-    /* ALGORITMA */
-    i = 0;
-    while  (currentChar != MARK && currentChar != NEWLINE && currentChar != BLANK && i < NMax) {
-        currentWord.TabWord[i] = currentChar;
+    /* Kamus */
+    /* Algoritma */
+    currentWord.Length = 0;
+    while (currentChar != MARK && currentChar != BLANK &&
+           currentChar != NEWLINE && currentWord.Length < NMax) {
+        currentWord.TabWord[currentWord.Length] = currentChar;
+        currentWord.Length++;
         ADV();
-        i++;
     }
-    currentWord.Length = i;
 }
+/* Mengakuisisi kata, menyimpan dalam currentWord
+   I.S. : currentChar adalah karakter pertama dari kata
+   F.S. : currentWord berisi kata yang sudah diakuisisi;
+          currentChar = BLANK atau currentChar = MARK;
+          currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
+          Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
-/* FUNGSI KONVERSI WORD KE BENTUK LAIN */
-int wordToInt(Word w) {
-    /* Mengubah Word w menjadi int. Diasumsikan w hanya berisi angka. Jika kosong diasumsikan nilainya 0. */
-    /* KAMUS LOKAL */
-    int i;
-    int result;
-
-    /* ALGORITMA */
-    result = 0;
-    for (i=0; i<w.Length; i++) {
-         if (i > 0) {
-            result *= 10;
-         }
-         result += ((int) (w.TabWord[i]) - '0');
-    }
-    return result;
-}
-
-boolean isWordEqual(Word w1, Word w2) {
-    /* Mengecek apakah Word w1 dan w2 sama */
-    /* KAMUS LOKAL */
-    boolean isEqual;
+/* Duplicate word1 into word2 */
+void duplicateWord(Word *word1, Word *word2) {
+    /* KAMUS */
     int i;
 
     /* ALGORITMA */
-    if (w1.Length != w2.Length) {
-        isEqual = false;
+    WordLength(*word2) = WordLength(*word1);
+    for (i = 0; i < WordLength(*word2); i++) {
+        CharAt(*word2, i) = CharAt(*word1, i);
     }
-    else {
-        isEqual = true;
-        i = 0;
-        while (i < w1.Length && isEqual) {
-            if (w1.TabWord[i] != w2.TabWord[i]) {
-                isEqual = false;
-            }
-            else {
-                i++;
-            }
-        }
-    }
-    return isEqual;
-}
-
-void printWord (Word w) {
-    /* I.S. w terdefinisi */
-    /* F.S. w tercetak ke layar */
-    /* KAMUS LOKAL */
-    int i;
-
-    /* ALGORITMA */
-    for (i=0; i<w.Length; i++) {
-        printf("%c", w.TabWord[i]);
-    }
-}
-
-char* readWord(Word w) {
-    /* Mengembalikan (null terminated) string dari Word w */
-    /* KAMUS LOKAL */
-    int i;
-    char* str;
-    /* ALGORITMA */
-    str = (char*) malloc((w.Length + 1) * sizeof(char));
-    for (i = 0; i < w.Length; i++) {
-        str[i] = w.TabWord[i];
-    }
-    str[w.Length] = '\0';
-    return str;
-}
-
-boolean wordCmp(Word w1, Word w2) {
-    /* Mengembalikan true jika w1 == w2 */
-    /* KAMUS LOKAL */
-    int i;
-    /* ALGORITMA */
-    if (w1.Length != w2.Length) {
-        return false;
-    }
-    for (i = 0; i < w1.Length; i++) {
-        if (w1.TabWord[i] != w2.TabWord[i]) {
-            return false;
-        }
-    }
-    return true;
 }

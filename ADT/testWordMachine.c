@@ -1,4 +1,4 @@
-#include "wordmachine.c"
+// #include "wordmachine.c"
 
 // int main() {
 //     char* file = NULL;

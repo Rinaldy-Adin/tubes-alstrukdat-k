@@ -6,7 +6,7 @@
 #include "makanan.h"
 
 /* KONSTRUKTOR */
-void makeMakanan(Makanan *m, char* id, char* nama, TIME kadaluwarsa, char command, TIME actTime) {
+void makeMakanan(Makanan *m, String id, String nama, TIME kadaluwarsa, TIME actTime, String command) {
     /* I.S. m sembarang */
     /* F.S. seluruh komponen m terisi sesuai masukan. */
     /* KAMUS LOKAL */

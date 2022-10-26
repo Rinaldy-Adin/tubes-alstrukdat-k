@@ -7,15 +7,16 @@
 
 #include <stdio.h>
 #include "boolean.h"
-#include "waktu.c"
+#include "waktu.h"
+#include "strlib.h"
 
 /* *** Definisi TYPE TIME <HH:MM:SS> *** */
 typedef struct { 
-    char* id;
-	char* nama;
+    String id;
+	String nama;
     TIME kadaluwarsa;
-    char command; // B = Buy, F = Fry, M = Mix, C = Chop, O = Boil
     TIME actTime; // Waktu yang diperlukan untuk delivery
+    String command; // B = Buy, F = Fry, M = Mix, C = Chop, O = Boil
 } Makanan;
 
 /* *** Notasi Akses: selektor Makanan *** */
@@ -31,7 +32,7 @@ typedef struct {
 #define Boil 'O'
 
 /*** KONSTRUKTOR ***/
-void makeMakanan(Makanan *m, char* id, char* nama, TIME kadaluwarsa, char command, TIME actTime);
+void makeMakanan(Makanan *m, String id, String nama, TIME kadaluwarsa, TIME actTime, String command);
 /* I.S. m sembarang */
 /* F.S. seluruh komponen m terisi sesuai masukan. */
 
