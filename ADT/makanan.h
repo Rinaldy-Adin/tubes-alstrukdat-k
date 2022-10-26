@@ -7,16 +7,16 @@
 
 #include <stdio.h>
 #include "boolean.h"
-#include "wordmachine.h"
 #include "waktu.h"
+#include "string.h"
 
 /* *** Definisi TYPE TIME <HH:MM:SS> *** */
 typedef struct { 
-    Word id;
-	Word nama;
+    String id;
+	String nama;
     TIME kadaluwarsa;
-    char command; // B = Buy, F = Fry, M = Mix, C = Chop, O = Boil
-    TIME deliver; // Waktu yang diperlukan untuk delivery
+    String command; // B = Buy, F = Fry, M = Mix, C = Chop, O = Boil
+    TIME actTime; // Waktu yang diperlukan untuk delivery
 } Makanan;
 
 /* *** Notasi Akses: selektor Makanan *** */
@@ -24,7 +24,7 @@ typedef struct {
 #define Nama(M) (M).nama
 #define Kadal(M) (M).kadaluwarsa
 #define Command(M) (M).command
-#define DelTime(M) (M).deliver
+#define ActTime(M) (M).actTime
 #define Buy 'B'
 #define Fry 'F'
 #define Mix 'M'
@@ -32,7 +32,7 @@ typedef struct {
 #define Boil 'O'
 
 /*** KONSTRUKTOR ***/
-void makeMakanan(Makanan *m, Word id, Word nama, Word kadaluwarsa, Word command, Word deliver);
+void makeMakanan(Makanan *m, String id, String nama, String kadaluwarsa, String actTime, String command);
 /* I.S. m sembarang */
 /* F.S. seluruh komponen m terisi sesuai masukan. */
 

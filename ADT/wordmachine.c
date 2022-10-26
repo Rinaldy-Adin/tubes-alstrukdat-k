@@ -103,7 +103,7 @@ void CopyWord() {
 
     /* ALGORITMA */
     i = 0;
-    while  (currentChar != MARK && currentChar != NEWLINE && i < NMax) {
+    while  (currentChar != MARK && currentChar != NEWLINE && currentChar != BLANK && i < NMax) {
         currentWord.TabWord[i] = currentChar;
         ADV();
         i++;
@@ -127,40 +127,6 @@ int wordToInt(Word w) {
          result += ((int) (w.TabWord[i]) - '0');
     }
     return result;
-}
-
-TIME wordToTime (Word w) {
-    /* Mengubah Word w menjadi TIME. Diasumsikan w ada dalam format D H M */
-    /* KAMUS LOKAL */
-    int i, j, ctr, d, h, m;
-    Word bil; // Word lebih kecil untuk penampung angka per bagian (D,H,M)
-    TIME t;
-
-    /* ALGORITMA */
-    i = 0;
-    ctr = 0;
-    while (i < w.Length) {
-        j = 0;
-        while(w.TabWord[i] != ' ' && i < w.Length) {
-            bil.TabWord[j] = w.TabWord[i];
-            i++;
-            j++;
-        }
-        bil.Length = j;
-        if (ctr == 0) { // Untuk hari
-            d = wordToInt(bil);
-        }
-        else if (ctr == 1) { // Untuk jam
-            h = wordToInt(bil);
-        }
-        else { // Untuk menit
-            m = wordToInt(bil);
-        }
-        ctr++;
-        i++;
-    }   
-    CreateTime(&t,d,h,m);
-    return t;
 }
 
 boolean isWordEqual(Word w1, Word w2) {
@@ -187,6 +153,7 @@ boolean isWordEqual(Word w1, Word w2) {
     }
     return isEqual;
 }
+
 void printWord (Word w) {
     /* I.S. w terdefinisi */
     /* F.S. w tercetak ke layar */

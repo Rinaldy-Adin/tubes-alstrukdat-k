@@ -28,7 +28,7 @@ void loadMakanan(ListMakanan *l) {
     /* F.S. l terisi makanan dari file konfigurasi */
     /* KAMUS LOKAL */
     Makanan m;
-    Word id, nama, kadal, command, deliver;
+    String id, nama, kadal, command, act;
     int N; // Jumlah makanan
     int i;
     char *filename = "pita.txt";
@@ -37,23 +37,19 @@ void loadMakanan(ListMakanan *l) {
     CreateListMakanan(l);
     STARTWORD(filename);    
     if (endWord) {
-        printf("File kosong");
+        printf("File kosong\n");
     }
     else {
         N = wordToInt(currentWord);
+        ADVWORD();
         for (i=0; i<N; i++) {
-            ADVWORD();
-            id = currentWord;
-            ADVWORD();
-            nama = currentWord;
-            ADVWORD();
-            kadal = currentWord;
-            ADVWORD();
-            deliver = currentWord;
-            ADVWORD();
-            command = currentWord;
+            readLine(&id);
+            readLine(&nama);
+            readLine(&kadal);
+            readLine(&act);
+            readLine(&command);
             
-            makeMakanan(&m,id,nama,kadal,deliver,command);
+            makeMakanan(&m,id,nama,kadal,act,command);
             insertLast(l,m);
         }
     }
@@ -133,18 +129,18 @@ void printList(ListMakanan l) {
    }
    else {
       printf("Daftar Makanan\n");
-      printf("ID - Nama - Kedaluwarsa - Lama antar - Cara dapat (B = Buy, M = Mix, C = Chop, F = Fry, O = Boil)\n");
+      printf("ID - Nama - Kedaluwarsa - Lama aksi - Cara dapat (B = Buy, M = Mix, C = Chop, F = Fry, O = Boil)\n");
       for (i=IDX_MIN; i <= getLastIdx(l); i++) {
          printf("  %d. ", (i+1));
-         printWord(ID(ELMT(l,i)));
+         printString(ID(ELMT(l,i)));
          printf(" - ");
-         printWord(Nama(ELMT(l,i)));
+         printString(Nama(ELMT(l,i)));
          printf(" - ");
          TulisTIME(Kadal(ELMT(l,i)));
          printf(" - ");
-         TulisTIME(DelTime(ELMT(l,i)));
+         TulisTIME(ActTime(ELMT(l,i)));
          printf(" - ");
-         printf("%c", Command(ELMT(l,i)));
+         printString(Command(ELMT(l,i)));
          printf("\n");
       }
    }
@@ -164,7 +160,7 @@ boolean isListEqual(ListMakanan l1, ListMakanan l2) {
       equal = true;
       i = IDX_MIN;
       while (i<listLength(l1) && equal) {
-         if (!isWordEqual(ID(ELMT(l1,i)),ID(ELMT(l2,i)))) {
+         if (!isStringEqual(ID(ELMT(l1,i)),ID(ELMT(l2,i)))) {
             equal = false;
          }
          else {
@@ -179,13 +175,14 @@ boolean isListEqual(ListMakanan l1, ListMakanan l2) {
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
-int indexOf(ListMakanan l, Word searchId) {
-   /* Search apakah ada elemen List l yang bernilai val */
-   /* Jika ada, menghasilkan indeks i terkecil, dengan ELMT(l,i) = val */
+int indexOf(ListMakanan l, char* searchId) {
+   /* Search apakah ada elemen List l yang ber-ID searchId */
+   /* Jika ada, menghasilkan indeks i terkecil, dengan ID(ELMT(l,i)) = searchId */
    /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
    /* Skema Searching yang digunakan bebas */
    /* KAMUS LOKAL */
    IdxType i;
+   String search;
    boolean found;
 
    /* ALGORITMA */
@@ -194,8 +191,9 @@ int indexOf(ListMakanan l, Word searchId) {
    } else { // Skema searching dengan boolean
       found = false;
       i = IDX_MIN;
+      createString(&search,searchId);
       while (i < listLength(l) && !(found)) {
-         if (isWordEqual(ID(ELMT(l,i)), searchId)) {
+         if (isStringEqual(ID(ELMT(l,i)), search)) {
             found = true;
          }
          else {

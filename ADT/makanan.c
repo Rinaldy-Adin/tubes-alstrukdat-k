@@ -3,11 +3,10 @@
 /* Implementasi ADT makanan */
 
 #include <stdio.h>
-#include "wordmachine.c"
 #include "makanan.h"
 
 /* KONSTRUKTOR */
-void makeMakanan(Makanan *m, Word id, Word nama, Word kadaluwarsa, Word deliver, Word command) {
+void makeMakanan(Makanan *m, String id, String nama, String kadaluwarsa, String actTime, String command) {
     /* I.S. m sembarang */
     /* F.S. seluruh komponen m terisi sesuai masukan. */
     /* KAMUS LOKAL */
@@ -15,9 +14,9 @@ void makeMakanan(Makanan *m, Word id, Word nama, Word kadaluwarsa, Word deliver,
     /* ALGORITMA */
     ID(*m) = id;
     Nama(*m) = nama;
-    Kadal(*m) = wordToTime(kadaluwarsa);
-    DelTime(*m) = wordToTime(deliver);
-    Command(*m) = command.TabWord[0];
+    Kadal(*m) = stringToTime(kadaluwarsa);
+    ActTime(*m) = stringToTime(actTime);
+    Command(*m) = command;
 }
 
 /*** PRIMITIF ***/

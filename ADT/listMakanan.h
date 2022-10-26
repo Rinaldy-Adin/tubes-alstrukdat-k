@@ -1,4 +1,4 @@
-/* MODUL LIST INTEGER STATIK DENGAN ELEMEN POSITIF */
+/* MODUL LIST MAKANAN STATIK DENGAN ELEMEN POSITIF */
 /* Berisi definisi dan semua primitif pemrosesan list integer statik dengan elemen positif */
 /* Penempatan elemen selalu rapat kiri */
 /* Banyaknya elemen didefinisikan secara implisit, memori list statik */
@@ -8,6 +8,7 @@
 
 #include "boolean.h"
 #include "makanan.c"
+#include "string.c"
 
 /*  Kamus Umum */
 #define CAPACITY 100
@@ -94,7 +95,7 @@ boolean isListEqual(ListMakanan l1, ListMakanan l2);
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
-int indexOf(ListMakanan l, Word serachId);
+int indexOf(ListMakanan l, char* searchId);
 /* Search apakah ada elemen List l yang bernilai val */
 /* Jika ada, menghasilkan indeks i terkecil, dengan ELMT(l,i) = val */
 /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
