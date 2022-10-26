@@ -6,9 +6,6 @@
 #include "../../ADT/wordmachine/wordmachine.h"
 #include "boolean.h"
 
-// Print "Enter command" then return command from user
-Word readCommand();
-
 // Wait for user to enter "START" command
 void waitForStart();
 

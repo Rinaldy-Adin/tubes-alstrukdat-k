@@ -1,5 +1,7 @@
 #include "wordmachine.h"
 
+#include <stdio.h>
+
 #include "boolean.h"
 #include "charmachine.h"
 
@@ -54,7 +56,7 @@ void CopyWord() {
     /* Algoritma */
     currentWord.Length = 0;
     while (currentChar != MARK && currentChar != BLANK &&
-           currentWord.Length < NMax) {
+           currentChar != NEWLINE && currentWord.Length < NMax) {
         currentWord.TabWord[currentWord.Length] = currentChar;
         currentWord.Length++;
         ADV();

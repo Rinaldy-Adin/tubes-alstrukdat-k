@@ -2,44 +2,63 @@
 
 #include <stdio.h>
 
+#include "../../ADT/wordmachine/strlib.h"
 #include "boolean.h"
+#include "cursed.h"
 
-Word readCommand() {
-    /* KAMUS */
-    int nWords;
-    Word command;
-    boolean valid;
-
-    /* ALGORITMA */
-    valid = false;
-
-    while (!valid) {
-        printf("Enter Command: ");
-        STARTWORD();
-        nWords = 0;
-
-        while (!endWord) {
-            duplicateWord(&currentWord, &command);
-            nWords++;
-            valid = true;
-            ADVWORD();
-        }
-
-        if (nWords != 1) {
-            valid = false;
-            printf("Commands must only consist of one word");
-        }
-    }
-
-    return command;
-}
-
-/* Wait for user to enter "START" command */
-void waitForStart() {
-    Word command = readCommand();
-
-    printf("%s\n", command.TabWord);
+void displayCurrentState() {
+    printf("\n");
+    printf("========================================");
+    printf("\n");
+    printf("BNMO di posisi: ");
+    printf("\n");
+    printf("Waktu: ");
+    printf("\n");
+    printf("Notifikasi: ");
+    printf("\n");
+    // Display map
+    printf("\n");
 }
 
 /* Run command line until user enters "EXIT" command */
-void commandLineCycle();
+void commandLineCycle() {
+    /* KAMUS */
+    String command, exit, start;
+    boolean started;
+
+    /* ALGORITMA */
+    command = createString("");
+    exit = createString("EXIT");
+    start = createString("START");
+
+    // splashScreen();
+
+    printf("Enter command: ");
+    START();
+    started = false;
+    while (!endWord) {
+        if (!started) {
+            command = readLine();
+            command = removeLongSpaces(command);
+            if (stringsAreEqual(command, start)) {
+                started = true;
+            } else if (stringsAreEqual(command, exit)) {
+                endWord = true;
+            } else {
+                printf("Enter command: ");
+            }
+        } else {
+            displayCurrentState();
+
+            printf("Enter command: ");
+            command = readLine();
+            command = removeLongSpaces(command);
+            if (stringsAreEqual(command, exit)) {
+                endWord = true;
+            } else {
+                printString(command);
+                printf("\n");
+            }
+        }
+    }
+}

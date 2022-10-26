@@ -1,7 +1,7 @@
 #include "cmdline.h"
 
 int main() {
-    waitForStart();
+    commandLineCycle();
 
     return 0;
 }
