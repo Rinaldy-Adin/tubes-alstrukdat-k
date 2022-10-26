@@ -8,10 +8,10 @@
 
 #include "boolean.h"
 #include "makanan.c"
-#include "string.c"
+#include "listdin.c"
 
 /*  Kamus Umum */
-#define CAPACITY 100
+#define CAPACITYSTAT 100
 /* Kapasitas penyimpanan */
 #define IDX_MIN 0
 /* Indeks minimum list */
@@ -19,13 +19,13 @@
 /* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
-typedef Makanan ElType;  /* type elemen List */
+typedef Makanan ElTypeStat;  /* type elemen List */
 typedef int IdxType;
 typedef struct {
-   ElType contents[CAPACITY]; /* memori tempat penyimpan elemen (container) */
-   int NEff; /* Jumlah elemen efektif [0..CAPACITY] */
+   ElTypeStat contents[CAPACITYSTAT]; /* memori tempat penyimpan elemen (container) */
+   int NEff; /* Jumlah elemen efektif [0..CAPACITYSTAT] */
 } ListMakanan;
-/* Indeks yang digunakan [0..CAPACITY-1] */
+/* Indeks yang digunakan [0..CAPACITYSTAT-1] */
 
 /* Jika l adalah ListMakanan, cara deklarasi dan akses: */
 /* Deklarasi : l : ListMakanan */
@@ -36,8 +36,8 @@ typedef struct {
    Definisi elemen pertama: ELMT(l,i) dengan i=0 */
 
 /* ********** SELEKTOR ********** */
-#define ELMT(l, i) (l).contents[(i)]
-#define NEFF(l) (l).NEff
+#define ELMTSTAT(l, i) (l).contents[(i)]
+#define NEFFSTAT(l) (l).NEff
 
 /* Definisi List kosong : NEFF(l) == 0 */
 
@@ -45,40 +45,42 @@ typedef struct {
 /* Konstruktor : create List kosong  */
 void CreateListMakanan(ListMakanan *l);
 /* I.S. l sembarang */
-/* F.S. Terbentuk List l kosong dengan kapasitas CAPACITY */
+/* F.S. Terbentuk List l kosong dengan kapasitas CAPACITYSTAT */
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
-int listLength(ListMakanan l);
+int listLengthStat(ListMakanan l);
 /* Mengirimkan banyaknya elemen efektif List */
-/* Mengirimkan nol jika List kosong */  
+/* Mengirimkan nol jika List kosong */ 
+
+void loadMakanan(ListMakanan *l);
+/* Membaca list makanan dari file */
+/* I.S. l sembarang */
+/* F.S. l terisi makanan dari file konfigurasi */
 
 /* *** Selektor INDEKS *** */
-IdxType getFirstIdx(ListMakanan l);
-/* Prekondisi : List l tidak kosong */
-/* Mengirimkan indeks elemen l pertama */
-IdxType getLastIdx(ListMakanan l);
+IdxType getLastIdxStat(ListMakanan l);
 /* Prekondisi : List l tidak kosong */
 /* Mengirimkan indeks elemen l terakhir */
 
 /* ********** Test Indeks yang valid ********** */
-boolean isIdxValid(IdxType i);
+boolean isIdxValidStat(IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk kapasitas List l */
 /* yaitu antara indeks yang terdefinisi utk container*/
-boolean isIdxEff(ListMakanan l, IdxType i);
+boolean isIdxEffStat(ListMakanan l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk List l */
 /* yaitu antara 0..length(l)-1 */
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test List kosong *** */
-boolean isEmpty(ListMakanan l);
+boolean isEmptyStat(ListMakanan l);
 /* Mengirimkan true jika List l kosong, mengirimkan false jika tidak */
 /* *** Test List penuh *** */
-boolean isFull(ListMakanan l);
+boolean isFullStat(ListMakanan l);
 /* Mengirimkan true jika List l penuh, mengirimkan false jika tidak */
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
-void printList(ListMakanan l);
+void printListStat(ListMakanan l);
 /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung 
    siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan 
    karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
@@ -89,13 +91,13 @@ void printList(ListMakanan l);
 
 /* ********** OPERATOR RELASIONAL ********** */
 /* *** Operasi pembandingan List: *** */
-boolean isListEqual(ListMakanan l1, ListMakanan l2);
+boolean isListEqualStat(ListMakanan l1, ListMakanan l2);
 /* Mengirimkan true jika l1 sama dengan l2 yaitu jika ukuran l1 = l2 dan semua 
    elemennya sama */
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
-int indexOf(ListMakanan l, char* searchId);
+int indexOfStat(ListMakanan l, char* searchId);
 /* Search apakah ada elemen List l yang bernilai val */
 /* Jika ada, menghasilkan indeks i terkecil, dengan ELMT(l,i) = val */
 /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
@@ -103,38 +105,38 @@ int indexOf(ListMakanan l, char* searchId);
 
 /* ********** MENAMBAH ELEMEN ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertFirst(ListMakanan *l, ElType val);
+void insertFirstStat(ListMakanan *l, ElTypeStat val);
 /* Proses: Menambahkan val sebagai elemen pertama List */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen pertama l yang baru */
 /* *** Menambahkan elemen pada index tertentu *** */
-void insertAt(ListMakanan *l, ElType val, IdxType idx);
+void insertAtStat(ListMakanan *l, ElTypeStat val, IdxType idx);
 /* Proses: Menambahkan val sebagai elemen pada index idx List */
 /* I.S. List l tidak kosong dan tidak penuh, idx merupakan index yang valid di l */
 /* F.S. val adalah elemen yang disisipkan pada index idx l */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListMakanan *l, ElType val);
+void insertLastStat(ListMakanan *l, ElTypeStat val);
 /* Proses: Menambahkan val sebagai elemen terakhir List */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 
 /* ********** MENGHAPUS ELEMEN ********** */
 /* *** Menghapus elemen pertama *** */
-void deleteFirst(ListMakanan *l, ElType *val);
+void deleteFirstStat(ListMakanan *l, ElTypeStat *val);
 /* Proses : Menghapus elemen pertama List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen pertama l sebelum penghapusan, */
 /*      Banyaknya elemen List berkurang satu */
 /*      List l mungkin menjadi kosong */
 /* *** Menghapus elemen pada index tertentu *** */
-void deleteAt(ListMakanan *l, ElType *val, IdxType idx);
+void deleteAtStat(ListMakanan *l, ElTypeStat *val, IdxType idx);
 /* Proses : Menghapus elemen pada index idx List */
 /* I.S. List tidak kosong, idx adalah index yang valid di l */
 /* F.S. val adalah nilai elemen pada index idx l sebelum penghapusan, */
 /*      Banyaknya elemen List berkurang satu */
 /*      List l mungkin menjadi kosong */
 /* *** Menghapus elemen terakhir *** */
-void deleteLast(ListMakanan *l, ElType *val);
+void deleteLastStat(ListMakanan *l, ElTypeStat *val);
 /* Proses : Menghapus elemen terakhir List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
@@ -142,7 +144,7 @@ void deleteLast(ListMakanan *l, ElType *val);
 /*      List l mungkin menjadi kosong */
 
 /* ********** SORTING ********** */
-void sortList(ListMakanan *l, boolean asc);
+void sortListStat(ListMakanan *l, boolean asc);
 /* I.S. l boleh kosong */
 /* F.S. Jika asc = true, l terurut membesar */
 /*      Jika asc = false, l terurut mengecil */

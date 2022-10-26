@@ -6,5 +6,5 @@ int main() {
 
     /* ALGORITMA */
     loadMakanan(&testMakan);
-    printList(testMakan);
+    printListStat(testMakan);
 }

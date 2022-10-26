@@ -170,7 +170,7 @@ IdxType indexOfDin(ListDinMakanan l, char* searchId) {
     /* Skema Searching yang digunakan bebas */
     /* KAMUS LOKAL */
     IdxType i;
-    String search;
+    ListDin search;
     boolean found;
 
     /* ALGORITMA */

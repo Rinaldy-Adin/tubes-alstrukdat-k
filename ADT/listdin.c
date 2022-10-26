@@ -120,7 +120,7 @@ void readList(ListDin *l) {
 
     // Membaca elemen list
     for (i=0; i<n; i++){
-        scanf("%d", &ELMT(*l,i));
+        scanf("%c", &ELMT(*l,i).c);
     }
 }
 
@@ -141,14 +141,123 @@ void printString(ListDin l) {
    }
    else {
       for (i=0;i<getLastIdx(l);i++) {
-         printf("%d,",ELMT(l,i));
+         printf("%c,",ELMT(l,i).c);
       }
    }
 }
 
+/****** KOMPARATOR *******/
+boolean isStringEqual(ListDin s1, ListDin s2) {
+    /* Menentukan apakah String s1 dan s2 sama */
+    /* KAMUS LOKAL */
+    int i;
+    boolean isEqual;
+
+    /* ALGORITMA */
+    if(listLength(s1) != listLength(s2)) {
+        return false;
+    } else {
+        isEqual = true;
+        i = 0;
+        while (i < listLength(s1) && isEqual) {
+            if (ELMT(s1,i).c != ELMT(s2,i).c) {
+                isEqual = false;
+            }
+            else {
+                i++;
+            }
+        }
+        return isEqual;
+    }
+}
+
+char* stringToCharArr(ListDin s) {
+    /* Mengubah s ke dalam bentuk char* */
+    /* KAMUS LOKAL */
+    int i;
+    char* c;
+
+    /* ALGORITMA */
+    c = (char *) malloc((listLength(s)+1)*sizeof(char));
+    for (i=0; i<listLength(s); i++) {
+        c[i] = ELMT(s,i).c;
+    }
+    c[listLength(s)] = '\0';
+    return c;
+}
+
+ListDin charArrToString(char* c) {
+    /* Mengubah c menjadi bentuk String (ListDin) */
+    /* KAMUS LOKAL */
+    ListDin s;
+    int i;
+    
+    /* ALGORITMA */
+    // Hitung panjang c
+    i = 0;
+    while (c[i] != '\0') {
+        i++;
+    }
+    CreateListDin(&s, i);
+    for (i = 0; i < listLength(s); i++) {
+        ELMT(s,i).c = c[i];
+    }
+    return s;
+}
+
+int stringToInt(ListDin s) {
+    /* Mengubah String s menjadi integer */
+    /* KAMUS LOKAL */
+    int i;
+    int result;
+
+    /* ALGORITMA */
+    result = 0;
+    for (i=0; i<NEFF(s); i++) {
+         if (i > 0) {
+            result *= 10;
+         }
+         result += ((int) (ELMT(s,i).c - '0'));
+    }
+    return result;
+}
+
+TIME stringToTime(ListDin s) {
+    /* Mengubah String s menjadi TIME */
+    /* KAMUS LOKAL */
+    TIME result;
+    int d,h,m;
+    int i, ctr;
+    ListDin temp;
+
+    /* ALGORITMA */
+    i = 0;
+    ctr = 0;
+    CreateListDin(&temp, NMax); // Inisialisasi penampung sementara angka
+    while (i < NEFFString(s)) {
+        while (ELMT(s,i).c != ' ' && i < NEFFString(s)) {
+            insertLastString(&temp, ELMT(s,i).c);
+            i++;
+        }
+        if (ctr == 0) {
+            d = stringToInt(temp);
+        }
+        else if (ctr == 1) {
+            h = stringToInt(temp);
+        }
+        else {
+            m = stringToInt(temp);
+        }
+        ctr++;
+        i++;
+    }
+    CreateTime(&result, d,h,m);
+    return result;
+}
+
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : list boleh kosong!! *** */
-IdxType indexOf(ListDin l, ElType val) {
+IdxType indexOfMakanan(ListDin l, ElType val) {
     /* Search apakah ada elemen List l yang bernilai val */
     /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = val */
     /* Jika tidak ada, mengirimkan IDX_UNDEF */
@@ -165,7 +274,7 @@ IdxType indexOf(ListDin l, ElType val) {
         found = false;
         i = IDX_MIN;
         while (i < listLength(l) && !(found)) {
-            if (wordCmp(ID(ELMT(l,i).m), ID(val.m))) {
+            if (isStringEqual(charArrToString(ID(ELMT(l,i).m)), charArrToString(ID(val.m)))) {
                 found = true;
             } else {
                 i++;
@@ -218,7 +327,6 @@ void deleteLast(ListDin *l, ElType *val) {
     /*      Banyaknya elemen list berkurang satu */
     /*      List l mungkin menjadi kosong */
     /* KAMUS LOKAL */
-    IdxType i;
 
     /* ALGORITMA */
     *val = ELMT(*l,listLength(*l)-1);
@@ -282,72 +390,25 @@ void readLine(ListDin *s) {
     /* I.S. s sembarang, mesin kata sudah ada di awal kata pertama baris yang ingin diakuisisi */
     /* F.S. s terisi dengan karakter di baris */
     /* KAMUS LOKAL */
-    int i,j;
+    int i;
+    ElType in;
 
     /* ALGORITMA */
     // Alokasi ukuran string sebesar 2 kali ukuran Word maksimum
     CreateString(s, NMax*2);
     while (!endWord && currentChar != NEWLINE) {
+        in.c = currentWord.TabWord[i];
         for (i=0; i<currentWord.Length; i++) {
-            insertLastString(s,currentWord.TabWord[i]);
+            insertLast(s,in);
         }
         ADVWORD();
-        if (CAPACITYString(*s) - NEFFString(*s) < 20) { // Jika string sudah hampir penuh, ubah ukuran list jadi 2x lipat
-            expandList(s, CAPACITYString(*s)*2);
+        if (CAPACITY(*s) - NEFF(*s) < 20) { // Jika string sudah hampir penuh, ubah ukuran list jadi 2x lipat
+            expandList(s, CAPACITY(*s)*2);
         }
         if (!endWord && currentChar != NEWLINE) {
-            insertLastString(s, ' ');
+            in.c = ' ';
+            insertLast(s, in);
         }
     }
     compressList(s);
-}
-
-int stringToInt(ListDin s) {
-    /* Mengubah String s menjadi integer */
-    /* KAMUS LOKAL */
-    int i;
-    int result;
-
-    /* ALGORITMA */
-    result = 0;
-    for (i=0; i<NEFFString(s); i++) {
-         if (i > 0) {
-            result *= 10;
-         }
-         result += ((int) (ELMT(s,i) - '0'));
-    }
-    return result;
-}
-
-TIME stringToTime(ListDin s) {
-    /* Mengubah String s menjadi TIME */
-    /* KAMUS LOKAL */
-    TIME result;
-    int d,h,m;
-    int i, ctr;
-    ListDin temp;
-
-    /* ALGORITMA */
-    i = 0;
-    ctr = 0;
-    CreateString(&temp, NMax); // Inisialisasi penampung sementara angka
-    while (i < NEFFString(s)) {
-        while (ELMT(s,i) != ' ' && i < NEFFString(s)) {
-            insertLastString(&temp, ELMT(s,i));
-            i++;
-        }
-        if (ctr == 0) {
-            d = stringToInt(temp);
-        }
-        else if (ctr == 1) {
-            h = stringToInt(temp);
-        }
-        else {
-            m = stringToInt(temp);
-        }
-        ctr++;
-        i++;
-    }
-    CreateTime(&result, d,h,m);
-    return result;
 }

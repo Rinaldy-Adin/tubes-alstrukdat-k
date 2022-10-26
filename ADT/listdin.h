@@ -11,6 +11,7 @@
 #include "makanan.h"
 #include "tree.h"
 #include "wordmachine.h"
+#include <stdlib.h>
 
 /*  Kamus Umum */
 #define IDX_MIN 0
@@ -118,12 +119,22 @@ ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus);
 
 /* ********** OPERATOR RELASIONAL ********** */
 /* *** Operasi pembandingan list : < =, > *** */
-boolean isListEqual(ListDin l1, ListDin l2);
+boolean isStringEqual(ListDin s1, ListDin s2);
 /* Mengirimkan true jika l1 sama dengan l2 yaitu jika nEff l1 = l2 dan semua elemennya sama */
+
+char* stringToCharArr(ListDin s);
+
+ListDin charArrToString(char* c);
+
+void readLine(ListDin *s);
+
+int stringToInt(ListDin s);
+
+TIME stringToTime(ListDin s);
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : list boleh kosong!! *** */
-IdxType indexOf(ListDin l, ElType val);
+IdxType indexOfMakanan(ListDin l, ElType val);
 /* Search apakah ada elemen List l yang bernilai val */
 /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = val */
 /* Jika tidak ada, mengirimkan IDX_UNDEF */
