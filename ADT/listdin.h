@@ -10,6 +10,7 @@
 #include "boolean.h"
 #include "makanan.h"
 #include "tree.h"
+#include "wordmachine.h"
 
 /*  Kamus Umum */
 #define IDX_MIN 0
@@ -22,6 +23,7 @@
 typedef union {
     Makanan m;
     Tree t;
+    char c;
 } ElType;
 typedef int IdxType;
 typedef struct

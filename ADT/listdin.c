@@ -124,7 +124,7 @@ void readList(ListDin *l) {
     }
 }
 
-void printList(ListDin l) {
+void printString(ListDin l) {
     /* Proses : Menuliskan isi list dengan traversal, list ditulis di antara kurung siku;
     antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan karakter di depan,
     di tengah, atau di belakang, termasuk spasi dan enter */
@@ -137,14 +137,12 @@ void printList(ListDin l) {
 
    /* ALGORITMA */
    if (isEmpty(l)) {
-      printf("[]");
+      printf("\n");
    }
    else {
-      printf("[");
       for (i=0;i<getLastIdx(l);i++) {
          printf("%d,",ELMT(l,i));
       }
-      printf("%d]", ELMT(l,getLastIdx(l)));
    }
 }
 
@@ -278,4 +276,78 @@ void compressList(ListDin *l) {
     if (NEFF(*l) < CAPACITY(*l)) {
         shrinkList(l, (CAPACITY(*l)-NEFF(*l)));
     }
+}
+
+void readLine(ListDin *s) {
+    /* I.S. s sembarang, mesin kata sudah ada di awal kata pertama baris yang ingin diakuisisi */
+    /* F.S. s terisi dengan karakter di baris */
+    /* KAMUS LOKAL */
+    int i,j;
+
+    /* ALGORITMA */
+    // Alokasi ukuran string sebesar 2 kali ukuran Word maksimum
+    CreateString(s, NMax*2);
+    while (!endWord && currentChar != NEWLINE) {
+        for (i=0; i<currentWord.Length; i++) {
+            insertLastString(s,currentWord.TabWord[i]);
+        }
+        ADVWORD();
+        if (CAPACITYString(*s) - NEFFString(*s) < 20) { // Jika string sudah hampir penuh, ubah ukuran list jadi 2x lipat
+            expandList(s, CAPACITYString(*s)*2);
+        }
+        if (!endWord && currentChar != NEWLINE) {
+            insertLastString(s, ' ');
+        }
+    }
+    compressList(s);
+}
+
+int stringToInt(ListDin s) {
+    /* Mengubah String s menjadi integer */
+    /* KAMUS LOKAL */
+    int i;
+    int result;
+
+    /* ALGORITMA */
+    result = 0;
+    for (i=0; i<NEFFString(s); i++) {
+         if (i > 0) {
+            result *= 10;
+         }
+         result += ((int) (ELMT(s,i) - '0'));
+    }
+    return result;
+}
+
+TIME stringToTime(ListDin s) {
+    /* Mengubah String s menjadi TIME */
+    /* KAMUS LOKAL */
+    TIME result;
+    int d,h,m;
+    int i, ctr;
+    ListDin temp;
+
+    /* ALGORITMA */
+    i = 0;
+    ctr = 0;
+    CreateString(&temp, NMax); // Inisialisasi penampung sementara angka
+    while (i < NEFFString(s)) {
+        while (ELMT(s,i) != ' ' && i < NEFFString(s)) {
+            insertLastString(&temp, ELMT(s,i));
+            i++;
+        }
+        if (ctr == 0) {
+            d = stringToInt(temp);
+        }
+        else if (ctr == 1) {
+            h = stringToInt(temp);
+        }
+        else {
+            m = stringToInt(temp);
+        }
+        ctr++;
+        i++;
+    }
+    CreateTime(&result, d,h,m);
+    return result;
 }
