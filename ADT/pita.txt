@@ -1,31 +1,49 @@
-6
+8
 11
 Ayam Mentah
 1 0 0
 0 0 15
+0 0 0
 B
 21
 Ayam Potong
 0 2 0
 0 0 0
+0 0 3
 C
 10
 Tepung
 0 1 0
 0 0 30
+0 0 0
 B
 15
 Minyak Goreng
 0 1 30
 0 1 0
+0 0 0
 B
 31
 Ayam Tepung
 0 0 30
 0 0 0
+0 0 10
 M
 37
 Ayam Goreng
 0 0 15
 0 0 0
+0 0 5
+F
+2
+Tahu
+0 0 10
+0 0 5
+0 0 0
+B
+37
+Tahu Goreng
+0 0 15
+0 0 0
+0 0 3
 F.

@@ -96,82 +96,82 @@ boolean isFull(ListDin l) {
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 /* *** Mendefinisikan isi list dari pembacaan *** */
-void readList(ListDin *l) {
-    /* I.S. l sembarang dan sudah dialokasikan sebelumnya */
-    /* F.S. List l terdefinisi */
-    /* Proses : membaca banyaknya elemen l dan mengisi nilainya */
-    /* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
-    /*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= CAPACITY(l) */
-    /*    Jika N tidak valid, tidak diberikan pesan kesalahan */
-    /* 2. Jika 0 < N <= CAPACITY(l); Lakukan N kali: Baca elemen mulai dari indeks
-        0 satu per satu diakhiri enter */
-    /*    Jika N = 0; hanya terbentuk l kosong */
-    /* KAMUS LOKAL */
+// void readList(ListDin *l) {
+//     /* I.S. l sembarang dan sudah dialokasikan sebelumnya */
+//     /* F.S. List l terdefinisi */
+//     /* Proses : membaca banyaknya elemen l dan mengisi nilainya */
+//     /* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
+//     /*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= CAPACITY(l) */
+//     /*    Jika N tidak valid, tidak diberikan pesan kesalahan */
+//     /* 2. Jika 0 < N <= CAPACITY(l); Lakukan N kali: Baca elemen mulai dari indeks
+//         0 satu per satu diakhiri enter */
+//     /*    Jika N = 0; hanya terbentuk l kosong */
+//     /* KAMUS LOKAL */
 
-    /* ALGORITMA*/
-    int n;
-    IdxType i;
+//     /* ALGORITMA*/
+//     int n;
+//     IdxType i;
 
-    /* ALGORITMA */
-    do {
-        scanf("%d", &n);
-    } while (n < 0 || n > CAPACITY(*l));
-    NEFF(*l) = n;
+//     /* ALGORITMA */
+//     do {
+//         scanf("%d", &n);
+//     } while (n < 0 || n > CAPACITY(*l));
+//     NEFF(*l) = n;
 
-    // Membaca elemen list
-    for (i=0; i<n; i++){
-        scanf("%c", &ELMT(*l,i).c);
-    }
-}
+//     // Membaca elemen list
+//     for (i=0; i<n; i++){
+//         scanf("%c", &ELMT(*l,i).c);
+//     }
+// }
 
-void printList(ListDin l) {
-    /* Proses : Menuliskan isi list dengan traversal, list ditulis di antara kurung siku;
-    antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan karakter di depan,
-    di tengah, atau di belakang, termasuk spasi dan enter */
-    /* I.S. l boleh kosong */
-    /* F.S. Jika l tidak kosong: [e1,e2,...,en] */
-    /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-    /* Jika list kosong : menulis [] */
-    /* KAMUS LOKAL */
-   IdxType i;
+// void printList(ListDin l) {
+//     /* Proses : Menuliskan isi list dengan traversal, list ditulis di antara kurung siku;
+//     antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan karakter di depan,
+//     di tengah, atau di belakang, termasuk spasi dan enter */
+//     /* I.S. l boleh kosong */
+//     /* F.S. Jika l tidak kosong: [e1,e2,...,en] */
+//     /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
+//     /* Jika list kosong : menulis [] */
+//     /* KAMUS LOKAL */
+//    IdxType i;
 
-   /* ALGORITMA */
-   if (isEmpty(l)) {
-      printf("[]\n");
-   }
-   else {
-        printf("[");
-        for (i=0;i<getLastIdx(l);i++) {
-            printf("%c,",ELMT(l,i).c);
-        }
-        printf("]\n");
-   }
-}
+//    /* ALGORITMA */
+//    if (isEmpty(l)) {
+//       printf("[]\n");
+//    }
+//    else {
+//         printf("[");
+//         for (i=0;i<getLastIdx(l);i++) {
+//             printf("%c,",ELMT(l,i));
+//         }
+//         printf("]\n");
+//    }
+// }
 
 /****** KOMPARATOR *******/
-boolean isStringEqual(ListDin s1, ListDin s2) {
-    /* Menentukan apakah String s1 dan s2 sama */
-    /* KAMUS LOKAL */
-    int i;
-    boolean isEqual;
+// boolean isStringEqual(ListDin s1, ListDin s2) {
+//     /* Menentukan apakah String s1 dan s2 sama */
+//     /* KAMUS LOKAL */
+//     int i;
+//     boolean isEqual;
 
-    /* ALGORITMA */
-    if(listLength(s1) != listLength(s2)) {
-        return false;
-    } else {
-        isEqual = true;
-        i = 0;
-        while (i < listLength(s1) && isEqual) {
-            if (ELMT(s1,i).c != ELMT(s2,i).c) {
-                isEqual = false;
-            }
-            else {
-                i++;
-            }
-        }
-        return isEqual;
-    }
-}
+//     /* ALGORITMA */
+//     if(listLength(s1) != listLength(s2)) {
+//         return false;
+//     } else {
+//         isEqual = true;
+//         i = 0;
+//         while (i < listLength(s1) && isEqual) {
+//             if (ELMT(s1,i) != ELMT(s2,i)) {
+//                 isEqual = false;
+//             }
+//             else {
+//                 i++;
+//             }
+//         }
+//         return isEqual;
+//     }
+// }
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : list boleh kosong!! *** */

@@ -15,7 +15,8 @@ typedef struct {
     String id;
 	String nama;
     TIME kadaluwarsa;
-    TIME actTime; // Waktu yang diperlukan untuk delivery
+    TIME delTime; // Waktu yang diperlukan untuk delivery
+    TIME actTime; // Waktu yang diperlukan untuk aksi (selain delivery)
     String command; // B = Buy, F = Fry, M = Mix, C = Chop, O = Boil
 } Makanan;
 
@@ -24,6 +25,7 @@ typedef struct {
 #define Nama(M) (M).nama
 #define Kadal(M) (M).kadaluwarsa
 #define Command(M) (M).command
+#define DelTime(M) (M).delTime
 #define ActTime(M) (M).actTime
 #define Buy 'B'
 #define Fry 'F'
@@ -32,7 +34,7 @@ typedef struct {
 #define Boil 'O'
 
 /*** KONSTRUKTOR ***/
-void makeMakanan(Makanan *m, String id, String nama, TIME kadaluwarsa, TIME actTime, String command);
+void makeMakanan(Makanan *m, String id, String nama, TIME kadaluwarsa, TIME del, TIME act, String command);
 /* I.S. m sembarang */
 /* F.S. seluruh komponen m terisi sesuai masukan. */
 

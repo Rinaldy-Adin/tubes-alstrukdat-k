@@ -6,12 +6,9 @@
 
 #include "boolean.h"
 #include "makanan.h"
+#include "node.h"
 
-typedef struct
-{
-    Makanan m; // Makanan sebagai node
-    ListDin children; // Array penampung children
-} Tree;
+typedef Node Tree;
 
 #define Makanan(P) (P).m
 #define Child(P) (P).children
