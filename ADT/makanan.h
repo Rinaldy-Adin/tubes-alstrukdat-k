@@ -17,7 +17,7 @@ typedef struct {
     TIME kadaluwarsa;
     TIME delTime; // Waktu yang diperlukan untuk delivery
     TIME actTime; // Waktu yang diperlukan untuk aksi (selain delivery)
-    String command; // B = Buy, F = Fry, M = Mix, C = Chop, O = Boil
+    String command;
 } Makanan;
 
 /* *** Notasi Akses: selektor Makanan *** */
@@ -27,11 +27,6 @@ typedef struct {
 #define Command(M) (M).command
 #define DelTime(M) (M).delTime
 #define ActTime(M) (M).actTime
-#define Buy 'B'
-#define Fry 'F'
-#define Mix 'M'
-#define Chop 'C'
-#define Boil 'O'
 
 /*** KONSTRUKTOR ***/
 void makeMakanan(Makanan *m, String id, String nama, TIME kadaluwarsa, TIME del, TIME act, String command);

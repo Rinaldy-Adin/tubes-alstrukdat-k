@@ -356,6 +356,7 @@ void loadResep(ListStatik *l, ListStatik makan) {
             }
             TREE(temp) = duplicateTree(TREE(e));
             insertLastStat(l, temp);
+            deleteTree(&TREE(e));
          }
     }
 }

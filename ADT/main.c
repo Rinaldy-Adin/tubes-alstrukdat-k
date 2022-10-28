@@ -15,7 +15,7 @@ int main() {
     loadResep(&testResep,testMakan);
     for (int i=0; i<NEFFSTAT(testResep); i++) {
         printf("Tree %d\n", i+1);
-        printTree(TREE(ELMTSTAT(testResep,i)));
+        printTreeResep(TREE(ELMTSTAT(testResep,i)));
     }
 
     // CreateTree(&test);

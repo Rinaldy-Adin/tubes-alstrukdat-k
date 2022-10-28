@@ -4,46 +4,46 @@ Ayam Mentah
 1 0 0
 0 0 15
 0 0 0
-B
+Buy
 21
 Ayam Potong
 0 2 0
 0 0 0
 0 0 3
-C
+Chop
 10
 Tepung
 0 1 0
 0 0 30
 0 0 0
-B
+Buy
 15
 Minyak Goreng
 0 1 30
 0 1 0
 0 0 0
-B
+Buy
 31
 Ayam Tepung
 0 0 30
 0 0 0
 0 0 10
-M
+Mix
 37
 Ayam Goreng
 0 0 15
 0 0 0
 0 0 5
-F
+Fry
 2
 Tahu
 0 0 10
 0 0 5
 0 0 0
-B
+Buy
 40
 Tahu Goreng
 0 0 15
 0 0 0
 0 0 3
-F.
+Fry.
