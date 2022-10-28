@@ -5,7 +5,7 @@ Load makanan aman (lewat ADT liststatik)
 
 Tree belum (fungsi Tree di liststatik juga belum)
 
-Prioqueue belum
+Prioqueue aman
 
 wordmachine dan charmachine aman
 
