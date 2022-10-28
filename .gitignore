@@ -1,2 +1,6 @@
-obj/
-.vscode/
+*.ilk
+*.obj
+*.o
+*/**.ilk
+*/**.obj
+*/**.o
