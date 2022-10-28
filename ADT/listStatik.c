@@ -152,7 +152,7 @@ int indexOfStat(ListStatik l, String searchID) {
    boolean found;
 
    /* ALGORITMA */
-   if (isEmptyStat(l) == true) {
+   if (isEmptyStat(l)) {
       return IDX_UNDEF;
    } else { // Skema searching dengan boolean
       found = false;
@@ -312,6 +312,50 @@ void loadMakanan(ListStatik *l) {
             } else {
                insertLastStat(l,e);
             }
+         }
+    }
+}
+
+void loadResep(ListStatik *l, ListStatik makan) {
+    /* Membaca list resep dari file */
+    /* I.S. l sembarang, makan terdefinisi dan sudah berisi semua makanan yang ada */
+    /* F.S. l terisi resep dari file konfigurasi */
+    /* KAMUS LOKAL */
+    ElTypeStat e, temp;
+    ListStatik test;
+    String NResep, NChild, IDParent, IDChild;
+    int N, M; // Jumlah resep dan bahan per makanan
+    int i, j, idx;
+    char *filename = "pitaResep.txt";
+
+    /* ALGORITMA */
+    CreateListStatik(l);
+    CreateListStatik(&test);
+    STARTWORDFILE(filename);    
+    if (endWord) {
+        printf("File kosong\n");
+    }
+    else {
+         NResep = createString(currentWord.TabWord);
+         N = stringToInt(NResep);
+         ADVWORD();
+         for (i=0; i<N; i++) {
+            IDParent = createString(currentWord.TabWord);
+            idx = indexOfStat(makan,IDParent);
+            ADVWORD();
+            CreateTree(&TREE(e));
+            AddChild(&TREE(e), MAKANAN(ELMTSTAT(makan,idx)));
+            NChild = createString(currentWord.TabWord);
+            M = stringToInt(NChild);
+            ADVWORD();
+            for (j=0; j<M; j++) {
+               IDChild = createString(currentWord.TabWord);
+               idx = indexOfStat(makan,IDChild);
+               AddChild(&TREE(e), MAKANAN(ELMTSTAT(makan,idx)));
+               ADVWORD();
+            }
+            TREE(temp) = duplicateTree(TREE(e));
+            insertLastStat(l, temp);
          }
     }
 }

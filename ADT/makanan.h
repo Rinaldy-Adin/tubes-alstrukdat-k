@@ -43,4 +43,6 @@ void advKadal(Makanan *m, int n);
 /* I.S. m sudah terdefinisi */
 /* F.S. kadaluwarsa m bertambah sebanyak n menit */
 
+boolean isMakananEqual(Makanan m1, Makanan m2);
+/* Mengembalikan true jika m1 = m2 (dicek dari ID) */
 #endif

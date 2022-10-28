@@ -10,7 +10,7 @@ Word currentWord;
 
 void IgnoreBlanks() {
     /* Algoritma */
-    while (currentChar == BLANK) {
+    while (currentChar == BLANK || currentChar == NEWLINE) {
         ADV();
     }
 }
@@ -55,12 +55,10 @@ void STARTWORDFILE(char* filename) {
 
 void ADVWORD() {
     IgnoreBlanks();
-
     if (currentChar == MARK) {
         endWord = true;
     } else {
         CopyWord();
-        IgnoreBlanks();
     }
 }
 /* I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi
@@ -71,7 +69,15 @@ void ADVWORD() {
 
 void CopyWord() {
     /* Kamus */
+    int i;
+
     /* Algoritma */
+    // Kosongkan TabWord currentWord
+    i = 0;
+    while (currentWord.TabWord[i] != '\0') {
+        currentWord.TabWord[i] = '\0';
+        i++;
+    }
     currentWord.Length = 0;
     while (currentChar != MARK && currentChar != BLANK &&
            currentChar != NEWLINE && currentWord.Length < NMax) {

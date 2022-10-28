@@ -29,3 +29,11 @@ void advKadal(Makanan *m, int n) {
     /* ALGORITMA */
     Kadal(*m) = NextNMenit(Kadal(*m), n);
 }
+
+boolean isMakananEqual(Makanan m1, Makanan m2) {
+    /* Mengembalikan true jika m1 = m2 (dicek dari ID) */
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
+    return (stringsAreEqual(ID(m1),ID(m2)));
+}

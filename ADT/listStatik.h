@@ -10,7 +10,7 @@
 #include "makanan.h"
 #include "strlib.h"
 #include "wordmachine.h"
-// #include "tree.h"
+#include "tree.h"
 
 /*  Kamus Umum */
 #define CAPACITYSTAT 100
@@ -25,7 +25,7 @@
 /* type elemen List */
 typedef union {
    Makanan m;
-   // Tree t;
+   Tree t;
 } ElTypeStat;
 
 typedef int IdxType;
@@ -161,4 +161,8 @@ void loadMakanan(ListStatik *l);
 /* I.S. l sembarang */
 /* F.S. l terisi makanan dari file konfigurasi */
 
+void loadResep(ListStatik *l, ListStatik makan) ;
+/* Membaca resep makanan dari file */
+/* I.S. l sembarang */
+/* F.S. l terisi resep dari file konfigurasi */
 #endif

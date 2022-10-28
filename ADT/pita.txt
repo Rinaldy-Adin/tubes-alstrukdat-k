@@ -41,7 +41,7 @@ Tahu
 0 0 5
 0 0 0
 B
-37
+40
 Tahu Goreng
 0 0 15
 0 0 0
