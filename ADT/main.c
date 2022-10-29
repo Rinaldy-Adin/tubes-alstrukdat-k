@@ -8,9 +8,9 @@ int main() {
     Address alamatMakanan;
 
     /* ALGORITMA */
-    // printf("%d\n", indexOfStat(testMakan,ID(MAKANAN(ELMTSTAT(testMakan,4)))));
+    // printf("%d\n", indexOfMakanan(testMakan,ID(MAKANAN(ELMTSTAT(testMakan,4)))));
     loadMakanan(&testMakan);
-    // printListStat(testMakan);
+    // printListMakanan(testMakan);
 
     loadResep(&testResep,testMakan);
     printResep(testResep);

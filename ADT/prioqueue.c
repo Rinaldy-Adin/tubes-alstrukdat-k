@@ -1,6 +1,8 @@
-//
-// Created by ammar on 24/10/2022.
-//
+/* File : prioqueue.h */
+/* Implementasi ADT Priority Queue Time dengan representasi array secara eksplisit dan alokasi dinamik */
+/* Model Implementasi Versi III dengan circular buffer */
+/* Elemen queue terurut membesar berdasarkan elemen time */
+/* Created by ammar on 24/10/2022. */
 
 #include "prioqueue.h"
 #include "stdlib.h"
@@ -60,20 +62,30 @@ void Dequeue(PrioQueue *Q, infotype *X) {
 
 // Fungsi internal
 boolean checkEq(infotype x, infotype y) {
+    /* Mengecek apakah x dan y sama */
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
     return (Time(x) == Time(y)) && stringsAreEqual(ID(Makanan(x)), ID(Makanan(y)));
 }
 
 void Ambil(PrioQueue *Q, infotype X, infotype *result) {
+    /* Proses: Mengambil X pada Q dan dihapus setelah operasi */
+    /* I.S. Q tidak mungkin kosong, mungkin ada X */
+    /* F.S. Q mungkin kosong. Jika X tidak ditemukan maka result tidak berubah */
+    /* KAMUS LOKAL */
+    int i,j;
+
+    /* ALGORITMA */
     if (NBElmt(*Q) == 1 && checkEq(InfoHead(*Q), X)) {
         Head(*Q) = Nil;
         Tail(*Q) = Nil;
         *result = InfoHead(*Q);
     }
-    int i;
+
     for (i = 0; i < NBElmt(*Q); i++) {
         if (checkEq(Elmt(*Q, i), X)) {
             infotype temp = Elmt(*Q, i);
-            int j;
             for (j = i; j < Tail(*Q); j++) {
                 Elmt(*Q, j) = Elmt(*Q, j + 1);
             }
@@ -81,4 +93,14 @@ void Ambil(PrioQueue *Q, infotype X, infotype *result) {
             *result = temp;
         }
     }
+}
+
+void Cook (String namaMakanan, PrioQueue *Q, ListStatik resep) {
+    /* Proses: Memasak makanan dengan nama namaMakanan jika ada di resep dan bahannya ada di inventory */
+    /* I.S. namaMakanan, *Q, resep terdefinisi */
+    /* F.S. Jika bahan dan resep ada, makanan dengan namaMakanan terbentuk. Makanan di Q berkurang. Q mungkin kosong. */
+    /* KAMUS LOKAL */
+    Address r;
+
+    /* ALGORITMA */
 }

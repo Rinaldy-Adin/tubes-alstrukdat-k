@@ -8,6 +8,7 @@
 
 #include "boolean.h"
 #include "makanan.h"
+#include "listStatik.h"
 
 #define Nil -1
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
@@ -80,4 +81,8 @@ void Ambil (PrioQueue * Q, infotype X, infotype *result);
 /* I.S. Q tidak mungkin kosong, mungkin ada X */
 /* F.S. Q mungkin kosong. Jika X tidak ditemukan maka result tidak berubah */
 
+void Cook (String namaMakanan, PrioQueue *Q, ListStatik resep);
+/* Proses: Memasak makanan dengan nama namaMakanan jika ada di resep dan bahannya ada di inventory */
+/* I.S. namaMakanan, *Q, resep terdefinisi */
+/* F.S. Jika bahan dan resep ada, makanan dengan namaMakanan terbentuk. Makanan di Q berkurang. Q mungkin kosong. */
 #endif

@@ -79,7 +79,7 @@ boolean isFullStat(ListStatik l) {
    return (NEFFSTAT(l) == CAPACITYSTAT);
 }
 
-void printListStat(ListStatik l) {
+void printListMakanan(ListStatik l) {
    /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung 
       siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan 
       karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
@@ -142,7 +142,7 @@ boolean isListEqualStat(ListStatik l1, ListStatik l2) {
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
-int indexOfStat(ListStatik l, String searchID) {
+int indexOfMakanan(ListStatik l, String searchID) {
    /* Search apakah ada elemen List l yang ber-ID searchId */
    /* Jika ada, menghasilkan indeks i terkecil, dengan ID(ELMTSTAT(l,i)) = searchId */
    /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
@@ -159,6 +159,38 @@ int indexOfStat(ListStatik l, String searchID) {
       i = IDX_MIN;
       while (i < NEFFSTAT(l) && !(found)) {
          if (stringsAreEqual(ID(MAKANAN(ELMTSTAT(l,i))), searchID) == true) {
+            found = true;
+         }
+         else {
+            i++;
+         }
+      }
+      if (found) {
+         return i;
+      }
+      else {
+         return IDX_UNDEF;
+      }
+   }
+}
+
+int indexOfResep(ListStatik l, String nama) {
+   /* Search apakah ada elemen List l yang bernama nama */
+   /* Jika ada, menghasilkan indeks i terkecil, dengan Nama(ELMTSTAT(l,i)) = nama */
+   /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
+   /* Skema Searching yang digunakan bebas */
+   /* KAMUS LOKAL */
+   IdxType i;
+   boolean found;
+
+   /* ALGORITMA */
+   if (isEmptyStat(l)) {
+      return IDX_UNDEF;
+   } else { // Skema searching dengan boolean
+      found = false;
+      i = IDX_MIN;
+      while (i < NEFFSTAT(l) && !(found)) {
+         if (stringsAreEqual(Nama(MAKANAN(ELMTSTAT(l,i))), nama) == true) {
             found = true;
          }
          else {
@@ -305,7 +337,7 @@ void loadMakanan(ListStatik *l) {
             command = readLine();
             
             makeMakanan(&MAKANAN(e), id, nama, stringToTime(kadal), stringToTime(del), stringToTime(act), command);
-            idx = indexOfStat(*l,id);
+            idx = indexOfMakanan(*l,id);
             if (idx != IDX_UNDEF) {
                deleteAtStat(l,&temp,idx);
                insertAtStat(l,e,idx);
@@ -341,7 +373,7 @@ void loadResep(ListStatik *l, ListStatik makan) {
          ADVWORD();
          for (i=0; i<N; i++) {
             IDParent = createString(currentWord.TabWord);
-            idx = indexOfStat(makan,IDParent);
+            idx = indexOfMakanan(makan,IDParent);
             ADVWORD();
             CreateTree(&TREE(e));
             AddChild(&TREE(e), MAKANAN(ELMTSTAT(makan,idx)));
@@ -350,7 +382,7 @@ void loadResep(ListStatik *l, ListStatik makan) {
             ADVWORD();
             for (j=0; j<M; j++) {
                IDChild = createString(currentWord.TabWord);
-               idx = indexOfStat(makan,IDChild);
+               idx = indexOfMakanan(makan,IDChild);
                AddChild(&TREE(e), MAKANAN(ELMTSTAT(makan,idx)));
                ADVWORD();
             }
