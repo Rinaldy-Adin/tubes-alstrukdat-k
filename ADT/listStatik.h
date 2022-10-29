@@ -108,6 +108,12 @@ int indexOfMakanan(ListStatik l, String searchID);
 /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
 /* Skema Searching yang digunakan bebas */
 
+int indexOfResep(ListStatik l, String searchID);
+/* Search apakah ada elemen List l yang ber-ID searchId */
+/* Jika ada, menghasilkan indeks i terkecil, dengan ID(ELMTSTAT(l,i)) = searchId */
+/* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
+/* Skema Searching yang digunakan bebas */
+
 /* ********** MENAMBAH ELEMEN ********** */
 /* *** Menambahkan elemen terakhir *** */
 void insertFirstStat(ListStatik *l, ElTypeStat val);
@@ -169,4 +175,7 @@ void loadResep(ListStatik *l, ListStatik makan) ;
 void printResep(ListStatik resep);
 /* I.S. resep terdefinisi */
 /* F.s. Isi resep tercetak di layar */
+
+ListStatik listMakananCommand(String com, ListStatik l);
+/* Mengembalikan list statik yang berisi makanan dengan cara mendapat sesuai com dari list l */
 #endif

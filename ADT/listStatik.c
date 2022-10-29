@@ -158,7 +158,7 @@ int indexOfMakanan(ListStatik l, String searchID) {
       found = false;
       i = IDX_MIN;
       while (i < NEFFSTAT(l) && !(found)) {
-         if (stringsAreEqual(ID(MAKANAN(ELMTSTAT(l,i))), searchID) == true) {
+         if (stringsAreEqual(ID(MAKANAN(ELMTSTAT(l,i))), searchID)) {
             found = true;
          }
          else {
@@ -174,9 +174,9 @@ int indexOfMakanan(ListStatik l, String searchID) {
    }
 }
 
-int indexOfResep(ListStatik l, String nama) {
-   /* Search apakah ada elemen List l yang bernama nama */
-   /* Jika ada, menghasilkan indeks i terkecil, dengan Nama(ELMTSTAT(l,i)) = nama */
+int indexOfResep(ListStatik l, String searchID) {
+   /* Search apakah ada elemen List l yang ber-ID searchId */
+   /* Jika ada, menghasilkan indeks i terkecil, dengan ID(ELMTSTAT(l,i)) = searchId */
    /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
    /* Skema Searching yang digunakan bebas */
    /* KAMUS LOKAL */
@@ -190,7 +190,7 @@ int indexOfResep(ListStatik l, String nama) {
       found = false;
       i = IDX_MIN;
       while (i < NEFFSTAT(l) && !(found)) {
-         if (stringsAreEqual(Nama(MAKANAN(ELMTSTAT(l,i))), nama) == true) {
+         if (stringsAreEqual(ID(MAKAN(TREE(ELMTSTAT(l,i)))), searchID)) {
             found = true;
          }
          else {
@@ -405,4 +405,35 @@ void printResep(ListStatik resep) {
       printf("    %d. ", i+1);
       printTreeResep(TREE(ELMTSTAT(resep,i)));
    }
+}
+
+ListStatik listMakananCommand(String com, ListStatik l) {
+   /* Mengembalikan list statik yang berisi makanan dengan cara mendapat sesuai com dari list l */
+   /* KAMUS LOKAL */
+   ListStatik result;
+   int i;
+
+   /* ALGORITMA */
+   CreateListStatik(&result);
+   for (i=0; i<NEFFSTAT(l); i++) {
+      if(stringsAreEqual(com, Command(MAKANAN(ELMTSTAT(l,i))))) {
+         insertLastStat(&result,ELMTSTAT(l,i));
+      }
+   }
+
+   if (isEmptyStat(result)) {
+      printf("Tidak ada makanan yang bisa dibuat dengan cara ");
+      printString(com);
+      printf("\n");
+   } else {
+      printf("Makanan yang bisa dibuat dengan cara ");
+      printString(com);
+      printf(" :\n");
+      for(i=0; i<NEFFSTAT(result); i++) {
+         printf("   %d. ",i+1);
+         printString(Nama(MAKANAN(ELMTSTAT(result,i))));
+         printf("\n");
+      }
+   }
+   return result;
 }

@@ -60,13 +60,45 @@ void Dequeue(PrioQueue *Q, infotype *X) {
     }
 }
 
+/* *** Searching indeks makanan *** */
+int idxInventory (PrioQueue Q, Makanan m) {
+    /* Mengembalikan indeks Makanan m di inventory */
+    /* KAMUS LOKAL */
+   int i;
+   int length;
+   boolean found;
+
+   /* ALGORITMA */
+   if (IsEmpty(Q)) {
+      return IDX_UNDEF;
+   } else { // Skema searching dengan boolean
+      found = false;
+      length = NBElmt(Q);
+      i = 0;
+      while (i < length && !(found)) {
+         if (isMakananEqual(m, Q.T[i].makanan)) {
+            found = true;
+         }
+         else {
+            i++;
+         }
+      }
+      if (found) {
+         return i;
+      }
+      else {
+         return IDX_UNDEF;
+      }
+   }
+}
+
 // Fungsi internal
 boolean checkEq(infotype x, infotype y) {
     /* Mengecek apakah x dan y sama */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    return (Time(x) == Time(y)) && stringsAreEqual(ID(Makanan(x)), ID(Makanan(y)));
+    return (TEQ(Time(x),Time(y)) && stringsAreEqual(ID(Makanan(x)), ID(Makanan(y))));
 }
 
 void Ambil(PrioQueue *Q, infotype X, infotype *result) {
@@ -75,6 +107,7 @@ void Ambil(PrioQueue *Q, infotype X, infotype *result) {
     /* F.S. Q mungkin kosong. Jika X tidak ditemukan maka result tidak berubah */
     /* KAMUS LOKAL */
     int i,j;
+    infotype temp;
 
     /* ALGORITMA */
     if (NBElmt(*Q) == 1 && checkEq(InfoHead(*Q), X)) {
@@ -85,7 +118,7 @@ void Ambil(PrioQueue *Q, infotype X, infotype *result) {
 
     for (i = 0; i < NBElmt(*Q); i++) {
         if (checkEq(Elmt(*Q, i), X)) {
-            infotype temp = Elmt(*Q, i);
+            temp = Elmt(*Q, i);
             for (j = i; j < Tail(*Q); j++) {
                 Elmt(*Q, j) = Elmt(*Q, j + 1);
             }
@@ -95,12 +128,44 @@ void Ambil(PrioQueue *Q, infotype X, infotype *result) {
     }
 }
 
-void Cook (String namaMakanan, PrioQueue *Q, ListStatik resep) {
-    /* Proses: Memasak makanan dengan nama namaMakanan jika ada di resep dan bahannya ada di inventory */
-    /* I.S. namaMakanan, *Q, resep terdefinisi */
-    /* F.S. Jika bahan dan resep ada, makanan dengan namaMakanan terbentuk. Makanan di Q berkurang. Q mungkin kosong. */
+boolean Cook (String IDMakanan, PrioQueue *Q, ListStatik resep) {
+    /* Proses: Memasak makanan dengan ID IDMakanan jika ada di resep dan bahannya ada di inventory */
+    /* I.S. IDMakanan, *Q, resep terdefinisi */
+    /* F.S. Jika bahan dan resep ada, makanan dengan ID IDMakanan terbentuk. Makanan di Q berkurang. Q mungkin kosong. */
     /* KAMUS LOKAL */
-    Address r;
+    int idxResep, idxInv;
+    Tree r;
+    infotype required, temp, cooked;
 
     /* ALGORITMA */
+    if (IsEmpty(*Q)) {
+        printf("Anda tidak memiliki makanan di inventory\n");
+        return false;
+    }
+
+    // Cari makanan di resep
+    idxResep = indexOfResep(resep, IDMakanan);
+    if (idxResep == IDX_UNDEF) {
+        printf("Makanan tersebut tidak ada di resep\n");
+        return false;
+    }
+
+    r = TREE(ELMTSTAT(resep,idxResep));
+    r = CHILD(r);
+    while (r != NULL) {
+        idxInv = idxInventory(*Q,MAKAN(r));
+        if (idxInv == IDX_UNDEF) {
+            printf("Gagal memasak karena Anda tidak memiliki bahan : ");
+            printString(Nama(MAKAN(r)));
+            printf("\n");
+            return false;
+        }
+        required = (*Q).T[idxInv];
+        Ambil(Q, required, &temp);
+        r = SIBLING(r);
+    }
+    Makanan(cooked) = MAKAN(TREE(ELMTSTAT(resep,idxResep)));
+    Time(cooked) = Kadal(Makanan(cooked));
+    Enqueue(Q, cooked);
+    return true;
 }
