@@ -150,7 +150,7 @@ boolean isFull(ListDin l) {
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : list boleh kosong!! *** */
-IdxType indexOfMakanan(ListDin l, ElType val) {
+IdxType indexOfMakananDin(ListDin l, ElType val) {
     /* Search apakah ada elemen List l yang bernilai val */
     /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = val */
     /* Jika tidak ada, mengirimkan IDX_UNDEF */

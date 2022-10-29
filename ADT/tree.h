@@ -22,12 +22,12 @@ typedef Address Tree;
 #define CHILD(T) (T) -> child
 #define SIBLING(T) (T) -> sibling
 
+boolean isTreeEmpty(Tree T);
+/* Mengembalikan true jika T kosong (ROOT(T) == NULL)*/
+
 void CreateTree(Tree *T);
 /* I.S. T sembarang */
 /* F.S. Terbentuk Tree T yang kosong */
-
-boolean isTreeEmpty(Tree T);
-/* Mengembalikan true jika T kosong (ROOT(T) == NULL)*/
 
 void AddSibling(Tree *T, Makanan sibling);
 /* I.S. T terdefinisi */
@@ -47,10 +47,10 @@ boolean isMakananInChild(Tree T, Makanan m);
 Tree duplicateTree(Tree T);
 /* Mengembalikan salinan Tree T */
 
-Address searchMakanan(Tree inT, Makanan m);
+Address searchMakananTree(Tree inT, Makanan m);
 /* Mengembalikan Address yang value makanananya adalah m di dalam Tree inT, jika ada */
 
-void printTree(Tree T);
+void printTreeResep(Tree T);
 /* I.S. T terdefinisi */
 /* F.S. Keseluruhan Tree resep T tercetak ke layar */
 

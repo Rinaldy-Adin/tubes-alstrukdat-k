@@ -8,13 +8,15 @@
 
 #include "boolean.h"
 #include "makanan.h"
+#include "listStatik.h"
+#include "waktu.h"
 
 #define Nil -1
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
 
 /* Definisi elemen dan address */
 typedef struct {
-    int time;  /* [1..100], waktu dengan nilai 1..100 (1 adalah waktu adalah terendah) */
+    TIME time;  /* [1..100], waktu dengan nilai 1..100 (1 adalah waktu adalah terendah) */
     Makanan makanan;  /* elemen karakter */
 } infotype;
 typedef int address;   /* indeks tabel */
@@ -74,10 +76,18 @@ void Dequeue (PrioQueue * Q, infotype * X);
 /* F.S. X = nilai elemen HEAD pd I.S.
         Q mungkin kosong */
 
+/* *** Searching indeks makanan *** */
+int idxInventory (PrioQueue Q, Makanan m);
+/* Mengembalikan indeks Makanan m di inventory */
+
 /* Operasi Tambahan */
 void Ambil (PrioQueue * Q, infotype X, infotype *result);
 /* Proses: Mengambil X pada Q dan dihapus setelah operasi */
 /* I.S. Q tidak mungkin kosong, mungkin ada X */
 /* F.S. Q mungkin kosong. Jika X tidak ditemukan maka result tidak berubah */
 
+boolean Cook (String IDMakanan, PrioQueue *Q, ListStatik resep);
+/* Proses: Memasak makanan dengan ID IDMakanan jika ada di resep dan bahannya ada di inventory */
+/* I.S. IDMakanan, *Q, resep terdefinisi */
+/* F.S. Jika bahan dan resep ada, makanan dengan ID IDMakanan terbentuk. Makanan di Q berkurang. Q mungkin kosong. */
 #endif

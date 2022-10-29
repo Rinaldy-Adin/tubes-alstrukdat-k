@@ -19,21 +19,22 @@ Address newNode(Makanan m) {
     return t;
 }
 
-void CreateTree(Tree *T)
-{
-    /* I.S. T sembarang */
-    /* F.S. Terbentuk Tree T yang kosong */
-    /* KAMUS LOKAL */
-
-    /* ALGORITMA */
-    ROOT(*T) = NULL;
-}
-
 boolean isTreeEmpty(Tree T) {
     /* Mengembalikan true jika T kosong (ROOT(T) == NULL)*/
     /* KAMUS LOKAL */
     /* ALGORITMA */
     return (ROOT(T) == NULL);
+}
+
+void CreateTree(Tree *T)
+{
+    /* I.S. T sembarang */
+    /* F.S. Terbentuk Tree T yang kosong */
+    /* KAMUS LOKAL */
+    Address t;
+
+    /* ALGORITMA */
+    ROOT(*T) = NULL;
 }
 
 void AddSibling(Tree *T, Makanan sibling) {
@@ -82,16 +83,12 @@ void deleteTree(Tree *T) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    if (SIBLING(*T) != NULL) {
-        deleteTree(&SIBLING(*T));
+    if (ROOT(*T) == NULL) {
+        return;
     }
-    if (CHILD(*T) != NULL) {
-        deleteTree(&CHILD(*T));
-    }
-    CHILD(*T) = NULL;
-    SIBLING(*T) = NULL;
+    deleteTree(&CHILD(*T));
+    deleteTree(&SIBLING(*T));
     free(ROOT(*T));
-    ROOT(*T) = NULL;
 }
 
 Tree duplicateTree(Tree T) {
@@ -100,20 +97,19 @@ Tree duplicateTree(Tree T) {
     Tree dup;
 
     /* ALGORITMA */
-    CreateTree(&dup);
-    if (!isTreeEmpty(T)) {
-        AddChild(&dup, MAKAN(ROOT(T)));
-        if (SIBLING(T) != NULL) {
-            AddSibling(&dup, MAKAN(duplicateTree(SIBLING(T))));
-        }
-        if (CHILD(T) != NULL) {
-            AddChild(&dup, MAKAN(duplicateTree(CHILD(T))));
-        }
+    if(isTreeEmpty(T)) {
+        return NULL;
     }
-    return dup;
+    else {
+        CreateTree(&dup);
+        AddChild(&dup, MAKAN(ROOT(T)));
+        SIBLING(dup) = duplicateTree(SIBLING(T));
+        CHILD(dup) = duplicateTree(CHILD(T));
+        return dup;
+    }
 }
 
-Address searchMakanan(Tree inT, Makanan m) {
+Address searchMakananTree(Tree inT, Makanan m) {
     /* Mengembalikan Address yang value makanananya adalah m di dalam Tree inT, jika ada. Jika tidak ada, mengembalikan NULL */
     /* Sumber : https://stackoverflow.com/questions/37209346/search-for-an-item-in-an-n-ary-tree */
     /* KAMUS LOKAL */
@@ -125,34 +121,39 @@ Address searchMakanan(Tree inT, Makanan m) {
     if (isMakananEqual(MAKAN(inT), m)) // Basis 1 (ditemukan)
         return inT;
     // Cari dari sibling dulu
-    temp = searchMakanan(SIBLING(inT), m);
+    temp = searchMakananTree(SIBLING(inT), m);
     if (temp != NULL)
         return temp;
     // Cari dari child
-    return searchMakanan(CHILD(inT),m);
+    return searchMakananTree(CHILD(inT),m);
 }
 
 
-void printTree(Tree T) {
+void printTreeResep(Tree T) {
     /* I.S. T terdefinisi */
     /* F.S. Keseluruhan Tree resep T tercetak ke layar */
     /* KAMUS LOKAL */
+    Address t;
 
     /* ALGORITMA */
     if (isTreeEmpty(T)) {
-        printf("Tree kosong\n");
+        printf("Resep kosong\n");
     }
     else {
-            printString(Nama(MAKAN(T)));
-            if (SIBLING(T) != NULL) {
-                printf(" dan ");
-                printTree(SIBLING(T));
-            }
-            if (CHILD(T) != NULL) {
-                printf("\n");
-                printf("Dibuat memakai bahan : ");
-                printTree(CHILD(T));
-            }
+        t = T;
+        printString(Nama(MAKAN(t)));
+        printf(" (");
+        printString(Command(MAKAN(t)));
+        printf(")");
+        if (SIBLING(T) != NULL) {
+            printf(" dan ");
+            printTreeResep(SIBLING(T));
+        }
+        if (CHILD(T) != NULL) {
             printf("\n");
+            printf("       Dibuat memakai bahan : ");
+            printTreeResep(CHILD(T));
+        }
+        printf("\n");
     }
 }

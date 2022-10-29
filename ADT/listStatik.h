@@ -85,7 +85,7 @@ boolean isFullStat(ListStatik l);
 /* Mengirimkan true jika List l penuh, mengirimkan false jika tidak */
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
-void printListStat(ListStatik l);
+void printListMakanan(ListStatik l);
 /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung 
    siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan 
    karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
@@ -102,9 +102,15 @@ boolean isListEqualStat(ListStatik l1, ListStatik l2);
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
-int indexOfStat(ListStatik l, String searchID);
+int indexOfMakanan(ListStatik l, String searchID);
 /* Search apakah ada elemen List l yang bernilai val */
 /* Jika ada, menghasilkan indeks i terkecil, dengan ELMT(l,i) = val */
+/* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
+/* Skema Searching yang digunakan bebas */
+
+int indexOfResep(ListStatik l, String searchID);
+/* Search apakah ada elemen List l yang ber-ID searchId */
+/* Jika ada, menghasilkan indeks i terkecil, dengan ID(ELMTSTAT(l,i)) = searchId */
 /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
 /* Skema Searching yang digunakan bebas */
 
@@ -165,4 +171,11 @@ void loadResep(ListStatik *l, ListStatik makan) ;
 /* Membaca resep makanan dari file */
 /* I.S. l sembarang */
 /* F.S. l terisi resep dari file konfigurasi */
+
+void printResep(ListStatik resep);
+/* I.S. resep terdefinisi */
+/* F.s. Isi resep tercetak di layar */
+
+ListStatik listMakananCommand(String com, ListStatik l);
+/* Mengembalikan list statik yang berisi makanan dengan cara mendapat sesuai com dari list l */
 #endif
