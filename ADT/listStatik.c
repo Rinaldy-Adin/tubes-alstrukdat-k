@@ -360,3 +360,17 @@ void loadResep(ListStatik *l, ListStatik makan) {
          }
     }
 }
+
+void printResep(ListStatik resep) {
+   /* I.S. resep terdefinisi */
+   /* F.s. Isi resep tercetak di layar */
+   /* KAMUS LOKAL */
+   int i;
+
+   /* ALGORITMA */
+   printf("Daftar resep : \n");
+   for (i=0; i<NEFFSTAT(resep); i++) {
+      printf("    %d. ", i+1);
+      printTreeResep(TREE(ELMTSTAT(resep,i)));
+   }
+}

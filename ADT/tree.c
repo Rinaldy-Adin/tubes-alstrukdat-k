@@ -137,7 +137,7 @@ void printTreeResep(Tree T) {
 
     /* ALGORITMA */
     if (isTreeEmpty(T)) {
-        printf("Tree kosong\n");
+        printf("Resep kosong\n");
     }
     else {
         t = T;
@@ -151,7 +151,7 @@ void printTreeResep(Tree T) {
         }
         if (CHILD(T) != NULL) {
             printf("\n");
-            printf("Dibuat memakai bahan : ");
+            printf("       Dibuat memakai bahan : ");
             printTreeResep(CHILD(T));
         }
         printf("\n");

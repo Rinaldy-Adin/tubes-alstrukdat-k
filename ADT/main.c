@@ -13,11 +13,7 @@ int main() {
     // printListStat(testMakan);
 
     loadResep(&testResep,testMakan);
-    for (int i=0; i<NEFFSTAT(testResep); i++) {
-        printf("Tree %d\n", i+1);
-        printTreeResep(TREE(ELMTSTAT(testResep,i)));
-    }
-
+    printResep(testResep);
     // CreateTree(&test);
     // for (int i=0; i<NEFFSTAT(testMakan); i++) {
     //     AddChild(&test,MAKANAN(ELMTSTAT(testMakan,i)));

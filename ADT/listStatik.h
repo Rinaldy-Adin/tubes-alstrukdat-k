@@ -165,4 +165,8 @@ void loadResep(ListStatik *l, ListStatik makan) ;
 /* Membaca resep makanan dari file */
 /* I.S. l sembarang */
 /* F.S. l terisi resep dari file konfigurasi */
+
+void printResep(ListStatik resep);
+/* I.S. resep terdefinisi */
+/* F.s. Isi resep tercetak di layar */
 #endif
