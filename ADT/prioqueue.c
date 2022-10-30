@@ -1,13 +1,20 @@
 /* File : prioqueue.h */
-/* Implementasi ADT Priority Queue Time dengan representasi array secara eksplisit dan alokasi dinamik */
+/* Implementasi ADT Priority Queue Time dengan representasi array secara
+ * eksplisit dan alokasi dinamik */
 /* Model Implementasi Versi III dengan circular buffer */
 /* Elemen queue terurut membesar berdasarkan elemen time */
 /* Created by ammar on 24/10/2022. */
 
 #include "prioqueue.h"
-#include "stdlib.h"
 
-boolean IsEmpty(PrioQueue Q) {
+#include "stdlib.h"
+<<<<<<< HEAD
+=======
+#include "waktu.h"
+    >>>>>>> master
+
+    boolean
+    IsEmpty(PrioQueue Q) {
     return (Head(Q) == Nil && Tail(Q) == Nil);
 }
 
@@ -23,7 +30,7 @@ int NBElmt(PrioQueue Q) {
 }
 
 void MakeEmpty(PrioQueue *Q, int Max) {
-    (*Q).T = (infotype *) malloc((Max + 1) * sizeof(infotype));
+    (*Q).T = (infotype *)malloc((Max + 1) * sizeof(infotype));
     if ((*Q).T != NULL) {
         MaxEl(*Q) = Max;
         Head(*Q) = Nil;
@@ -45,7 +52,17 @@ void Enqueue(PrioQueue *Q, infotype X) {
         Elmt(*Q, 1) = X;
     } else {
         Tail(*Q)++;
-        Elmt(*Q, Tail(*Q)) = X;
+        int i;
+        for (i = 0; i < NBElmt(*Q); i++) {
+            if (TIMEToMenit(Time(X)) < TIMEToMenit(Time(Elmt(*Q, i)))) {
+                int j;
+                for (j = NBElmt(*Q); j > i; j--) {
+                    Elmt(*Q, j) = Elmt(*Q, j - 1);
+                }
+                Elmt(*Q, i) = X;
+                break;
+            }
+        }
     }
 }
 
@@ -61,35 +78,33 @@ void Dequeue(PrioQueue *Q, infotype *X) {
 }
 
 /* *** Searching indeks makanan *** */
-int idxInventory (PrioQueue Q, Makanan m) {
+int idxInventory(PrioQueue Q, Makanan m) {
     /* Mengembalikan indeks Makanan m di inventory */
     /* KAMUS LOKAL */
-   int i;
-   int length;
-   boolean found;
+    int i;
+    int length;
+    boolean found;
 
-   /* ALGORITMA */
-   if (IsEmpty(Q)) {
-      return IDX_UNDEF;
-   } else { // Skema searching dengan boolean
-      found = false;
-      length = NBElmt(Q);
-      i = 0;
-      while (i < length && !(found)) {
-         if (isMakananEqual(m, Q.T[i].makanan)) {
-            found = true;
-         }
-         else {
-            i++;
-         }
-      }
-      if (found) {
-         return i;
-      }
-      else {
-         return IDX_UNDEF;
-      }
-   }
+    /* ALGORITMA */
+    if (IsEmpty(Q)) {
+        return IDX_UNDEF;
+    } else {  // Skema searching dengan boolean
+        found = false;
+        length = NBElmt(Q);
+        i = 0;
+        while (i < length && !(found)) {
+            if (isMakananEqual(m, Q.T[i].makanan)) {
+                found = true;
+            } else {
+                i++;
+            }
+        }
+        if (found) {
+            return i;
+        } else {
+            return IDX_UNDEF;
+        }
+    }
 }
 
 // Fungsi internal
@@ -98,15 +113,17 @@ boolean checkEq(infotype x, infotype y) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    return (TEQ(Time(x),Time(y)) && stringsAreEqual(ID(Makanan(x)), ID(Makanan(y))));
+    return (TEQ(Time(x), Time(y)) &&
+            stringsAreEqual(ID(Makanan(x)), ID(Makanan(y))));
 }
 
 void Ambil(PrioQueue *Q, infotype X, infotype *result) {
     /* Proses: Mengambil X pada Q dan dihapus setelah operasi */
     /* I.S. Q tidak mungkin kosong, mungkin ada X */
-    /* F.S. Q mungkin kosong. Jika X tidak ditemukan maka result tidak berubah */
+    /* F.S. Q mungkin kosong. Jika X tidak ditemukan maka result tidak berubah
+     */
     /* KAMUS LOKAL */
-    int i,j;
+    int i, j;
     infotype temp;
 
     /* ALGORITMA */
@@ -128,10 +145,12 @@ void Ambil(PrioQueue *Q, infotype X, infotype *result) {
     }
 }
 
-boolean Cook (String IDMakanan, PrioQueue *Q, ListStatik resep) {
-    /* Proses: Memasak makanan dengan ID IDMakanan jika ada di resep dan bahannya ada di inventory */
+boolean Cook(String IDMakanan, PrioQueue *Q, ListStatik resep) {
+    /* Proses: Memasak makanan dengan ID IDMakanan jika ada di resep dan
+     * bahannya ada di inventory */
     /* I.S. IDMakanan, *Q, resep terdefinisi */
-    /* F.S. Jika bahan dan resep ada, makanan dengan ID IDMakanan terbentuk. Makanan di Q berkurang. Q mungkin kosong. */
+    /* F.S. Jika bahan dan resep ada, makanan dengan ID IDMakanan terbentuk.
+     * Makanan di Q berkurang. Q mungkin kosong. */
     /* KAMUS LOKAL */
     int idxResep, idxInv;
     Tree r;
@@ -150,10 +169,10 @@ boolean Cook (String IDMakanan, PrioQueue *Q, ListStatik resep) {
         return false;
     }
 
-    r = TREE(ELMTSTAT(resep,idxResep));
+    r = TREE(ELMTSTAT(resep, idxResep));
     r = CHILD(r);
     while (r != NULL) {
-        idxInv = idxInventory(*Q,MAKAN(r));
+        idxInv = idxInventory(*Q, MAKAN(r));
         if (idxInv == IDX_UNDEF) {
             printf("Gagal memasak karena Anda tidak memiliki bahan : ");
             printString(Nama(MAKAN(r)));
@@ -164,7 +183,7 @@ boolean Cook (String IDMakanan, PrioQueue *Q, ListStatik resep) {
         Ambil(Q, required, &temp);
         r = SIBLING(r);
     }
-    Makanan(cooked) = MAKAN(TREE(ELMTSTAT(resep,idxResep)));
+    Makanan(cooked) = MAKAN(TREE(ELMTSTAT(resep, idxResep)));
     Time(cooked) = Kadal(Makanan(cooked));
     Enqueue(Q, cooked);
     return true;
