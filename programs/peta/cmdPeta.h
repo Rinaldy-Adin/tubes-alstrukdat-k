@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <math.h>
-#include "matrix.h"
-#include "point.h"
-#include "charmachine.h"
-#include "wordmachine.h"
+#include "../../ADT/matrix.h"
+#include "../../ADT/point.h"
+#include "../../ADT/charmachine.h"
+#include "../../ADT/wordmachine.h"
 
 void readPetaFromFile(Matrix *container, char *filename);
 /* DESKRIPSI
