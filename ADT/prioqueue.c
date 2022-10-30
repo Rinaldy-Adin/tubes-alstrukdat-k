@@ -6,6 +6,7 @@
 
 #include "prioqueue.h"
 #include "stdlib.h"
+#include "waktu.h"
 
 boolean IsEmpty(PrioQueue Q) {
     return (Head(Q) == Nil && Tail(Q) == Nil);
@@ -45,7 +46,17 @@ void Enqueue(PrioQueue *Q, infotype X) {
         Elmt(*Q, 1) = X;
     } else {
         Tail(*Q)++;
-        Elmt(*Q, Tail(*Q)) = X;
+        int i;
+        for (i = 0; i < NBElmt(*Q); i++) {
+            if (TIMEToMenit(Time(X)) < TIMEToMenit(Time(Elmt(*Q, i)))) {
+                int j;
+                for (j = NBElmt(*Q); j > i; j--) {
+                    Elmt(*Q, j) = Elmt(*Q, j - 1);
+                }
+                Elmt(*Q, i) = X;
+                break;
+            }
+        }
     }
 }
 
