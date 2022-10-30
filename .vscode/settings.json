@@ -1,7 +1,5 @@
 {
     "files.associations": {
-        "charmachine.h": "c",
-        "cmdline.h": "c",
-        "strlib.h": "c"
+        "stdlib.h": "c"
     }
 }
