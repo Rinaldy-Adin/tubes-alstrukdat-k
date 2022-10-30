@@ -1,12 +1,16 @@
-# tubes-alstrukdat-j branch peta 
+# tubes-alstrukdat-j
+ADT Makanan sementara udah aman (mungkin msh perlu fungsi lain)
 
-Berisi command untuk peta dan drivernya (harusnya udh aman semua)
+Load makanan aman (lewat ADT liststatik)
 
+Load resep aman (lewat ADT liststatik)
 
-ADT yang digunakan : Point, Matrix, charmachine, wordmachine (ada di master/ADT)
+Tree belum (fungsi Tree di liststatik juga belum)
 
+Prioqueue aman
 
-compile : gcc driver_CmdPeta.c cmdPeta.c charmachine.c wordmachine.c matrix.c point.c -o driver_CmdPeta
+wordmachine dan charmachine aman
 
+Masak makanan pake ID (ambil dari isi PrioQueue), list makanan berdasarkan command (di liststatik), print resep (di liststatik) aman
 
-run : ./driver_CmdPeta
+peta aman
