@@ -12,3 +12,5 @@ Prioqueue aman
 wordmachine dan charmachine aman
 
 Masak makanan pake ID (ambil dari isi PrioQueue), list makanan berdasarkan command (di liststatik), print resep (di liststatik) aman
+
+peta aman
