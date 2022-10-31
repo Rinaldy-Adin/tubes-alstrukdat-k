@@ -42,16 +42,16 @@ void DeAlokasi(PrioQueue *Q) {
 
 void Enqueue(PrioQueue *Q, infotype X) {
     if (IsEmpty(*Q)) {
-        Head(*Q) = 1;
-        Tail(*Q) = 1;
-        Elmt(*Q, 1) = X;
+        Head(*Q) = 0;
+        Tail(*Q) = 0;
+        Elmt(*Q, 0) = X;
     } else {
         Tail(*Q)++;
         int i;
         for (i = 0; i < NBElmt(*Q); i++) {
             if (TIMEToMenit(Time(X)) < TIMEToMenit(Time(Elmt(*Q, i)))) {
                 int j;
-                for (j = NBElmt(*Q); j > i; j--) {
+                for (j = Tail(*Q); j > i; j--) {
                     Elmt(*Q, j) = Elmt(*Q, j - 1);
                 }
                 Elmt(*Q, i) = X;
