@@ -1,27 +1,24 @@
 #include "cmdline.h"
 
-#include <stdio.h>
+void displayCurrentState(Matrix peta) {
+    POINT position = currentPosition(peta);
 
-#include "../../ADT/wordmachine/strlib.h"
-#include "boolean.h"
-#include "cursed.h"
-
-void displayCurrentState() {
     printf("\n");
     printf("========================================");
     printf("\n");
-    printf("BNMO di posisi: ");
+    printf("BNMO di posisi: (%d,%d)", ROW(position)-1, COL(position)-1);
     printf("\n");
     printf("Waktu: ");
     printf("\n");
     printf("Notifikasi: ");
     printf("\n");
-    // Display map
+    printf("\n");
+    displayMatrix(peta);
     printf("\n");
 }
 
 /* Run command line until user enters "EXIT" command */
-void commandLineCycle() {
+void commandLineCycle(Matrix peta) {
     /* KAMUS */
     String command, exit, start;
     boolean started;
@@ -48,7 +45,7 @@ void commandLineCycle() {
                 printf("Enter command: ");
             }
         } else {
-            displayCurrentState();
+            displayCurrentState(peta);
 
             printf("Enter command: ");
             command = readLine();

@@ -13,11 +13,11 @@ void readPetaFromFile(Matrix *container, char *filename)  {
     // BACA JUMLAH BARIS DAN KOLOM PADA AWAL FILE, KONVERSI KE INTEGER (row, col) 
     row = 0, col = 0;
     for (i=0; i<currentWord.Length; i++) {
-        row += (currentWord.TabWord[i] - 48) * pow(10, currentWord.Length-i-1);
+        row += (currentWord.TabWord[i] - 48) * power(10, currentWord.Length-i-1);
     }
     ADVWORD();
     for (i=0; i<currentWord.Length; i++) {
-        col += (currentWord.TabWord[i] - 48) * pow(10, currentWord.Length-i-1);
+        col += (currentWord.TabWord[i] - 48) * power(10, currentWord.Length-i-1);
     }
     ADV();
     

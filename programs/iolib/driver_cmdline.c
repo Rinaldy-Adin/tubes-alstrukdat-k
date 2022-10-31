@@ -1,7 +1,10 @@
 #include "cmdline.h"
+#include "../../ADT/matrix.h"
 
 int main() {
-    commandLineCycle();
+    Matrix peta;
+    readPetaFromFile(&peta, "peta.txt");
+    commandLineCycle(peta);
 
     return 0;
 }

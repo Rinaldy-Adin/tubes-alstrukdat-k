@@ -1,5 +1,8 @@
+#ifndef __CMDPETA_H__
+#define __CMDPETA_H__
+
 #include <stdio.h>
-#include <math.h>
+#include "../../utils/mathops.h"
 #include "../../ADT/matrix.h"
 #include "../../ADT/point.h"
 #include "../../ADT/charmachine.h"
@@ -73,4 +76,4 @@ I.S POINT *pos, Matrix *peta terdefinisi
 F.S Jika posisi tersedia, posisi simulator akan dipindahkan sesuai arah yang diinginkan
 */
 
-
+#endif
