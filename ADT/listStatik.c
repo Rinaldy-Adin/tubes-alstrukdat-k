@@ -423,6 +423,11 @@ void printResep(ListStatik resep) {
    Address p;
 
    /* ALGORITMA */
+   if (isEmptyStat(resep)) {
+      printf("Resep kosong\n");
+      return;
+   }
+   
    printf("Daftar resep :\n");
    for (i=0; i<NEFFSTAT(resep); i++) {
       p = TREE(ELMTSTAT(resep,i));
