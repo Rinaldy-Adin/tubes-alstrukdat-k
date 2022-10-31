@@ -51,8 +51,8 @@ Tree duplicateTree(Tree T);
 Address searchMakananTree(Tree inT, Makanan m);
 /* Mengembalikan Address yang value makanananya adalah m di dalam Tree inT, jika ada */
 
-void printTreeResep(Tree T);
-/* I.S. T terdefinisi */
-/* F.S. Keseluruhan Tree resep T tercetak ke layar */
+// void printTreeResep(Tree T);
+// /* I.S. T terdefinisi */
+// /* F.S. Keseluruhan Tree resep T tercetak ke layar */
 
 #endif
