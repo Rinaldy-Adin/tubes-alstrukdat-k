@@ -37,9 +37,7 @@ void STARTWORD() {
 
 void STARTWORDFILE(char* filename) {
     /* Algoritma */
-    printf("reading file\n");
     STARTFILE(filename);
-    printf("file read\n");
     endWord = false;
     IgnoreBlanks();
     if (currentChar == MARK) {
