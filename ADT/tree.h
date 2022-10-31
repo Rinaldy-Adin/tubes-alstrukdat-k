@@ -6,6 +6,7 @@
 
 #include "boolean.h"
 #include "makanan.h"
+#include <stdlib.h>
 
 typedef struct node* Address;
 

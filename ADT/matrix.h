@@ -37,7 +37,7 @@ boolean isMatrixIdxValid(int i, int j);
 /* Mengirimkan true jika i, j adalah index yang valid untuk matriks apa pun */
 
 /* *** Selektor: Untuk sebuah matriks m yang terdefinisi: *** */
-boolean isIdxEff(Matrix m, IdxType i, IdxType j);
+boolean isIdxEffMat(Matrix m, IdxType i, IdxType j);
 /* Mengirimkan true jika i, j adalah Index efektif bagi m */
 
 /* ********** Assignment  Matrix ********** */

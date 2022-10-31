@@ -43,4 +43,8 @@ int stringToInt(String s);
 TIME stringToTime(String s);
 /* Mengubah String s menjadi TIME. Prekondisi : String s memiliki format D H M */
 
+/* Konversi bentuk lain ke string */
+String wordToString(Word w);
+/* Mengubah Word w menjadi String. */
+
 #endif

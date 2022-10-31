@@ -8,14 +8,7 @@
 #include "prioqueue.h"
 
 #include "stdlib.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include "waktu.h"
-    >>>>>>> master
-=======
-#include "waktu.h"
->>>>>>> 0498838d9bf621ecd7c36dc53d028c0e8fc815e1
 
     boolean
     IsEmpty(PrioQueue Q) {

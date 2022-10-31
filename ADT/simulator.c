@@ -14,9 +14,9 @@ void CreateSimulator(Simulator* sim, String nama, int posX, int posY, int day,
     POINT pos;
     CreatePoint(&pos, posX, posY);
 
-    Nama(*sim) = nama;
-    Position(*sim) = pos;
-    Inventory(*sim) = inventory;
+    NamaSim(*sim) = nama;
+    PositionSim(*sim) = pos;
+    InventorySim(*sim) = inventory;
 }
 /* I.S. sim sembarang */
 /* F.S. seluruh komponen sim terisi sesuai masukan. */

@@ -73,7 +73,7 @@ IdxType getLastIdx(ListDin l);
 boolean isIdxValid(ListDin l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk kapasitas list l */
 /* yaitu antara indeks yang terdefinisi utk container*/
-boolean isIdxEff(ListDin l, IdxType i);
+boolean isIdxEffDin(ListDin l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk list */
 /* yaitu antara 0..NEFF(l) */
 

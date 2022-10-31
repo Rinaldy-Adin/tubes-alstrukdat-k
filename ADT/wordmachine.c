@@ -10,7 +10,7 @@ Word currentWord;
 
 void IgnoreBlanks() {
     /* Algoritma */
-    while (currentChar == BLANK || currentChar == NEWLINE) {
+    while (currentChar == BLANK || currentChar == NEWLINE || currentChar == CARRETURN) {
         ADV();
     }
 }
@@ -37,7 +37,9 @@ void STARTWORD() {
 
 void STARTWORDFILE(char* filename) {
     /* Algoritma */
+    printf("reading file\n");
     STARTFILE(filename);
+    printf("file read\n");
     endWord = false;
     IgnoreBlanks();
     if (currentChar == MARK) {
@@ -80,7 +82,7 @@ void CopyWord() {
     }
     currentWord.Length = 0;
     while (currentChar != MARK && currentChar != BLANK &&
-           currentChar != NEWLINE && currentWord.Length < NMax) {
+           currentChar != NEWLINE && currentChar != CARRETURN && currentWord.Length < NMax) {
         currentWord.TabWord[currentWord.Length] = currentChar;
         currentWord.Length++;
         ADV();
@@ -104,3 +106,20 @@ void duplicateWord(Word *word1, Word *word2) {
         CharAt(*word2, i) = CharAt(*word1, i);
     }
 }
+
+int wordToInt(Word w) {
+    /* KAMUS */
+    int i;
+    int result;
+
+    /* ALGORITMA */
+    result = 0;
+    for (i=0; i<WordLength(w); i++) {
+         if (i > 0) {
+            result *= 10;
+         }
+         result += ((int) (CharAt(w, i) - '0'));
+    }
+    return result;
+}
+/* Mengubah Word w menjadi integer */

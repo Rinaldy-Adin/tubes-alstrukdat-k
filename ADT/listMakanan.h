@@ -64,7 +64,7 @@ IdxType getLastIdx(ListMakanan l);
 boolean isIdxValid(IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk kapasitas List l */
 /* yaitu antara indeks yang terdefinisi utk container*/
-boolean isIdxEff(ListMakanan l, IdxType i);
+boolean isIdxEffMakanan(ListMakanan l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk List l */
 /* yaitu antara 0..length(l)-1 */
 

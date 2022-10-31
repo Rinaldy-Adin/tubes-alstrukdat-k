@@ -7,6 +7,7 @@
 #define NMax 50
 #define BLANK ' '
 #define NEWLINE '\n'
+#define CARRETURN '\r'
 
 typedef struct {
     char TabWord[NMax]; /* container penyimpan kata, indeks yang dipakai
@@ -55,5 +56,9 @@ void CopyWord();
 
 void duplicateWord(Word *word1, Word *word2);
 /* Duplicate word1 into word2 */
+
+int wordToInt(Word w);
+/* Mengubah Word w menjadi integer */
+
 
 #endif

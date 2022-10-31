@@ -28,7 +28,7 @@ void loadMakanan(ListMakanan *l) {
     /* F.S. l terisi makanan dari file konfigurasi */
     /* KAMUS LOKAL */
     Makanan m;
-    Word id, nama, kadal, command, deliver;
+    String id, nama, kadal, command, deliver;
     int N; // Jumlah makanan
     int i;
     char *filename = "pita.txt";
@@ -43,15 +43,15 @@ void loadMakanan(ListMakanan *l) {
         N = wordToInt(currentWord);
         for (i=0; i<N; i++) {
             ADVWORD();
-            id = currentWord;
+            id = wordToString(currentWord);
             ADVWORD();
-            nama = currentWord;
+            nama = wordToString(currentWord);
             ADVWORD();
-            kadal = currentWord;
+            kadal = wordToString(currentWord);
             ADVWORD();
-            deliver = currentWord;
+            deliver = wordToString(currentWord);
             ADVWORD();
-            command = currentWord;
+            command = wordToString(currentWord);
             
             makeMakanan(&m,id,nama,kadal,deliver,command);
             insertLast(l,m);
@@ -80,7 +80,7 @@ boolean isIdxValid(IdxType i) {
    return (i >= IDX_MIN && i < CAPACITY);
 }
 
-boolean isIdxEff(ListMakanan l, IdxType i) {
+boolean isIdxEffMakanan(ListMakanan l, IdxType i) {
    /* Mengirimkan true jika i adalah indeks yang terdefinisi utk List l */
    /* yaitu antara 0..length(l)-1 */
    /* KAMUS LOKAL */

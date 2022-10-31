@@ -155,3 +155,19 @@ TIME stringToTime(String s) {
     CreateTime(&result, d,h,m);
     return result;
 }
+
+String wordToString(Word w) {
+    /* KAMUS */
+    String str;
+    int i;
+
+    /* ALGORITMA */
+    for (i = 0; i < WordLength(w); i++) {
+        TAB(str)[i] = CharAt(w, i);
+    }
+    
+    LEN(str) = WordLength(w);
+
+    return str;
+}
+/* Mengubah Word w menjadi String. */

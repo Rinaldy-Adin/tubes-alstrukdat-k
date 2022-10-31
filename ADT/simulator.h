@@ -15,9 +15,9 @@ typedef struct {
 } Simulator;
 
 /* *** Notasi Akses: selektor Simulator *** */
-#define Nama(s) (s).nama
-#define Position(s) (s).pos
-#define Inventory(s) (s).inventory
+#define NamaSim(s) (s).nama
+#define PositionSim(s) (s).pos
+#define InventorySim(s) (s).inventory
 
 /*** KONSTRUKTOR ***/
 void CreateSimulator(Simulator* sim, String nama, int posX, int posY, int day,

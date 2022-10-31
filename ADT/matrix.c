@@ -18,7 +18,7 @@ boolean isMatrixIdxValid(int i, int j){
 /* Mengirimkan true jika i, j adalah index yang valid untuk matriks apa pun */
 
 /* Mengirimkan Index kolom terbesar m */
-boolean isIdxEff(Matrix m, IdxType i, IdxType j){
+boolean isIdxEffMat(Matrix m, IdxType i, IdxType j){
    return (i>=0 && i<=ROW_EFF(m)-1 && j>=0 && j<=COL_EFF(m)-1);
 }
 
@@ -40,7 +40,7 @@ void readMatrix(Matrix *m, int nRow, int nCol){
    COL_EFF(*m) = nCol;
    for (int i=0; i<ROW_EFF(*m); i++) {
       for (int j=0; j<COL_EFF(*m); j++) {
-         scanf("%d", &ELMT(*m, i, j));
+         scanf("%c", &ELMT(*m, i, j));
       }
    }
 }

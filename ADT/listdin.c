@@ -65,7 +65,7 @@ boolean isIdxValid(ListDin l, IdxType i) {
     return (i >= 0 && i < CAPACITY(l));
 }
 
-boolean isIdxEff(ListDin l, IdxType i) {
+boolean isIdxEffDin(ListDin l, IdxType i) {
     /* Mengirimkan true jika i adalah indeks yang terdefinisi utk list */
     /* yaitu antara 0..NEFF(l) */
     /* KAMUS LOKAL */
