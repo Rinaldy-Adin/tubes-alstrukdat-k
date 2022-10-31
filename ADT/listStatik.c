@@ -94,7 +94,7 @@ void printListMakanan(ListStatik l) {
    }
    else {
       printf("Daftar Makanan\n");
-      printf("ID - Nama - Kedaluwarsa - Lama antar - Lama aksi (selain pengantaran) - Cara dapat\n");
+      printf("ID - Nama - Kedaluwarsa - Lama antar - Lama aksi (selain pengantaran) - Cara dapat - Ukuran (lebar x tinggi)\n");
       for (i=IDX_MIN; i <= getLastIdxStat(l); i++) {
          printf("  %d. ", (i+1));
          printString(ID(MAKANAN(ELMTSTAT(l,i))));
@@ -108,6 +108,9 @@ void printListMakanan(ListStatik l) {
          TulisTIME(ActTime(MAKANAN(ELMTSTAT(l,i))));
          printf(" - ");
          printString(Command(MAKANAN(ELMTSTAT(l,i))));
+         printf(" - ");
+         printf("%d x ", Width(MAKANAN(ELMTSTAT(l,i))));
+         printf("%d", Height(MAKANAN(ELMTSTAT(l,i))));
          printf("\n");
       }
    }
@@ -314,7 +317,7 @@ void loadMakanan(ListStatik *l) {
     /* F.S. l terisi makanan dari file konfigurasi */
     /* KAMUS LOKAL */
     ElTypeStat e, temp;
-    String Nmakanan, id, nama, kadal, command, del, act;
+    String Nmakanan, id, nama, kadal, command, del, act, w, h;
     int N; // Jumlah makanan
     int i, idx;
     char *filename = "pita.txt";
@@ -328,6 +331,7 @@ void loadMakanan(ListStatik *l) {
     else {
          Nmakanan = createString(currentWord.TabWord);
          N = stringToInt(Nmakanan);
+         // Urutan pembacaan data (per baris) : id, nama, kedaluwarsa, delivery time, act time, command untuk mendapat makanan, lebar, tinggi
          for (i=0; i<N; i++) {
             id = readLine();
             nama = readLine();
@@ -335,8 +339,10 @@ void loadMakanan(ListStatik *l) {
             del = readLine();
             act = readLine();
             command = readLine();
+            w = readLine();
+            h = readLine();
             
-            makeMakanan(&MAKANAN(e), id, nama, stringToTime(kadal), stringToTime(del), stringToTime(act), command);
+            makeMakanan(&MAKANAN(e), id, nama, stringToTime(kadal), stringToTime(del), stringToTime(act), command, stringToInt(w), stringToInt(h));
             idx = indexOfMakanan(*l,id);
             if (idx != IDX_UNDEF) {
                deleteAtStat(l,&temp,idx);
@@ -427,7 +433,7 @@ void printResep(ListStatik resep) {
       printf("Resep kosong\n");
       return;
    }
-   
+
    printf("Daftar resep :\n");
    for (i=0; i<NEFFSTAT(resep); i++) {
       p = TREE(ELMTSTAT(resep,i));
