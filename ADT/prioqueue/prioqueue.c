@@ -23,7 +23,7 @@ int NBElmt(PrioQueue Q) {
 }
 
 void MakeEmpty(PrioQueue *Q, int Max) {
-    (*Q).T = (infotype *)malloc((Max + 1) * sizeof(infotype));
+    (*Q).T = malloc(Max * sizeof(infotype));
     if ((*Q).T != NULL) {
         MaxEl(*Q) = Max;
         Head(*Q) = Nil;
