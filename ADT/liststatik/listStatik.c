@@ -6,6 +6,8 @@
 
 #include "listStatik.h"
 
+#include <stdio.h>
+
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create List kosong  */
 void CreateListStatik(ListStatik *l) {
@@ -95,8 +97,7 @@ void printListMakanan(ListStatik l) {
         printf("Daftar Makanan\n");
         printf(
             "ID - Nama - Kedaluwarsa - Lama antar - Lama aksi (selain "
-            "pengantaran) - Cara dapat (B = Buy, M = Mix, C = Chop, F = Fry, O "
-            "= Boil)\n");
+            "pengantaran) - Cara dapat - Ukuran (lebar x tinggi)\n");
         for (i = IDX_MIN; i <= getLastIdxStat(l); i++) {
             printf("  %d. ", (i + 1));
             printString(ID(MAKANAN(ELMTSTAT(l, i))));
@@ -110,6 +111,9 @@ void printListMakanan(ListStatik l) {
             TulisTIME(ActTime(MAKANAN(ELMTSTAT(l, i))));
             printf(" - ");
             printString(Command(MAKANAN(ELMTSTAT(l, i))));
+            printf(" - ");
+            printf("%d x ", Width(MAKANAN(ELMTSTAT(l, i))));
+            printf("%d", Height(MAKANAN(ELMTSTAT(l, i))));
             printf("\n");
         }
     }
@@ -314,7 +318,7 @@ void loadMakanan(ListStatik *l) {
     /* F.S. l terisi makanan dari file konfigurasi */
     /* KAMUS LOKAL */
     ElTypeStat e, temp;
-    String Nmakanan, id, nama, kadal, command, del, act;
+    String Nmakanan, id, nama, kadal, command, del, act, w, h;
     int N;  // Jumlah makanan
     int i, idx;
     char *filename = "pita.txt";
@@ -327,6 +331,8 @@ void loadMakanan(ListStatik *l) {
     } else {
         Nmakanan = createString(currentWord.TabWord);
         N = stringToInt(Nmakanan);
+        // Urutan pembacaan data (per baris) : id, nama, kedaluwarsa, delivery
+        // time, act time, command untuk mendapat makanan, lebar, tinggi
         for (i = 0; i < N; i++) {
             id = readLine();
             nama = readLine();
@@ -334,9 +340,12 @@ void loadMakanan(ListStatik *l) {
             del = readLine();
             act = readLine();
             command = readLine();
+            w = readLine();
+            h = readLine();
 
             makeMakanan(&MAKANAN(e), id, nama, stringToTime(kadal),
-                        stringToTime(del), stringToTime(act), command);
+                        stringToTime(del), stringToTime(act), command,
+                        stringToInt(w), stringToInt(h));
             idx = indexOfMakanan(*l, id);
             if (idx != IDX_UNDEF) {
                 deleteAtStat(l, &temp, idx);
@@ -356,9 +365,11 @@ void loadResep(ListStatik *l, ListStatik makan) {
     /* KAMUS LOKAL */
     ElTypeStat e, temp;
     ListStatik test;
+    Address searchIsChildPrev, searchIsParentPrev;
+    Makanan m;
     String NResep, NChild, IDParent, IDChild;
     int N, M;  // Jumlah resep dan bahan per makanan
-    int i, j, idx;
+    int i, j, k, idx;
     char *filename = "pitaResep.txt";
 
     /* ALGORITMA */
@@ -374,19 +385,47 @@ void loadResep(ListStatik *l, ListStatik makan) {
         for (i = 0; i < N; i++) {
             IDParent = createString(currentWord.TabWord);
             idx = indexOfMakanan(makan, IDParent);
+            m = MAKANAN(ELMTSTAT(makan, idx));
             ADVWORD();
             CreateTree(&TREE(e));
-            AddChild(&TREE(e), MAKANAN(ELMTSTAT(makan, idx)));
+            AddChild(&TREE(e), m);
             NChild = createString(currentWord.TabWord);
             M = stringToInt(NChild);
             ADVWORD();
             for (j = 0; j < M; j++) {
                 IDChild = createString(currentWord.TabWord);
                 idx = indexOfMakanan(makan, IDChild);
-                AddChild(&TREE(e), MAKANAN(ELMTSTAT(makan, idx)));
+                m = MAKANAN(ELMTSTAT(makan, idx));
+                AddChild(&TREE(e), m);
                 ADVWORD();
             }
             TREE(temp) = duplicateTree(TREE(e));
+            if (!isEmptyStat(*l)) {
+                // Cari apakah makanan ada di tree resep yang sudah ada (baik
+                // sebagai child maupun parent)
+                k = 0;
+                searchIsChildPrev = NULL;
+                searchIsParentPrev = NULL;
+                while (searchIsChildPrev == NULL &&
+                       searchIsParentPrev == NULL && k < NEFFSTAT(*l)) {
+                    searchIsChildPrev = searchMakananTree(TREE(ELMTSTAT(*l, k)),
+                                                          MAKAN(TREE(temp)));
+                    searchIsParentPrev = searchMakananTree(
+                        TREE(temp), MAKAN(TREE(ELMTSTAT(*l, k))));
+                    k++;
+                }
+                if (searchIsChildPrev != NULL) {  // Makanan baru adalah child
+                                                  // dari resep yang sudah ada
+                    CHILD(searchIsChildPrev) = CHILD(TREE(temp));
+                    TREE(temp) = searchIsChildPrev;
+                } else if (searchIsParentPrev !=
+                           NULL) {  // Makanan baru adalah parent dari resep
+                                    // yang sudah ada
+                    CHILD(searchIsParentPrev) =
+                        CHILD(TREE(ELMTSTAT(*l, k - 1)));
+                    TREE(ELMTSTAT(*l, k - 1)) = searchIsParentPrev;
+                }
+            }
             insertLastStat(l, temp);
             deleteTree(&TREE(e));
         }
@@ -398,12 +437,36 @@ void printResep(ListStatik resep) {
     /* F.s. Isi resep tercetak di layar */
     /* KAMUS LOKAL */
     int i;
+    Address p;
 
     /* ALGORITMA */
-    printf("Daftar resep : \n");
+    if (isEmptyStat(resep)) {
+        printf("Resep kosong\n");
+        return;
+    }
+
+    printf("Daftar resep :\n");
     for (i = 0; i < NEFFSTAT(resep); i++) {
+        p = TREE(ELMTSTAT(resep, i));
         printf("    %d. ", i + 1);
-        printTreeResep(TREE(ELMTSTAT(resep, i)));
+        printString(Nama(MAKAN(p)));
+        printf(" (");
+        printString(Command(MAKAN(p)));
+        printf(")\n");
+        printf("       Dibuat memakai bahan : ");
+        p = CHILD(p);
+        while (SIBLING(p) != NULL) {
+            printString(Nama(MAKAN(p)));
+            printf(" (");
+            printString(Command(MAKAN(p)));
+            printf(")");
+            printf(" dan ");
+            p = SIBLING(p);
+        }
+        printString(Nama(MAKAN(p)));
+        printf(" (");
+        printString(Command(MAKAN(p)));
+        printf(")\n");
     }
 }
 

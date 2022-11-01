@@ -129,31 +129,31 @@ Address searchMakananTree(Tree inT, Makanan m) {
 }
 
 
-void printTreeResep(Tree T) {
-    /* I.S. T terdefinisi */
-    /* F.S. Keseluruhan Tree resep T tercetak ke layar */
-    /* KAMUS LOKAL */
-    Address t;
+// void printTreeResep(Tree T) {
+//     /* I.S. T terdefinisi */
+//     /* F.S. Keseluruhan Tree resep T tercetak ke layar */
+//     /* KAMUS LOKAL */
+//     Address t;
 
-    /* ALGORITMA */
-    if (isTreeEmpty(T)) {
-        printf("Resep kosong\n");
-    }
-    else {
-        t = T;
-        printString(Nama(MAKAN(t)));
-        printf(" (");
-        printString(Command(MAKAN(t)));
-        printf(")");
-        if (SIBLING(T) != NULL) {
-            printf(" dan ");
-            printTreeResep(SIBLING(T));
-        }
-        if (CHILD(T) != NULL) {
-            printf("\n");
-            printf("       Dibuat memakai bahan : ");
-            printTreeResep(CHILD(T));
-        }
-        printf("\n");
-    }
-}
+//     /* ALGORITMA */
+//     if (isTreeEmpty(T)) {
+//         printf("Tree kosong\n");
+//     }
+//     else {
+//         t = T;
+//         printString(Nama(MAKAN(t)));
+//         printf(" (");
+//         printString(Command(MAKAN(t)));
+//         printf(")");
+//         if (SIBLING(T) != NULL) {
+//             printf(" dan ");
+//             printTreeResep(SIBLING(T));
+//         }
+//         if (CHILD(T) != NULL) {
+//             printf("\n");
+//             printf("Dibuat memakai bahan : ");
+//             printTreeResep(CHILD(T));
+//         }
+//         printf("\n");
+//     }
+// }

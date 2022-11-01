@@ -16,7 +16,7 @@ int main() {
     // printf("%d\n",
     // indexOfMakanan(testMakan,ID(MAKANAN(ELMTSTAT(testMakan,4)))));
     loadMakanan(&testMakan);
-    // printListMakanan(testMakan);
+    printListMakanan(testMakan);
 
     loadResep(&testResep, testMakan);
     printResep(testResep);
@@ -40,9 +40,9 @@ int main() {
 
     printf("\n\n");
     printf("Masak makanan : ");
-    printString(Nama(MAKANAN(ELMTSTAT(testMasak, 0))));
+    printString(Nama(MAKANAN(ELMTSTAT(testMasak, 1))));
     printf("\n");
-    found = Cook(ID(MAKANAN(ELMTSTAT(testMasak, 0))), &q, testResep);
+    found = Cook(ID(MAKANAN(ELMTSTAT(testMasak, 1))), &q, testResep);
     printf("%d\n", found);
 
     printf("Isi inventory\n");
@@ -53,10 +53,11 @@ int main() {
 
     printf("\n\n");
     printf("Masak makanan : ");
-    printString(Nama(MAKANAN(ELMTSTAT(testMasak, 0))));
+    printString(Nama(MAKANAN(ELMTSTAT(testMasak, 1))));
     printf("\n");
-    found = Cook(ID(MAKANAN(ELMTSTAT(testMasak, 0))), &q, testResep);
+    found = Cook(ID(MAKANAN(ELMTSTAT(testMasak, 1))), &q, testResep);
     printf("%d\n", found);
+
     // CreateTree(&test);
     // for (int i=0; i<NEFFSTAT(testMakan); i++) {
     //     AddChild(&test,MAKANAN(ELMTSTAT(testMakan,i)));
