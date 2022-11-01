@@ -6,17 +6,18 @@
 #define MAKANAN_H
 
 #include <stdio.h>
-#include "boolean.h"
-#include "waktu.h"
-#include "strlib.h"
+
+#include "../boolean.h"
+#include "../strlib/strlib.h"
+#include "../waktu/waktu.h"
 
 /* *** Definisi TYPE TIME <HH:MM:SS> *** */
-typedef struct { 
+typedef struct {
     String id;
-	String nama;
+    String nama;
     TIME kadaluwarsa;
-    TIME delTime; // Waktu yang diperlukan untuk delivery
-    TIME actTime; // Waktu yang diperlukan untuk aksi (selain delivery)
+    TIME delTime;  // Waktu yang diperlukan untuk delivery
+    TIME actTime;  // Waktu yang diperlukan untuk aksi (selain delivery)
     String command;
     int width;
     int height;
@@ -33,7 +34,8 @@ typedef struct {
 #define Height(M) (M).height
 
 /*** KONSTRUKTOR ***/
-void makeMakanan(Makanan *m, String id, String nama, TIME kadaluwarsa, TIME del, TIME act, String command, int lebar, int tinggi);
+void makeMakanan(Makanan *m, String id, String nama, TIME kadaluwarsa, TIME del,
+                 TIME act, String command, int lebar, int tinggi);
 /* I.S. m sembarang */
 /* F.S. seluruh komponen m terisi sesuai masukan. */
 

@@ -1,16 +1,12 @@
 #include "wordmachine.h"
 
-#include <stdio.h>
-
-#include "boolean.h"
-#include "charmachine.h"
-
 boolean endWord;
 Word currentWord;
 
 void IgnoreBlanks() {
     /* Algoritma */
-    while (currentChar == BLANK || currentChar == NEWLINE || currentChar == CARRETURN) {
+    while (currentChar == BLANK || currentChar == NEWLINE ||
+           currentChar == CARRETURN) {
         ADV();
     }
 }
@@ -35,11 +31,9 @@ void STARTWORD() {
           atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
           currentChar karakter pertama sesudah karakter terakhir kata */
 
-void STARTWORDFILE(char* filename) {
+void STARTWORDFILE(char *filename) {
     /* Algoritma */
-    printf("reading file\n");
     STARTFILE(filename);
-    printf("file read\n");
     endWord = false;
     IgnoreBlanks();
     if (currentChar == MARK) {
@@ -82,7 +76,8 @@ void CopyWord() {
     }
     currentWord.Length = 0;
     while (currentChar != MARK && currentChar != BLANK &&
-           currentChar != NEWLINE && currentChar != CARRETURN && currentWord.Length < NMax) {
+           currentChar != NEWLINE && currentChar != CARRETURN &&
+           currentWord.Length < NMax) {
         currentWord.TabWord[currentWord.Length] = currentChar;
         currentWord.Length++;
         ADV();
@@ -114,11 +109,11 @@ int wordToInt(Word w) {
 
     /* ALGORITMA */
     result = 0;
-    for (i=0; i<WordLength(w); i++) {
-         if (i > 0) {
+    for (i = 0; i < WordLength(w); i++) {
+        if (i > 0) {
             result *= 10;
-         }
-         result += ((int) (CharAt(w, i) - '0'));
+        }
+        result += ((int)(CharAt(w, i) - '0'));
     }
     return result;
 }

@@ -4,24 +4,25 @@
 #ifndef TREE_H
 #define TREE_H
 
-#include "boolean.h"
-#include "makanan.h"
 #include <stdlib.h>
 
-typedef struct node* Address;
+#include "../boolean.h"
+#include "../makanan/makanan.h"
+
+typedef struct node *Address;
 
 typedef struct node {
     Makanan m;
     Address child;
-    Address sibling; 
+    Address sibling;
 } Node;
 
 typedef Address Tree;
 
 #define ROOT(T) (T)
-#define MAKAN(T) (T) -> m
-#define CHILD(T) (T) -> child
-#define SIBLING(T) (T) -> sibling
+#define MAKAN(T) (T)->m
+#define CHILD(T) (T)->child
+#define SIBLING(T) (T)->sibling
 
 boolean isTreeEmpty(Tree T);
 /* Mengembalikan true jika T kosong (ROOT(T) == NULL)*/
@@ -49,7 +50,8 @@ Tree duplicateTree(Tree T);
 /* Mengembalikan salinan Tree T */
 
 Address searchMakananTree(Tree inT, Makanan m);
-/* Mengembalikan Address yang value makanananya adalah m di dalam Tree inT, jika ada */
+/* Mengembalikan Address yang value makanananya adalah m di dalam Tree inT, jika
+ * ada */
 
 // void printTreeResep(Tree T);
 // /* I.S. T terdefinisi */

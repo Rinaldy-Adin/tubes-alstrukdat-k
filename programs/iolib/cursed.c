@@ -1,7 +1,5 @@
 #include "cursed.h"
 
-#include <stdio.h>
-
 void splashScreen() {
     char* str =
         "           .:::-::::"

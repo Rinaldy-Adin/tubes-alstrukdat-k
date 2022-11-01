@@ -5,8 +5,6 @@
 /* Topik praktikum: ADT List Statik dan Dinamik */
 /* Deskripsi: implementasi ADT list dinamis */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "listdin.h"
 
 /* ********** KONSTRUKTOR ********** */
@@ -17,7 +15,7 @@ void CreateListDin(ListDin *l, int capacity) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    BUFFER(*l) = malloc(capacity*sizeof(int));
+    BUFFER(*l) = malloc(capacity * sizeof(int));
     NEFF(*l) = 0;
     CAPACITY(*l) = capacity;
 }
@@ -29,8 +27,8 @@ void dealocateList(ListDin *l) {
 
     /* ALGORITMA */
     free(BUFFER(*l));
-    CAPACITY(*l)=0;
-    NEFF(*l)=0;
+    CAPACITY(*l) = 0;
+    NEFF(*l) = 0;
 }
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
@@ -52,7 +50,7 @@ IdxType getLastIdx(ListDin l) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA*/
-    return (NEFF(l)-1);
+    return (NEFF(l) - 1);
 }
 
 /* ********** Test Indeks yang valid ********** */
@@ -73,7 +71,6 @@ boolean isIdxEffDin(ListDin l, IdxType i) {
     /* ALGORITMA*/
     return (i >= 0 && i < NEFF(l));
 }
-
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test list kosong *** */
@@ -101,9 +98,11 @@ boolean isFull(ListDin l) {
 //     /* F.S. List l terdefinisi */
 //     /* Proses : membaca banyaknya elemen l dan mengisi nilainya */
 //     /* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
-//     /*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= CAPACITY(l) */
+//     /*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <=
+//     CAPACITY(l) */
 //     /*    Jika N tidak valid, tidak diberikan pesan kesalahan */
-//     /* 2. Jika 0 < N <= CAPACITY(l); Lakukan N kali: Baca elemen mulai dari indeks
+//     /* 2. Jika 0 < N <= CAPACITY(l); Lakukan N kali: Baca elemen mulai dari
+//     indeks
 //         0 satu per satu diakhiri enter */
 //     /*    Jika N = 0; hanya terbentuk l kosong */
 //     /* KAMUS LOKAL */
@@ -125,12 +124,14 @@ boolean isFull(ListDin l) {
 // }
 
 // void printList(ListDin l) {
-//     /* Proses : Menuliskan isi list dengan traversal, list ditulis di antara kurung siku;
-//     antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan karakter di depan,
-//     di tengah, atau di belakang, termasuk spasi dan enter */
+//     /* Proses : Menuliskan isi list dengan traversal, list ditulis di antara
+//     kurung siku; antara dua elemen dipisahkan dengan separator "koma", tanpa
+//     tambahan karakter di depan, di tengah, atau di belakang, termasuk spasi
+//     dan enter */
 //     /* I.S. l boleh kosong */
 //     /* F.S. Jika l tidak kosong: [e1,e2,...,en] */
-//     /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
+//     /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak:
+//     [1,20,30] */
 //     /* Jika list kosong : menulis [] */
 //     /* KAMUS LOKAL */
 //    IdxType i;
@@ -163,11 +164,11 @@ IdxType indexOfMakananDin(ListDin l, ElType val) {
     /* ALGORITMA */
     if (isEmpty(l)) {
         return IDX_UNDEF;
-    } else { // Skema searching dengan boolean
+    } else {  // Skema searching dengan boolean
         found = false;
         i = IDX_MIN;
         while (i < listLength(l) && !(found)) {
-            if (isMakananEqual(ELMT(l,i), val)) {
+            if (isMakananEqual(ELMT(l, i), val)) {
                 found = true;
             } else {
                 i++;
@@ -175,8 +176,7 @@ IdxType indexOfMakananDin(ListDin l, ElType val) {
         }
         if (found) {
             return i;
-        }
-        else {
+        } else {
             return IDX_UNDEF;
         }
     }
@@ -186,18 +186,17 @@ IdxType indexOfMakananDin(ListDin l, ElType val) {
 void copyList(ListDin lIn, ListDin *lOut) {
     /* I.S. lIn terdefinisi tidak kosong, lOut sembarang */
     /* F.S. lOut berisi salinan dari lIn (identik, nEff dan capacity sama) */
-    /* Proses : Menyalin isi lIn ke lOut */ 
+    /* Proses : Menyalin isi lIn ke lOut */
     /* KAMUS LOKAL */
     IdxType i;
 
     /* ALGORITMA */
     CreateListDin(lOut, CAPACITY(lIn));
     NEFF(*lOut) = NEFF(lIn);
-    for (i=0;i<listLength(lIn);i++) {
-        ELMT(*lOut,i) = ELMT(lIn,i);
+    for (i = 0; i < listLength(lIn); i++) {
+        ELMT(*lOut, i) = ELMT(lIn, i);
     }
 }
-
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
@@ -222,7 +221,7 @@ void deleteLast(ListDin *l, ElType *val) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    *val = ELMT(*l,listLength(*l)-1);
+    *val = ELMT(*l, listLength(*l) - 1);
     NEFF(*l)--;
 }
 
@@ -237,19 +236,20 @@ void expandList(ListDin *l, int num) {
     int newCap;
 
     /* ALGORITMA */
-    copyList(*l,&tempList);
+    copyList(*l, &tempList);
     newCap = CAPACITY(*l) + num;
     dealocateList(l);
     CreateListDin(l, newCap);
-    for (i=0;i<NEFF(tempList);i++) {
-        ELMT(*l,i) = ELMT(tempList,i);
+    for (i = 0; i < NEFF(tempList); i++) {
+        ELMT(*l, i) = ELMT(tempList, i);
         NEFF(*l)++;
     }
 }
 
 void shrinkList(ListDin *l, int num) {
     /* Proses : Mengurangi capacity sebanyak num */
-    /* I.S. List sudah terdefinisi, ukuran capacity > num, dan nEff < capacity - num. */
+    /* I.S. List sudah terdefinisi, ukuran capacity > num, dan nEff < capacity -
+     * num. */
     /* F.S. Ukuran list berkurang sebanyak num. */
     /* KAMUS LOKAL */
     IdxType i;
@@ -257,12 +257,12 @@ void shrinkList(ListDin *l, int num) {
     int newCap;
 
     /* ALGORITMA */
-    copyList(*l,&tempList);
+    copyList(*l, &tempList);
     newCap = CAPACITY(*l) - num;
     dealocateList(l);
     CreateListDin(l, newCap);
-    for (i=0;i<NEFF(tempList);i++) {
-        ELMT(*l,i) = ELMT(tempList,i);
+    for (i = 0; i < NEFF(tempList); i++) {
+        ELMT(*l, i) = ELMT(tempList, i);
         NEFF(*l)++;
     }
 }
@@ -275,6 +275,6 @@ void compressList(ListDin *l) {
 
     /* ALGORITMA */
     if (NEFF(*l) < CAPACITY(*l)) {
-        shrinkList(l, (CAPACITY(*l)-NEFF(*l)));
+        shrinkList(l, (CAPACITY(*l) - NEFF(*l)));
     }
 }

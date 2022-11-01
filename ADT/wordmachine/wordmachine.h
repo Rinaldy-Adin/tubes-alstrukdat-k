@@ -1,8 +1,10 @@
 #ifndef __MESINKATA_H__
 #define __MESINKATA_H__
 
-#include "boolean.h"
-#include "charmachine.h"
+#include <stdio.h>
+
+#include "../boolean.h"
+#include "../charmachine/charmachine.h"
 
 #define NMax 50
 #define BLANK ' '
@@ -33,7 +35,7 @@ void STARTWORD();
           atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
           currentChar karakter pertama sesudah karakter terakhir kata */
 
-void STARTWORDFILE(char* filename);
+void STARTWORDFILE(char *filename);
 /* I.S. : currentChar sembarang, file dengan nama filename ada
    F.S. : endWord = true, dan currentChar = MARK;
           atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
@@ -59,6 +61,5 @@ void duplicateWord(Word *word1, Word *word2);
 
 int wordToInt(Word w);
 /* Mengubah Word w menjadi integer */
-
 
 #endif
