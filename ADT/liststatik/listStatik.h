@@ -1,16 +1,19 @@
 /* MODUL LIST MAKANAN STATIK DENGAN ELEMEN POSITIF */
-/* Berisi definisi dan semua primitif pemrosesan list integer statik dengan elemen positif */
+/* Berisi definisi dan semua primitif pemrosesan list integer statik dengan
+ * elemen positif */
 /* Penempatan elemen selalu rapat kiri */
 /* Banyaknya elemen didefinisikan secara implisit, memori list statik */
 
 #ifndef LISTSTATIK_H
 #define LISTSTATIK_H
 
-#include "boolean.h"
-#include "makanan.h"
-#include "strlib.h"
-#include "wordmachine.h"
-#include "tree.h"
+#include <stdio.h>
+
+#include "../boolean.h"
+#include "../makanan/makanan.h"
+#include "../strlib/strlib.h"
+#include "../tree/tree.h"
+#include "../wordmachine/wordmachine.h"
 
 /*  Kamus Umum */
 #define CAPACITYSTAT 100
@@ -24,22 +27,23 @@
 
 /* type elemen List */
 typedef union {
-   Makanan m;
-   Tree t;
+    Makanan m;
+    Tree t;
 } ElTypeStat;
 
 typedef int IdxType;
 typedef struct {
-   ElTypeStat contents[CAPACITYSTAT]; /* memori tempat penyimpan elemen (container) */
-   int NEff; /* Jumlah elemen efektif [0..CAPACITYSTAT] */
+    ElTypeStat
+        contents[CAPACITYSTAT]; /* memori tempat penyimpan elemen (container) */
+    int NEff;                   /* Jumlah elemen efektif [0..CAPACITYSTAT] */
 } ListStatik;
 /* Indeks yang digunakan [0..CAPACITYSTAT-1] */
 
 /* Jika l adalah ListStatik, cara deklarasi dan akses: */
 /* Deklarasi : l : ListStatik */
-/* Maka cara akses: 
+/* Maka cara akses:
    ELMT(l,i) untuk mengakses elemen ke-i */
-/* Definisi : 
+/* Definisi :
    List kosong: semua elemen bernilai MARK
    Definisi elemen pertama: ELMT(l,i) dengan i=0 */
 
@@ -61,7 +65,7 @@ void CreateListStatik(ListStatik *l);
 /* *** Banyaknya elemen *** */
 int listLengthStat(ListStatik l);
 /* Mengirimkan banyaknya elemen efektif List */
-/* Mengirimkan nol jika List kosong */ 
+/* Mengirimkan nol jika List kosong */
 
 /* *** Selektor INDEKS *** */
 IdxType getLastIdxStat(ListStatik l);
@@ -86,8 +90,8 @@ boolean isFullStat(ListStatik l);
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 void printListMakanan(ListStatik l);
-/* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung 
-   siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan 
+/* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung
+   siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan
    karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
 /* I.S. l boleh kosong */
 /* F.S. Jika l tidak kosong: [e1,e2,...,en] */
@@ -97,7 +101,7 @@ void printListMakanan(ListStatik l);
 /* ********** OPERATOR RELASIONAL ********** */
 /* *** Operasi pembandingan List: *** */
 boolean isListEqualStat(ListStatik l1, ListStatik l2);
-/* Mengirimkan true jika l1 sama dengan l2 yaitu jika ukuran l1 = l2 dan semua 
+/* Mengirimkan true jika l1 sama dengan l2 yaitu jika ukuran l1 = l2 dan semua
    elemennya sama */
 
 /* ********** SEARCHING ********** */
@@ -110,7 +114,8 @@ int indexOfMakanan(ListStatik l, String searchID);
 
 int indexOfResep(ListStatik l, String searchID);
 /* Search apakah ada elemen List l yang ber-ID searchId */
-/* Jika ada, menghasilkan indeks i terkecil, dengan ID(ELMTSTAT(l,i)) = searchId */
+/* Jika ada, menghasilkan indeks i terkecil, dengan ID(ELMTSTAT(l,i)) = searchId
+ */
 /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
 /* Skema Searching yang digunakan bebas */
 
@@ -123,7 +128,8 @@ void insertFirstStat(ListStatik *l, ElTypeStat val);
 /* *** Menambahkan elemen pada index tertentu *** */
 void insertAtStat(ListStatik *l, ElTypeStat val, IdxType idx);
 /* Proses: Menambahkan val sebagai elemen pada index idx List */
-/* I.S. List l tidak kosong dan tidak penuh, idx merupakan index yang valid di l */
+/* I.S. List l tidak kosong dan tidak penuh, idx merupakan index yang valid di l
+ */
 /* F.S. val adalah elemen yang disisipkan pada index idx l */
 /* *** Menambahkan elemen terakhir *** */
 void insertLastStat(ListStatik *l, ElTypeStat val);
@@ -167,7 +173,7 @@ void loadMakanan(ListStatik *l);
 /* I.S. l sembarang */
 /* F.S. l terisi makanan dari file konfigurasi */
 
-void loadResep(ListStatik *l, ListStatik makan) ;
+void loadResep(ListStatik *l, ListStatik makan);
 /* Membaca resep makanan dari file */
 /* I.S. l sembarang */
 /* F.S. l terisi resep dari file konfigurasi */
@@ -177,5 +183,6 @@ void printResep(ListStatik resep);
 /* F.s. Isi resep tercetak di layar */
 
 ListStatik listMakananCommand(String com, ListStatik l);
-/* Mengembalikan list statik yang berisi makanan dengan cara mendapat sesuai com dari list l */
+/* Mengembalikan list statik yang berisi makanan dengan cara mendapat sesuai com
+ * dari list l */
 #endif

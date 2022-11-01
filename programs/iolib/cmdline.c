@@ -6,9 +6,9 @@ void displayCurrentState(Matrix peta, Simulator sim) {
     printf("\n");
     printf("========================================");
     printf("\n");
-    printf("BNMO di posisi: (%d,%d)", ROW(position)-1, COL(position)-1);
+    printf("BNMO di posisi: (%d,%d)", ROW(position) - 1, COL(position) - 1);
     printf("\n");
-    printf("Waktu: ");
+    printf("Waktu: %02d.%02d", Jam(TimeSim(sim)), Menit(TimeSim(sim)));
     printf("\n");
     printf("Notifikasi: ");
     printf("\n");
@@ -26,12 +26,16 @@ void runCommand(Matrix *peta, Simulator *sim, String command) {
 
     if (stringsAreEqual(command, mv_north)) {
         move(&PositionSim(*sim), peta, 'N');
+        TimeSim(*sim) = NextMenit(TimeSim(*sim));
     } else if (stringsAreEqual(command, mv_east)) {
         move(&PositionSim(*sim), peta, 'E');
+        TimeSim(*sim) = NextMenit(TimeSim(*sim));
     } else if (stringsAreEqual(command, mv_south)) {
         move(&PositionSim(*sim), peta, 'S');
+        TimeSim(*sim) = NextMenit(TimeSim(*sim));
     } else if (stringsAreEqual(command, mv_west)) {
         move(&PositionSim(*sim), peta, 'W');
+        TimeSim(*sim) = NextMenit(TimeSim(*sim));
     } else {
         printf("command salah");
     }
@@ -42,11 +46,13 @@ void initializeSimulator(Simulator *sim, Matrix peta) {
     String nama;
     POINT pos;
     PrioQueue inventory;
+    TIME time;
 
     /* ALGORITMA */
     pos = currentPosition(peta);
-    printf("Posisi saat ini: (%d,%d)\n\n", ROW(pos)-1, COL(pos)-1);
+    printf("Posisi saat ini: (%d,%d)\n\n", ROW(pos) - 1, COL(pos) - 1);
     MakeEmpty(&inventory, 100);
+    CreateTime(&time, 0, 0, 0);
 
     printf("\n");
     printf("========================================");
@@ -55,9 +61,7 @@ void initializeSimulator(Simulator *sim, Matrix peta) {
     nama = readLine();
     nama = removeLongSpaces(nama);
 
-    NamaSim(*sim) = nama;
-    PositionSim(*sim) = pos;
-    InventorySim(*sim) = inventory;
+    CreateSimulator(sim, nama, pos, time, inventory);
 }
 
 /* Run command line until user enters "EXIT" command */

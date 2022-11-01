@@ -1,5 +1,5 @@
+#include "../../ADT/matrix/matrix.h"
 #include "cmdline.h"
-#include "../../ADT/matrix.h"
 
 int main() {
     Matrix peta;

@@ -3,11 +3,11 @@
 
 #include <stdio.h>
 
-#include "../../ADT/strlib.h"
-#include "../../ADT/matrix.h"
-#include "../../ADT/point.h"
+#include "../../ADT/matrix/matrix.h"
+#include "../../ADT/point/point.h"
+#include "../../ADT/simulator/simulator.h"
+#include "../../ADT/strlib/strlib.h"
 #include "../peta/cmdPeta.h"
-#include "../../ADT/simulator.h"
 #include "boolean.h"
 #include "cursed.h"
 

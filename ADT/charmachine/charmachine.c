@@ -3,14 +3,10 @@
 
 #include "charmachine.h"
 
-#include <stdio.h>
-
-#include "boolean.h"
-
 char currentChar;
 boolean EOP;
 
-static FILE *pita;
+static FILE* pita;
 static int retval;
 
 void START() {
@@ -39,7 +35,7 @@ void STARTFILE(char* filename) {
     /* Algoritma */
     EOP = false;
     currentChar = 0;
-    pita = fopen(filename,"r");
+    pita = fopen(filename, "r");
     ADV();
 }
 

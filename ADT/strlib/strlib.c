@@ -1,5 +1,4 @@
 #include "strlib.h"
-#include <stdio.h>
 
 // Membuat struktur data string dari array of characters
 String createString(char charArr[]) {
@@ -107,11 +106,11 @@ int stringToInt(String s) {
 
     /* ALGORITMA */
     result = 0;
-    for (i=0; i<LEN(s); i++) {
-         if (i > 0) {
+    for (i = 0; i < LEN(s); i++) {
+        if (i > 0) {
             result *= 10;
-         }
-         result += ((int) (TAB(s)[i] - '0'));
+        }
+        result += ((int)(TAB(s)[i] - '0'));
     }
     return result;
 }
@@ -120,7 +119,7 @@ TIME stringToTime(String s) {
     /* Mengubah String s menjadi TIME */
     /* KAMUS LOKAL */
     TIME result;
-    int d,h,m;
+    int d, h, m;
     int i, j, ctr;
     String temp;
 
@@ -136,11 +135,9 @@ TIME stringToTime(String s) {
         }
         if (ctr == 0) {
             d = stringToInt(temp);
-        }
-        else if (ctr == 1) {
+        } else if (ctr == 1) {
             h = stringToInt(temp);
-        }
-        else {
+        } else {
             m = stringToInt(temp);
         }
         ctr++;
@@ -152,7 +149,7 @@ TIME stringToTime(String s) {
             j++;
         }
     }
-    CreateTime(&result, d,h,m);
+    CreateTime(&result, d, h, m);
     return result;
 }
 
@@ -165,7 +162,7 @@ String wordToString(Word w) {
     for (i = 0; i < WordLength(w); i++) {
         TAB(str)[i] = CharAt(w, i);
     }
-    
+
     LEN(str) = WordLength(w);
 
     return str;

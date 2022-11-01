@@ -7,11 +7,7 @@
 
 #include "prioqueue.h"
 
-#include "stdlib.h"
-#include "waktu.h"
-
-    boolean
-    IsEmpty(PrioQueue Q) {
+boolean IsEmpty(PrioQueue Q) {
     return (Head(Q) == Nil && Tail(Q) == Nil);
 }
 
