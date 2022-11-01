@@ -3,20 +3,14 @@
 
 #include "simulator.h"
 
-#include "point.h"
-#include "prioqueue.h"
-#include "strlib.h"
-
 /*** KONSTRUKTOR ***/
-void CreateSimulator(Simulator* sim, String nama, int posX, int posY, int day,
-                     int hour, int min, PrioQueue inventory) {
+void CreateSimulator(Simulator* sim, String nama, POINT pos, TIME time,
+                     PrioQueue inventory) {
     /* ALGORITMA */
-    POINT pos;
-    CreatePoint(&pos, posX, posY);
-
     NamaSim(*sim) = nama;
     PositionSim(*sim) = pos;
     InventorySim(*sim) = inventory;
+    Time(*sim) = time;
 }
 /* I.S. sim sembarang */
 /* F.S. seluruh komponen sim terisi sesuai masukan. */

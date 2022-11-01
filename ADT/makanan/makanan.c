@@ -2,11 +2,11 @@
 /* Tanggal: 22 Oktober 2022 */
 /* Implementasi ADT makanan */
 
-#include <stdio.h>
 #include "makanan.h"
 
 /* KONSTRUKTOR */
-void makeMakanan(Makanan *m, String id, String nama, TIME kadaluwarsa, TIME del, TIME act, String command) {
+void makeMakanan(Makanan *m, String id, String nama, TIME kadaluwarsa, TIME del,
+                 TIME act, String command, int lebar, int tinggi) {
     /* I.S. m sembarang */
     /* F.S. seluruh komponen m terisi sesuai masukan. */
     /* KAMUS LOKAL */
@@ -18,6 +18,8 @@ void makeMakanan(Makanan *m, String id, String nama, TIME kadaluwarsa, TIME del,
     DelTime(*m) = del;
     ActTime(*m) = act;
     Command(*m) = command;
+    Width(*m) = lebar;
+    Height(*m) = tinggi;
 }
 
 /*** PRIMITIF ***/
@@ -35,5 +37,5 @@ boolean isMakananEqual(Makanan m1, Makanan m2) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    return (stringsAreEqual(ID(m1),ID(m2)));
+    return (stringsAreEqual(ID(m1), ID(m2)));
 }

@@ -19,7 +19,7 @@ void readPetaFromFile(Matrix *container, char *filename)  {
     for (i=0; i<currentWord.Length; i++) {
         col += (currentWord.TabWord[i] - 48) * power(10, currentWord.Length-i-1);
     }
-    ADV();
+    IgnoreBlanks();
     
     //printf("row: %d, col: %d\n", row, col);
     
@@ -34,8 +34,8 @@ void readPetaFromFile(Matrix *container, char *filename)  {
     // MEMASUKKAN PETA KE DALAM MATRIX
     for (i=1; i<row+1; i++) {
         for (j=1; j<=col+1; j++) {
-            if (currentChar == '\n') {
-                ADV();
+            if (currentChar == '\n' || currentChar == '\r') {
+                IgnoreBlanks();
             }
             else {
                 if (currentChar == '#') {

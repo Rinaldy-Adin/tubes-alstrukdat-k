@@ -3,9 +3,9 @@
 
 #include <stdio.h>
 
-#include "charmachine.h"
-#include "waktu.h"
-#include "wordmachine.h"
+#include "../charmachine/charmachine.h"
+#include "../waktu/waktu.h"
+#include "../wordmachine/wordmachine.h"
 
 #define StrMax 255
 
@@ -35,13 +35,13 @@ String removeLongSpaces(String str);
 // Print string ke terminal tanpa ada penambahan karakter
 void printString(String str);
 
-
 /* Konversi String ke bentuk lain */
 int stringToInt(String s);
 /* Mengubah String s menjadi int. Prekondisi : String s hanya berisi angka */
 
 TIME stringToTime(String s);
-/* Mengubah String s menjadi TIME. Prekondisi : String s memiliki format D H M */
+/* Mengubah String s menjadi TIME. Prekondisi : String s memiliki format D H M
+ */
 
 /* Konversi bentuk lain ke string */
 String wordToString(Word w);
