@@ -1,8 +1,19 @@
 {
     "files.associations": {
+        "*.pl": "Prolog",
         "stdlib.h": "c",
         "stdio.h": "c",
         "strlib.h": "c",
-        "charmachine.h": "c"
+        "charmachine.h": "c",
+        "liststatik.h": "c",
+        "point.h": "c",
+        "prioqueue.h": "c",
+        "cmdline.h": "c",
+        "cmdpeta.h": "c",
+        "boolean.h": "c",
+        "stack.h": "c",
+        "cursed.h": "c",
+        "inventory.h": "c",
+        "order.h": "c"
     }
 }

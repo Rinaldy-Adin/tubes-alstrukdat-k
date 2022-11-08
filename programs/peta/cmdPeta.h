@@ -69,11 +69,19 @@ tempat mixing (M), tempat menggoreng (F), tempat memotong (C),
 dan tempat merebus (B) bersebelahan/adjacent dengan posisi simulator (S)
 */
 
-void move(POINT *pos, Matrix *peta, char direction);
+boolean move(POINT *pos, Matrix *peta, char direction);
 /* DESKRIPSI
 Memindahkan posisi simulator sesuai arah yang diinginkan
 I.S POINT *pos, Matrix *peta terdefinisi
 F.S Jika posisi tersedia, posisi simulator akan dipindahkan sesuai arah yang
+diinginkan
+*/
+
+void moveTo(POINT startPos, POINT endPos, Matrix *peta);
+/* DESKRIPSI
+Memindahkan posisi simulator sesuai arah yang diinginkan
+I.S POINT *startPos, *endPos, Matrix *peta terdefinisi
+F.S Jika posisi tersedia, posisi simulator akan dipindahkan sesuai posisi yang
 diinginkan
 */
 

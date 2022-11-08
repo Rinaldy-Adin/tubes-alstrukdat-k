@@ -63,6 +63,8 @@ void MakeEmpty(PrioQueue *Q, int Max);
 /* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 
+void CopyPrioqueue(PrioQueue Source, PrioQueue *Dest);
+
 /* *** Destruktor *** */
 void DeAlokasi(PrioQueue *Q);
 /* Proses: Mengembalikan memori Q */

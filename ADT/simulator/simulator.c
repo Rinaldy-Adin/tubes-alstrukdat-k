@@ -5,15 +5,27 @@
 
 /*** KONSTRUKTOR ***/
 void CreateSimulator(Simulator* sim, String nama, POINT pos, TIME time,
-                     PrioQueue inventory) {
+                     PrioQueue inventory, PrioQueue delivery,
+                     ListStatik events) {
     /* ALGORITMA */
     NamaSim(*sim) = nama;
     PositionSim(*sim) = pos;
     InventorySim(*sim) = inventory;
     Time(*sim) = time;
+    DeliverySim(*sim) = delivery;
+    EventsSim(*sim) = events;
 }
 /* I.S. sim sembarang */
 /* F.S. seluruh komponen sim terisi sesuai masukan. */
+
+void CopySimulator(Simulator sim, Simulator* newSim) {
+    copyString(NamaSim(sim), &NamaSim(*newSim));
+    PositionSim(*newSim) = PositionSim(sim);
+    CopyPrioqueue(InventorySim(sim), &InventorySim(*newSim));
+    Time(*newSim) = Time(sim);
+    CopyPrioqueue(DeliverySim(sim), &DeliverySim(*newSim));
+    CopyListStatikString(EventsSim(sim), &EventsSim(*newSim));
+}
 
 PrioQueue AdvInventory(PrioQueue inventory) {
     /* KAMUS */

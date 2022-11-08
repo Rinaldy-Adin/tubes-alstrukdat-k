@@ -3,7 +3,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include "boolean.h"
+#include "../boolean.h"
 
 /* Ukuran maksimum baris dan kolom */
 #define ROW_CAP 100
@@ -11,11 +11,10 @@
 
 typedef int IdxType; /* Index baris, kolom */
 typedef char ElType;
-typedef struct
-{
-   ElType mem[ROW_CAP][COL_CAP];
-   int rowEff; /* banyaknya/ukuran baris yg terdefinisi */
-   int colEff; /* banyaknya/ukuran kolom yg terdefinisi */
+typedef struct {
+    ElType mem[ROW_CAP][COL_CAP];
+    int rowEff; /* banyaknya/ukuran baris yg terdefinisi */
+    int colEff; /* banyaknya/ukuran kolom yg terdefinisi */
 } Matrix;
 /* Indeks matriks yang digunakan: [0..ROW_CAP-1][0..COL_CAP-1] */
 /* Memori matriks yang dipakai selalu di "ujung kiri atas" */
@@ -23,7 +22,8 @@ typedef struct
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk Matrix *** */
 void createMatrix(int nRows, int nCols, Matrix *m);
-/* Membentuk sebuah Matrix "kosong" yang siap diisi berukuran nRow x nCol di "ujung kiri" memori */
+/* Membentuk sebuah Matrix "kosong" yang siap diisi berukuran nRow x nCol di
+ * "ujung kiri" memori */
 /* I.S. nRow dan nCol adalah valid untuk memori matriks yang dibuat */
 /* F.S. Matriks m sesuai dengan definisi di atas terbentuk */
 
@@ -53,13 +53,15 @@ void readMatrix(Matrix *m, int nRow, int nCol);
 /* Contoh: Jika nRow = 3 dan nCol = 3, maka contoh cara membaca isi matriks :
 1 2 3
 4 5 6
-8 9 10 
+8 9 10
 */
 void displayMatrix(Matrix m);
 /* I.S. m terdefinisi */
-/* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
-   dipisahkan sebuah spasi. Baris terakhir tidak diakhiri dengan newline */
-/* Proses: Menulis nilai setiap elemen m ke layar dengan traversal per baris dan per kolom */
+/* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen
+   per baris dipisahkan sebuah spasi. Baris terakhir tidak diakhiri dengan
+   newline */
+/* Proses: Menulis nilai setiap elemen m ke layar dengan traversal per baris dan
+ * per kolom */
 /* Contoh: menulis matriks 3x3 (ingat di akhir tiap baris, tidak ada spasi)
 1 2 3
 4 5 6
@@ -74,7 +76,8 @@ boolean isMatrixEqual(Matrix m1, Matrix m2);
 boolean isMatrixNotEqual(Matrix m1, Matrix m2);
 /* Mengirimkan true jika m1 tidak sama dengan m2 */
 boolean isMatrixSizeEqual(Matrix m1, Matrix m2);
-/* Mengirimkan true jika ukuran efektif matriks m1 sama dengan ukuran efektif m2 */
+/* Mengirimkan true jika ukuran efektif matriks m1 sama dengan ukuran efektif m2
+ */
 /* yaitu RowEff(m1) = RowEff (m2) dan ColEff (m1) = ColEff (m2) */
 
 /* ********** Operasi lain ********** */

@@ -6,8 +6,6 @@ ifdef OS
 	SRCS = $(filter-out $(TARGETS), $(patsubst "%", %,$(shell forfiles /s /m *.c /c "cmd /c echo @relpath")))
 else
 	ifeq ($(shell uname), Linux)
-		EXCLUDE_SRC = ./ADT/listMakanan.c
-		EXCLUDE_INC = ./ADT/listMakanan.h
 		TARGETS = ./main.c $(shell find . -name 'driver_*.c')
 		INCS = $(filter-out $(EXCLUDE_INC), $(shell find . -name '*.h'))
 		SRCS = $(filter-out $(EXCLUDE_SRC), $(filter-out $(TARGETS), $(shell find . -name '*.c')))

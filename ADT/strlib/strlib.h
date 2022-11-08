@@ -25,8 +25,12 @@ String readLine();
 // Membuat struktur data string dari array of characters
 String createString(char charArr[]);
 
+void copyString(String source, String *dest);
+
 // Membandingkan kesamaan dari dua string
 boolean stringsAreEqual(String s1, String s2);
+
+String concatString(String s1, String s2);
 
 // Menghilangkan leading dan trailing zero, serta mereduksi
 // Nilai Spasi yang panjang menjadi hanya satu karakter spasi

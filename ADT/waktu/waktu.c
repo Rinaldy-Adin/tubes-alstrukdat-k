@@ -82,6 +82,22 @@ void TulisTIME(TIME T) {
     printf("%d hari %d jam %d menit", DD, HH, MM);
 }
 
+void TulisTIMEShort(TIME T) {
+    int DD, HH, MM;
+
+    DD = Hari(T);
+    HH = Jam(T);
+    MM = Menit(T);
+
+    if (DD > 0) {
+        printf("%d hari %d jam %d menit", DD, HH, MM);
+    } else if (HH > 0) {
+        printf("%d jam %d menit", HH, MM);
+    } else {
+        printf("%d menit", MM);
+    }
+}
+
 /* ***************************************************************** */
 /* KELOMPOK KONVERSI TERHADAP TYPE                                   */
 /* ***************************************************************** */

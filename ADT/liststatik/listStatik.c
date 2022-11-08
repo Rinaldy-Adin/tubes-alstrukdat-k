@@ -21,6 +21,15 @@ void CreateListStatik(ListStatik *l) {
     return;
 }
 
+void CopyListStatikString(ListStatik Source, ListStatik *Dest) {
+    int i;
+    CreateListStatik(Dest);
+    NEFFSTAT(*Dest) = NEFFSTAT(Source);
+    for (i = 0; i < NEFFSTAT(Source); i++) {
+        copyString(STRING(ELMTSTAT(Source, i)), &STRING(ELMTSTAT(*Dest, i)));
+    }
+}
+
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
 int listLengthStat(ListStatik l) {
@@ -79,6 +88,22 @@ boolean isFullStat(ListStatik l) {
     return (NEFFSTAT(l) == CAPACITYSTAT);
 }
 
+void printListString(ListStatik l) {
+    IdxType i;
+
+    /* ALGORITMA */
+    if (isEmptyStat(l)) {
+        printf("List string kosong\n");
+    } else {
+        printf("Daftar String\n");
+        for (i = IDX_MIN; i <= getLastIdxStat(l); i++) {
+            printf("  %d. ", (i + 1));
+            printString(STRING(ELMTSTAT(l, i)));
+            printf("\n");
+        }
+    }
+}
+
 void printListMakanan(ListStatik l) {
     /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara
        kurung siku; antara dua elemen dipisahkan dengan separator "koma", tanpa
@@ -104,11 +129,11 @@ void printListMakanan(ListStatik l) {
             printf(" - ");
             printString(Nama(MAKANAN(ELMTSTAT(l, i))));
             printf(" - ");
-            TulisTIME(Kadal(MAKANAN(ELMTSTAT(l, i))));
+            TulisTIMEShort(Kadal(MAKANAN(ELMTSTAT(l, i))));
             printf(" - ");
-            TulisTIME(DelTime(MAKANAN(ELMTSTAT(l, i))));
+            TulisTIMEShort(DelTime(MAKANAN(ELMTSTAT(l, i))));
             printf(" - ");
-            TulisTIME(ActTime(MAKANAN(ELMTSTAT(l, i))));
+            TulisTIMEShort(ActTime(MAKANAN(ELMTSTAT(l, i))));
             printf(" - ");
             printString(Command(MAKANAN(ELMTSTAT(l, i))));
             printf(" - ");
@@ -500,4 +525,36 @@ ListStatik listMakananCommand(String com, ListStatik l) {
         }
     }
     return result;
+}
+
+ListStatik splitString(String str) {
+    /* KAMUS */
+    ListStatik listStr;
+    char c;
+    int i, j;
+    ElTypeStat elmt;
+    String currStr;
+
+    /* ALGORITMA */
+    CreateListStatik(&listStr);
+    currStr = createString("");
+    str = removeLongSpaces(str);
+    for (i = 0; i < LEN(str); i++) {
+        if (TAB(str)[i] == ' ') {
+            STRING(elmt) = currStr;
+            insertLastStat(&listStr, elmt);
+            currStr = createString("");
+            continue;
+        }
+        TAB(currStr)[LEN(currStr)] = TAB(str)[i];
+        LEN(currStr)++;
+    }
+
+    if (!stringsAreEqual(currStr, createString(""))) {
+        STRING(elmt) = currStr;
+        insertLastStat(&listStr, elmt);
+        currStr = createString("");
+    }
+
+    return listStr;
 }

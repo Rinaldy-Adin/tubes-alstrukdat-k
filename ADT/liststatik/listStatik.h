@@ -29,6 +29,7 @@
 typedef union {
     Makanan m;
     Tree t;
+    String s;
 } ElTypeStat;
 
 typedef int IdxType;
@@ -52,6 +53,7 @@ typedef struct {
 #define NEFFSTAT(l) (l).NEff
 #define MAKANAN(e) (e).m
 #define TREE(e) (e).t
+#define STRING(e) (e).s
 
 /* Definisi List kosong : NEFF(l) == 0 */
 
@@ -60,6 +62,8 @@ typedef struct {
 void CreateListStatik(ListStatik *l);
 /* I.S. l sembarang */
 /* F.S. Terbentuk List l kosong dengan kapasitas CAPACITYSTAT */
+
+void CopyListStatikString(ListStatik Source, ListStatik *Dest);
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
@@ -89,6 +93,8 @@ boolean isFullStat(ListStatik l);
 /* Mengirimkan true jika List l penuh, mengirimkan false jika tidak */
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
+void printListString(ListStatik l);
+
 void printListMakanan(ListStatik l);
 /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung
    siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan
@@ -185,4 +191,7 @@ void printResep(ListStatik resep);
 ListStatik listMakananCommand(String com, ListStatik l);
 /* Mengembalikan list statik yang berisi makanan dengan cara mendapat sesuai com
  * dari list l */
+
+ListStatik splitString(String str);
+
 #endif

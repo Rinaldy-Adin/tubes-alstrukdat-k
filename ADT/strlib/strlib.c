@@ -17,18 +17,30 @@ String createString(char charArr[]) {
     return str;
 }
 
+void copyString(String source, String *dest) {
+    /* KAMUS */
+    int i;
+
+    /* ALGORITMA */
+    LEN(*dest) = LEN(source);
+    for (i = 0; i < LEN(source); i++) {
+        TAB(*dest)[i] = TAB(source)[i];
+    }
+}
+
 // Baca string sampai menemukan karakter '\n'
 String readLine() {
     /* KAMUS */
     String str;
 
     /* ALGORITMA */
-    if (currentChar == '\n') {
+    while (currentChar == '\n' || currentChar == '\r') {
         ADV();
     }
 
     LEN(str) = 0;
-    while (currentChar != '\n' && LEN(str) < StrMax && currentChar != MARK) {
+    while (currentChar != '\n' && currentChar != '\r' && LEN(str) < StrMax &&
+           currentChar != MARK) {
         TAB(str)[LEN(str)] = currentChar;
         LEN(str)++;
         ADV();
@@ -52,6 +64,29 @@ boolean stringsAreEqual(String s1, String s2) {
     }
 
     return true;
+}
+
+String concatString(String s1, String s2) {
+    /* KAMUS */
+    String str;
+    int i;
+
+    /* ALGORITMA */
+    str = createString("");
+    for (i = 0; i < s1.Length; i++) {
+        TAB(str)[LEN(str)] = TAB(s1)[i];
+        LEN(str)++;
+    }
+    if (LEN(s1) != 0) {
+        TAB(str)[LEN(str)] = ' ';
+        LEN(str)++;
+    }
+    for (i = 0; i < s2.Length; i++) {
+        TAB(str)[LEN(str)] = TAB(s2)[i];
+        LEN(str)++;
+    }
+
+    return str;
 }
 
 // Menghilangkan leading dan trailing zero, serta mereduksi

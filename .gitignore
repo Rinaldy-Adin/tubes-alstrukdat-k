@@ -4,9 +4,9 @@
 *.pbd
 *.pdb
 *.exe
-*/**.ilk
-*/**.obj
-*/**.o
-*/**.pbd
-*/**.pdb
-*/**.exe
+**/*.ilk
+**/*.obj
+**/*.o
+**/*.pbd
+**/*.pdb
+**/*.exe

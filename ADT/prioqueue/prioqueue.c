@@ -33,6 +33,18 @@ void MakeEmpty(PrioQueue *Q, int Max) {
     }
 }
 
+void CopyPrioqueue(PrioQueue Source, PrioQueue *Dest) {
+    int i;
+    MakeEmpty(Dest, MaxEl(Source));
+    if (!IsEmpty(Source)) {
+        i = Head(Source);
+        while (i <= Tail(Source)) {
+            Enqueue(Dest, Elmt(Source, i));
+            i++;
+        }
+    }
+}
+
 void DeAlokasi(PrioQueue *Q) {
     MaxEl(*Q) = 0;
     free((*Q).T);
@@ -47,7 +59,8 @@ void Enqueue(PrioQueue *Q, infotype X) {
         Tail(*Q)++;
         int i;
         for (i = 0; i < NBElmt(*Q); i++) {
-            if (TIMEToMenit(Time(X)) < TIMEToMenit(Time(Elmt(*Q, i)))) {
+            if (TIMEToMenit(Time(X)) < TIMEToMenit(Time(Elmt(*Q, i))) ||
+                i == NBElmt(*Q) - 1) {
                 int j;
                 for (j = Tail(*Q); j > i; j--) {
                     Elmt(*Q, j) = Elmt(*Q, j - 1);

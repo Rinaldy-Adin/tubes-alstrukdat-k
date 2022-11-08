@@ -58,6 +58,10 @@ void TulisTIME(TIME T);
    tanpa karakter apa pun di depan atau belakangnya, termasuk spasi, enter,
    dll.*/
 
+void TulisTIMEShort(TIME T);
+/* I.S. : T sembarang */
+/* F.S. : Nilai T ditulis dg format D hari H jam M menit secara singkat */
+
 /* ***************************************************************** */
 /* KELOMPOK KONVERSI TERHADAP TYPE                                   */
 /* ***************************************************************** */
