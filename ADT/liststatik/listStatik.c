@@ -298,7 +298,7 @@ void deleteFirstStat(ListStatik *l, ElTypeStat *val) {
 
     /* ALGORITMA */
     *val = ELMTSTAT(*l, 0);
-    for (i = IDX_MIN; i < listLengthStat(*l); i++) {
+    for (i = IDX_MIN; i < listLengthStat(*l)-1; i++) {
         ELMTSTAT(*l, i) = ELMTSTAT(*l, i + 1);
     }
     NEFFSTAT(*l)--;
@@ -346,7 +346,7 @@ void loadMakanan(ListStatik *l) {
     String Nmakanan, id, nama, kadal, command, del, act, w, h;
     int N;  // Jumlah makanan
     int i, idx;
-    char *filename = "pita.txt";
+    char *filename = "../../pita.txt";
 
     /* ALGORITMA */
     CreateListStatik(l);
@@ -356,6 +356,10 @@ void loadMakanan(ListStatik *l) {
     } else {
         Nmakanan = createString(currentWord.TabWord);
         N = stringToInt(Nmakanan);
+        if (N > CAPACITYSTAT) { // Jika jumlah makanan yang mau dibaca > kapasitas
+            printf("Maksimal hanya boleh ada %d makanan. Pembacaan dibatasi sampai %d makanan.\n", CAPACITYSTAT, CAPACITYSTAT);
+            N = CAPACITYSTAT;
+        }
         // Urutan pembacaan data (per baris) : id, nama, kedaluwarsa, delivery
         // time, act time, command untuk mendapat makanan, lebar, tinggi
         for (i = 0; i < N; i++) {
@@ -395,7 +399,7 @@ void loadResep(ListStatik *l, ListStatik makan) {
     String NResep, NChild, IDParent, IDChild;
     int N, M;  // Jumlah resep dan bahan per makanan
     int i, j, k, idx;
-    char *filename = "pitaResep.txt";
+    char *filename = "../../pitaResep.txt";
 
     /* ALGORITMA */
     CreateListStatik(l);
@@ -406,6 +410,10 @@ void loadResep(ListStatik *l, ListStatik makan) {
     } else {
         NResep = createString(currentWord.TabWord);
         N = stringToInt(NResep);
+        if (N > CAPACITYSTAT) {
+            printf("Maksimal hanya boleh ada %d resep. Pembacaan dibatasi sampai %d resep.\n", CAPACITYSTAT, CAPACITYSTAT);
+            N = CAPACITYSTAT;
+        }
         ADVWORD();
         for (i = 0; i < N; i++) {
             IDParent = createString(currentWord.TabWord);

@@ -43,9 +43,6 @@ void deleteTree(Tree *T);
 /* I.S. T terdefinisi */
 /* F.S. T menjadi tree kosong */
 
-boolean isMakananInChild(Tree T, Makanan m);
-/* Mengembalikan true jika m adalah child dari T */
-
 Tree duplicateTree(Tree T);
 /* Mengembalikan salinan Tree T */
 
@@ -53,8 +50,8 @@ Address searchMakananTree(Tree inT, Makanan m);
 /* Mengembalikan Address yang value makanananya adalah m di dalam Tree inT, jika
  * ada */
 
-// void printTreeResep(Tree T);
-// /* I.S. T terdefinisi */
-// /* F.S. Keseluruhan Tree resep T tercetak ke layar */
+void printTree(Tree T);
+/* I.S. T terdefinisi */
+/* F.S. Keseluruhan Tree resep T tercetak ke layar */
 
 #endif

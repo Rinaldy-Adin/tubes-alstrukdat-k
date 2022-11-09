@@ -1,67 +1,48 @@
-#include "../liststatik/listStatik.h"
-#include "../prioqueue/prioqueue.h"
+#include "makanan.h"
 
 int main() {
     /* KAMUS */
-    ListStatik testMakan;
-    ListStatik testResep;
-    ListStatik testMasak;
-    Tree test;
-    Address alamatMakanan;
-    PrioQueue q;
-    infotype bahan;
-    boolean found;
+    Makanan testM, testM2;
+    TIME t;
 
     /* ALGORITMA */
-    // printf("%d\n",
-    // indexOfMakanan(testMakan,ID(MAKANAN(ELMTSTAT(testMakan,4)))));
-    loadMakanan(&testMakan);
-    printListMakanan(testMakan);
-
-    loadResep(&testResep, testMakan);
-    printResep(testResep);
-
-    testMasak = listMakananCommand(createString("Fry"), testMakan);
-    testMasak = listMakananCommand(createString("Mix"), testMakan);
-    testMasak = listMakananCommand(createString("Chop"), testMakan);
-    testMasak = listMakananCommand(createString("Boil"), testMakan);
-
-    MakeEmpty(&q, 20);
-    for (int i = 0; i < NEFFSTAT(testMakan); i++) {
-        Makanan(bahan) = MAKANAN(ELMTSTAT(testMakan, i));
-        Time(bahan) = Kadal(Makanan(bahan));
-        Enqueue(&q, bahan);
-    }
-    printf("Isi inventory\n");
-    for (int i = 0; i < NBElmt(q); i++) {
-        printString(Nama(Makanan(q.T[i])));
-        printf(", ");
-    }
-
-    printf("\n\n");
-    printf("Masak makanan : ");
-    printString(Nama(MAKANAN(ELMTSTAT(testMasak, 1))));
+    printf("========== MEMBUAT MAKANAN BARU ==========\n");
+    CreateTime(&t, 10, 10, 10);
+    makeMakanan(&testM, createString("100"), createString("Makanan test"), t, t, t, createString("Buy"), 10, 10);
+    printf("ID makanan baru : ");
+    printString(ID(testM));
     printf("\n");
-    found = Cook(ID(MAKANAN(ELMTSTAT(testMasak, 1))), &q, testResep);
-    printf("%d\n", found);
-
-    printf("Isi inventory\n");
-    for (int i = 0; i < NBElmt(q); i++) {
-        printString(Nama(Makanan(q.T[i])));
-        printf(", ");
-    }
-
-    printf("\n\n");
-    printf("Masak makanan : ");
-    printString(Nama(MAKANAN(ELMTSTAT(testMasak, 1))));
+    printf("Nama makanan baru : ");
+    printString(Nama(testM));
     printf("\n");
-    found = Cook(ID(MAKANAN(ELMTSTAT(testMasak, 1))), &q, testResep);
-    printf("%d\n", found);
+    printf("Waktu kedaluwarsa makanan baru : ");
+    TulisTIME(Kadal(testM));
+    printf("\n");
+    printf("Waktu antar makanan baru : ");
+    TulisTIME(DelTime(testM));
+    printf("\n");
+    printf("Waktu aksi makanan baru : ");
+    TulisTIME(ActTime(testM));
+    printf("\n");
+    printf("Aksi untuk mendapat makanan baru : ");
+    printString(Command(testM));
+    printf("\n");
+    printf("Ukuran makanan baru : ");
+    printf("%d x %d", Width(testM), Height(testM));
+    printf("\n\n");
 
-    // CreateTree(&test);
-    // for (int i=0; i<NEFFSTAT(testMakan); i++) {
-    //     AddChild(&test,MAKANAN(ELMTSTAT(testMakan,i)));
-    // }
-    // deleteTree(&test);
-    // printTree(test);
+    printf("========== MEMAJUKAN KEDALUWARSA MAKANAN ==========\n");
+    advKadal(&testM, 5);
+    printf("Sisa waktu kedaluwarsa makanan setelah 5 menit : ");
+    TulisTIME(Kadal(testM));
+    printf("\n\n");
+
+    printf("========== APAKAH 2 MAKANAN SAMA ==========\n");
+    printf("Keterangan : dilakukan dengan memeriksa ID makanan karena ID bersifat unique\n");
+    makeMakanan(&testM2, createString("99"), createString("Makanan test 2"), t, t, t, createString("Buy"), 10, 10);
+    if (isMakananEqual(testM, testM2)) {
+        printf("Kedua makanan sama\n");
+    } else {
+        printf("Kedua makanan berbeda\n");
+    }
 }

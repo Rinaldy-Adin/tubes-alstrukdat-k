@@ -29,7 +29,7 @@ void advKadal(Makanan *m, int n) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    Kadal(*m) = NextNMenit(Kadal(*m), n);
+    Kadal(*m) = PrevNMenit(Kadal(*m), n);
 }
 
 boolean isMakananEqual(Makanan m1, Makanan m2) {

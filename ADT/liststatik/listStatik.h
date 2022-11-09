@@ -30,6 +30,7 @@ typedef union {
     Makanan m;
     Tree t;
     String s;
+    int i;
 } ElTypeStat;
 
 typedef int IdxType;
@@ -54,6 +55,7 @@ typedef struct {
 #define MAKANAN(e) (e).m
 #define TREE(e) (e).t
 #define STRING(e) (e).s
+#define INTEGER(e) (e).i
 
 /* Definisi List kosong : NEFF(l) == 0 */
 
