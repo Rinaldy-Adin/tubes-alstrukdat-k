@@ -118,6 +118,7 @@ int main() {
     printf("========== MEMBUAT LIST MAKANAN TERKELOMPOK BERDASARKAN COMMAND ==========\n");
     testMByCommand = listMakananCommand(createString("Fry"), testMakanan);
     printListMakanan(testMByCommand);
+    printf("\n");
 
     printf("========== MEMBAGI STRING ==========\n");
 }

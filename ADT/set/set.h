@@ -40,9 +40,8 @@ void RemoveElmtSet(Set *s, ElTypeStat e, ListStatik makanan);
 Set Union(Set s1, Set s2, ListStatik katalog);
 /* Menghasilkan Set hasil union s1 dan s2 */
 
-void MakeSetResep(Set* S, Tree T, ListStatik katalog);
-/* I.S. S sembarang, T terdefinisi dan berisi resep yang diinginkan */
-/* F.S. S terisi berdasarkan resep dari T */
+boolean CompareInvWTree(Set *S, Set inv, Tree T, ListStatik katalog);
+/* Mengembalikan true jika makanan di inventory bisa membuat makanan di resep T */
 
 void RecommendMakanan(PrioQueue inventory, ListStatik resep, ListStatik katalog);
 /* Memberikan rekomendasi makanan berdasarkan makanan yang ada di inventory */

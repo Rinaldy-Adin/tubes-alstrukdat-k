@@ -101,10 +101,22 @@ int main() {
     MakeEmpty(&inv, NEFFSTAT(katalog));
     RecommendMakanan(inv, resep, katalog);
 
-    printf("Dengan inventory berisi tiap makanan di katalog\n");
+    printf("Dengan inventory berisi beberapa makanan di katalog\n");
     for (i=0; i<NEFFSTAT(katalog)-4; i++) {
-        Makanan(isiInv) = MAKANAN(ELMTSTAT(katalog,i));
-        Enqueue(&inv, isiInv);
+        if (i != 1) {
+            Makanan(isiInv) = MAKANAN(ELMTSTAT(katalog,i));
+            Enqueue(&inv, isiInv);
+        }
+    }
+    printf("\n");
+    RecommendMakanan(inv, resep, katalog);
+
+    printf("Dengan inventory berisi seluruh makanan di katalog\n");
+    for (i=0; i<NEFFSTAT(katalog); i++) {
+        if (i != 1) {
+            Makanan(isiInv) = MAKANAN(ELMTSTAT(katalog,i));
+            Enqueue(&inv, isiInv);
+        }
     }
     printf("\n");
     RecommendMakanan(inv, resep, katalog);

@@ -32,7 +32,7 @@ boolean isSetEmpty(Set s) {
     return true;
 }
 
-boolean isInSet(Set s, ElTypeStat e, ListStatik makanan) {
+boolean isInSet(Set s, ElTypeStat e, ListStatik makanan) { /* Belum dipake */
     /* Mengembalikan true jika e ada di s (jumlah makanan e tidak 0) */
     /* KAMUS LOKAL */
     int idx;
@@ -42,7 +42,7 @@ boolean isInSet(Set s, ElTypeStat e, ListStatik makanan) {
     return (INTEGER(ELMTSTAT(s,idx)) > 0);
 }
 
-boolean isSetEqual(Set s1, Set s2) {
+boolean isSetEqual(Set s1, Set s2) { /* Belum dipake */
     /* Mengembalikan true jika s1 sama dengan s2 */
     /* KAMUS LOKAL */
     int i;
@@ -100,7 +100,7 @@ void RemoveElmtSet(Set *s, ElTypeStat e, ListStatik makanan) {
     INTEGER(ELMTSTAT(*s,idx))--;
 }
 
-Set Union(Set s1, Set s2, ListStatik katalog) {
+Set Union(Set s1, Set s2, ListStatik katalog) { /* Belum dipake */
     /* Menghasilkan Set hasil union s1 dan s2. Prekondisi : NEFF s1 dan s2 sama */
     /* KAMUS LOKAL */
     Set sUnion;
@@ -118,9 +118,8 @@ Set Union(Set s1, Set s2, ListStatik katalog) {
     return sUnion;
 }
 
-void MakeSetResep(Set* S, Tree T, ListStatik katalog) {
-    /* I.S. S terdefinisi, T terdefinisi dan berisi resep yang diinginkan */
-    /* F.S. S terisi berdasarkan resep dari T */
+boolean CompareInvWTree(Set *S, Set inv, Tree T, ListStatik katalog) {
+    /* Mengembalikan true jika makanan di inventory bisa membuat makanan di resep T */
     /* KAMUS LOKAL */
     ElTypeStat m;
 
@@ -128,11 +127,18 @@ void MakeSetResep(Set* S, Tree T, ListStatik katalog) {
     MAKANAN(m) = MAKAN(T);
     AddElmtSet(S, m, katalog);
     if (SIBLING(T) != NULL) {
-        MakeSetResep(S, SIBLING(T), katalog);
+        if (CompareInvWTree(S, inv, SIBLING(T), katalog)) {
+            return true;
+        }
+    }
+    if (isSubset(inv, *S)) {
+        return true;
     }
     if (CHILD(T) != NULL) {
-        MakeSetResep(S, CHILD(T), katalog);
+        RemoveElmtSet(S, m, katalog);
+        return CompareInvWTree(S, inv, CHILD(T), katalog);
     }
+    return false;
 }
 
 void RecommendMakanan(PrioQueue inventory, ListStatik resep, ListStatik katalog) {
@@ -143,7 +149,8 @@ void RecommendMakanan(PrioQueue inventory, ListStatik resep, ListStatik katalog)
     Set inv,setResep;
     ElTypeStat m;
     int i, j, idx;
-    boolean anyRecomm;
+    boolean anyRecomm, recommended;
+    Address p,q;
 
     /* ALGORITMA */
     CreateSet(&inv, katalog);
@@ -153,25 +160,18 @@ void RecommendMakanan(PrioQueue inventory, ListStatik resep, ListStatik katalog)
         MAKANAN(m) = Makanan(Elmt(inventory,i));
         AddElmtSet(&inv,m,katalog);
     }
-    printf("Isi set inventory : ");
-    for (i=0; i<NEFFSTAT(inv); i++) {
-        printf("%d ", ELMTSTAT(inv,i));
-    }
-    printf("\n");
+
     printf("Rekomendasi makanan : ");
     anyRecomm = false;
     for (i = 0; i < listLengthStat(resep); i++) {
         CreateSet(&setResep, katalog);
-        MakeSetResep(&setResep, CHILD(TREE(ELMTSTAT(resep,i))), katalog);
-        printf("Isi set resep : ");
-        for (j=0; j<NEFFSTAT(setResep); j++) {
-            printf("%d ", ELMTSTAT(setResep,j));
-        }
-        printf("\n");
-        if (isSubset(inv,setResep)) {
-            anyRecomm = true;
+        recommended = CompareInvWTree(&setResep, inv, CHILD(TREE(ELMTSTAT(resep,i))), katalog);
+        if (recommended) {
+            if (i > 0) {
+                printf(", ");
+            }
             printString(Nama(MAKAN(TREE(ELMTSTAT(resep,i)))));
-            printf(" ");
+            anyRecomm = true;
         }
     }
     printf("\n");
