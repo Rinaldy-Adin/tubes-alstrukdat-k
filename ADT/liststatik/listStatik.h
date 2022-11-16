@@ -181,12 +181,12 @@ void sortListStat(ListStatik *l, boolean asc);
 /* Proses : Mengurutkan l dengan salah satu algoritma sorting,
    algoritma bebas */
 
-void loadMakanan(ListStatik *l);
+void loadMakanan(ListStatik *l, char *filename);
 /* Membaca list makanan dari file */
 /* I.S. l sembarang */
 /* F.S. l terisi makanan dari file konfigurasi */
 
-void loadResep(ListStatik *l, ListStatik makan);
+void loadResep(ListStatik *l, ListStatik makan, char *filename);
 /* Membaca resep makanan dari file */
 /* I.S. l sembarang */
 /* F.S. l terisi resep dari file konfigurasi */

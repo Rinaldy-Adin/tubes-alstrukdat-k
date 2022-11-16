@@ -7,8 +7,8 @@ int main() {
     Matrix peta;
     ListStatik listCatalog;
     ListStatik listResep;
-    loadMakanan(&listCatalog);
-    loadResep(&listResep, listCatalog);
+    loadMakanan(&listCatalog, "./pita.txt");
+    loadResep(&listResep, listCatalog, "./pitaResep.txt");
     readPetaFromFile(&peta, "peta.txt");
     commandLineCycle(peta, listCatalog, listResep);
 

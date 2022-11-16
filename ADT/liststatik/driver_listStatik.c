@@ -35,8 +35,8 @@ int main() {
     printListString(testStringCopy);
 
     printf("========== MELAKUKAN LOAD MAKANAN DAN RESEP DARI FILE KONFIGURASI ==========\n");
-    loadMakanan(&testMakanan);
-    loadResep(&testResep, testMakanan);
+    loadMakanan(&testMakanan, "./pita.txt");
+    loadResep(&testResep, testMakanan, "./pitaResep.txt");
     printf("\n");
     
     printf("========== PANJANG LIST ==========\n");
@@ -110,7 +110,7 @@ int main() {
     printf("\n");
 
     
-    printf("========== OPERASI INSERT/DELETE (Tidak semua digunakan) ==========\n");
+    printf("========== OPERASI INSERT/DELETE ==========\n");
     CreateTime(&t, 10, 10, 10);
     makeMakanan(&testM, createString("100"), createString("Makanan test"), t, t, t, createString("Buy"), 10, 10);
     MAKANAN(elM) = testM;
@@ -130,7 +130,6 @@ int main() {
 
     printf("========== MEMBUAT LIST MAKANAN TERKELOMPOK BERDASARKAN COMMAND ==========\n");
     testMByCommand = listMakananCommand(createString("Fry"), testMakanan);
-    printListMakanan(testMByCommand);
     printf("\n");
 
     printf("========== MEMBAGI STRING ==========\n");

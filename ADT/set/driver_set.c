@@ -13,8 +13,8 @@ int main() {
 
     /* ALGORITMA */
     // Inisialisasi katalog dan list resep yang ada
-    loadMakanan(&katalog);
-    loadResep(&resep, katalog);
+    loadMakanan(&katalog, "./pita.txt");
+    loadResep(&resep, katalog, "./pitaResep.txt");
 
     printf("========== MEMBUAT SET KOSONG ==========\n");
     CreateSet(&test, katalog);
@@ -96,7 +96,7 @@ int main() {
         printf("Tidak\n");
     }
 
-    printf("========== REKOMENDASI MAKANAN (SEKALIGUS MAKESETRESEP YANG DIGUNAKAN DI REKOMENDASI MAKANAN) ==========\n");
+    printf("========== REKOMENDASI MAKANAN (SEKALIGUS CompareInvWTree YANG DIGUNAKAN DI REKOMENDASI MAKANAN) ==========\n");
     printf("Dengan inventory kosong\n");
     MakeEmpty(&inv, NEFFSTAT(katalog));
     RecommendMakanan(inv, resep, katalog);
