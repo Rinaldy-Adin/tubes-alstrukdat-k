@@ -22,8 +22,6 @@ void displayCurrentState(Matrix peta, Simulator sim, ListStatik listCatalog,
 // Wait for user to enter "START" command
 void waitForStart(Matrix peta);
 
-void initializeSimulator(Simulator *sim, Matrix peta);
-
 int buyCommand(Simulator *sim, Simulator *nextSim, ListStatik listCatalog);
 
 int cookCommand(Simulator *sim, Simulator *nextSim, ListStatik listCatalog,
@@ -45,8 +43,6 @@ void runCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
                 Stack *undoStack, Stack *redoStack, boolean *isRedo,
                 ListStatik listCatalog, ListStatik listResep, String command);
 
-// Run command line until user enters "EXIT" command
-void commandLineCycle(Matrix peta, ListStatik listCatalog,
-                      ListStatik listResep);
+void initializeSimulator(Simulator *sim, Matrix peta);
 
 #endif

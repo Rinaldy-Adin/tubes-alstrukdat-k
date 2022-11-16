@@ -180,7 +180,7 @@ int buyCommand(Simulator *sim, Simulator *nextSim, ListStatik listCatalog) {
     ListStatik list;
     Makanan chosenMakanan;
     infotype inventoryItem;
-    String eventStr;
+    String eventStr, commandStr;
     ElTypeStat eType;
     int command;
 
@@ -192,14 +192,18 @@ int buyCommand(Simulator *sim, Simulator *nextSim, ListStatik listCatalog) {
 
     printf("Kirim 0 untuk exit.\n\n");
     printf("Enter command: ");
-    command = stringToInt(removeLongSpaces(readLine()));
-    printf("\n");
+    commandStr = removeLongSpaces(readLine());
 
-    while (command < 0 || command > NEFFSTAT(list)) {
+    while (true) {
+        if (stringIsIntParsable(commandStr)) {
+            command = stringToInt(commandStr);
+            if (command >= 0 && command <= NEFFSTAT(list))
+                break;
+        }
         printf("Masukkan command yang valid (angka 0 - %d)\n\n",
                NEFFSTAT(list));
         printf("Enter command: ");
-        command = stringToInt(removeLongSpaces(readLine()));
+        commandStr = removeLongSpaces(readLine());
         printf("\n");
     }
 
@@ -234,7 +238,7 @@ int cookCommand(Simulator *sim, Simulator *nextSim, ListStatik listCatalog,
     Makanan chosenMakanan;
     infotype inventoryItem;
     ElTypeStat eType;
-    String eventStr;
+    String eventStr, commandStr;
     int command;
     boolean cookable;
 
@@ -248,29 +252,35 @@ int cookCommand(Simulator *sim, Simulator *nextSim, ListStatik listCatalog,
 
     printf("Kirim 0 untuk exit.\n\n");
     printf("Enter command: ");
-    command = stringToInt(removeLongSpaces(readLine()));
+    commandStr = removeLongSpaces(readLine());
     printf("\n");
 
     while (true) {
-        if (command < 0 || command > NEFFSTAT(list)) {
-            printf("Masukkan command yang valid (angka 0 - %d)\n\n",
-                   NEFFSTAT(list));
-            printf("Enter command: ");
-            command = stringToInt(removeLongSpaces(readLine()));
-            printf("\n");
-        } else if (command == 0) {
-            break;
-        } else {
-            cookable = Cook(ID(MAKANAN(ELMTSTAT(list, command - 1))),
-                            &InventorySim(*nextSim), listResep);
+        if (stringIsIntParsable(commandStr)) {
+            command = stringToInt(commandStr);
+            if (command >= 0 && command <= NEFFSTAT(list)) {
+                if (command == 0) {
+                    break;
+                } else {
+                    cookable = Cook(ID(MAKANAN(ELMTSTAT(list, command - 1))),
+                                    &InventorySim(*nextSim), listResep);
 
-            if (cookable) {
-                break;
-            } else {
-                printf("\nEnter command: ");
-                command = stringToInt(removeLongSpaces(readLine()));
+                    if (cookable) {
+                        break;
+                    } else {
+                        printf("\nEnter command: ");
+                        commandStr = removeLongSpaces(readLine());
+                        continue;
+                    }
+                }
             }
         }
+
+        printf("Masukkan command yang valid (angka 0 - %d)\n\n",
+               NEFFSTAT(list));
+        printf("Enter command: ");
+        commandStr = removeLongSpaces(readLine());
+        printf("\n");
     }
 
     if (command > 0) {
@@ -289,11 +299,13 @@ int cookCommand(Simulator *sim, Simulator *nextSim, ListStatik listCatalog,
 }
 
 void removeActions(Simulator *sim) {
+    /* KAMUS */
     int i;
     ListStatik eventStrings;
     String event;
     ElTypeStat tmp;
 
+    /* ALGORITMA */
     if (listLengthStat(EventsSim(*sim)) == 0)
         return;
 
@@ -310,8 +322,10 @@ void removeActions(Simulator *sim) {
 
 void undoCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
                  Stack *undoStack, Stack *redoStack) {
+    /* KAMUS */
     POINT oldPos;
 
+    /* ALGOITMA */
     if (!StackIsEmpty(*undoStack)) {
         oldPos = PositionSim(*sim);
         Push(redoStack, *sim);
@@ -325,8 +339,10 @@ void undoCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
 
 void redoCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
                  Stack *undoStack, Stack *redoStack) {
+    /* KAMUS */
     POINT oldPos;
 
+    /* ALGORITMA */
     if (!StackIsEmpty(*redoStack)) {
         oldPos = PositionSim(*sim);
         Pop(redoStack, sim);
@@ -341,28 +357,27 @@ void redoCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
 
 void decrementSim(Simulator *sim, Simulator *nextSim, Stack *undoStack,
                   Stack *redoStack, int nMenit) {
+    /* KAMUS */
     Simulator tmp;
 
     /* ALGORITMA */
     Push(undoStack, *sim);
-    printListString(EventsSim(*nextSim));
 
     TimeSim(*nextSim) = NextNMenit(TimeSim(*nextSim), nMenit);
     decrementTime(&DeliverySim(*nextSim), nMenit);
-    decrementTime(&InventorySim(*nextSim), nMenit);
     removeDelivered(&DeliverySim(*nextSim), &InventorySim(*nextSim),
                     &EventsSim(*nextSim));
+    decrementTime(&InventorySim(*nextSim), nMenit);
     removeExpired(&InventorySim(*nextSim), &EventsSim(*nextSim));
 
     CopySimulator(*nextSim, sim);
-    printListString(EventsSim(*sim));
     CreateListStatik(&EventsSim(*nextSim));
 }
 
-// Run command based on input
 void runCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
                 Stack *undoStack, Stack *redoStack, boolean *isRedo,
                 ListStatik listCatalog, ListStatik listResep, String command) {
+    /* KAMUS */
     String mv_north = createString("MOVE NORTH");
     String mv_east = createString("MOVE EAST");
     String mv_south = createString("MOVE SOUTH");
@@ -386,8 +401,8 @@ void runCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
     String undo = createString("UNDO");
     String redo = createString("REDO");
 
+    /* ALGORITMA */
     *isRedo = false;
-
     printf("\n");
     if (stringsAreEqual(command, mv_north)) {
         if (move(&PositionSim(*nextSim), peta, 'N'))
@@ -465,7 +480,9 @@ void runCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
         }
     } else if (stringsAreEqual(STRING(ELMTSTAT(splitString(command), 0)),
                                wait)) {
-        if (NEFFSTAT(splitString(command)) == 3) {
+        if (NEFFSTAT(splitString(command)) == 3 &&
+            stringIsIntParsable(STRING(ELMTSTAT(splitString(command), 1))) &&
+            stringIsIntParsable(STRING(ELMTSTAT(splitString(command), 1)))) {
             x = stringToInt(STRING(ELMTSTAT(splitString(command), 1)));
             y = stringToInt(STRING(ELMTSTAT(splitString(command), 2)));
             minutes = 60 * x + y;
@@ -507,60 +524,3 @@ void initializeSimulator(Simulator *sim, Matrix peta) {
 
     CreateSimulator(sim, nama, pos, time, inventory, delivery, events);
 }
-
-/* Run command line until user enters "EXIT" command */
-void commandLineCycle(Matrix peta, ListStatik listCatalog,
-                      ListStatik listResep) {
-    /* KAMUS */
-    String command, exit, start;
-    Simulator simulator, nextSimulator;
-    Stack undoStack, redoStack;
-    boolean started, isRedo;
-
-    /* ALGORITMA */
-    command = createString("");
-    exit = createString("EXIT");
-    start = createString("START");
-    CreateEmptyStack(&undoStack);
-    CreateEmptyStack(&redoStack);
-
-    // splashScreen();
-
-    printf("Enter command: ");
-    START();
-    started = false;
-    while (!endWord) {
-        if (!started) {
-            command = readLine();
-            command = removeLongSpaces(command);
-            if (stringsAreEqual(command, start)) {
-                initializeSimulator(&simulator, peta);
-                CopySimulator(simulator, &nextSimulator);
-                started = true;
-                isRedo = false;
-            } else if (stringsAreEqual(command, exit)) {
-                endWord = true;
-            } else {
-                printf("Enter command: ");
-            }
-        } else {
-            displayCurrentState(peta, simulator, listCatalog, undoStack,
-                                redoStack, isRedo);
-
-            printf("Enter command: ");
-            command = readLine();
-            command = removeLongSpaces(command);
-            if (stringsAreEqual(command, exit)) {
-                endWord = true;
-            } else {
-                runCommand(&peta, &simulator, &nextSimulator, &undoStack,
-                           &redoStack, &isRedo, listCatalog, listResep,
-                           command);
-            }
-        }
-    }
-}
-
-/* STUFF TO FIX
-6. Timed actions
-*/

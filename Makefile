@@ -15,6 +15,7 @@ endif
 .PHONY: clean echoes
 
 all: $(addsuffix .exe, $(basename $(TARGETS)))
+# all: ./main.exe
 
 $(addsuffix .exe, $(basename $(TARGETS))): $(SRCS)
 	$(CC) -o $@ $(SRCS) $(addsuffix .c, $(basename $@))

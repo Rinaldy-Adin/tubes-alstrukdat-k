@@ -3,7 +3,7 @@
 Ayam Mentah
 0 0 2
 0 0 2
-0 0 0
+0 0 2
 Buy
 2
 2
@@ -19,7 +19,7 @@ Chop
 Tepung
 0 1 0
 0 0 1
-0 0 0
+0 0 2
 Buy
 1
 1
