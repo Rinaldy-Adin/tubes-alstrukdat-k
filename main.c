@@ -13,11 +13,11 @@ int main() {
     Stack undoStack, redoStack;
     boolean started, isRedo;
 
-    loadMakanan(&listCatalog);
-    loadResep(&listResep, listCatalog);
+    /* ALGORITMA */
+    loadMakanan(&listCatalog, "./pita.txt");
+    loadResep(&listResep, listCatalog, "./pitaResep.txt");
     readPetaFromFile(&peta, "peta.txt");
 
-    /* ALGORITMA */
     command = createString("");
     exit = createString("EXIT");
     start = createString("START");

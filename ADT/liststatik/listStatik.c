@@ -346,7 +346,7 @@ void deleteLastStat(ListStatik *l, ElTypeStat *val) {
 }
 
 /* Membaca makanan dari file */
-void loadMakanan(ListStatik *l) {
+void loadMakanan(ListStatik *l, char *filename) {
     /* Membaca list makanan dari file */
     /* I.S. l sembarang */
     /* F.S. l terisi makanan dari file konfigurasi */
@@ -355,7 +355,6 @@ void loadMakanan(ListStatik *l) {
     String Nmakanan, id, nama, kadal, command, del, act, w, h;
     int N;  // Jumlah makanan
     int i, idx;
-    char *filename = "./pita.txt";
 
     /* ALGORITMA */
     CreateListStatik(l);
@@ -399,7 +398,7 @@ void loadMakanan(ListStatik *l) {
     }
 }
 
-void loadResep(ListStatik *l, ListStatik makan) {
+void loadResep(ListStatik *l, ListStatik makan, char *filename) {
     /* Membaca list resep dari file */
     /* I.S. l sembarang, makan terdefinisi dan sudah berisi semua makanan yang
      * ada */
@@ -412,7 +411,6 @@ void loadResep(ListStatik *l, ListStatik makan) {
     String NResep, NChild, IDParent, IDChild;
     int N, M;  // Jumlah resep dan bahan per makanan
     int i, j, k, idx;
-    char *filename = "./pitaResep.txt";
 
     /* ALGORITMA */
     CreateListStatik(l);
