@@ -22,7 +22,12 @@ void CreateListStatik(ListStatik *l) {
 }
 
 void CopyListStatikString(ListStatik Source, ListStatik *Dest) {
+    /* I.S. Source terdefinisi dan Dest sembarang, kedua list berisi string */
+    /* F.S. List Dest berisi nilai yang sama dengan Source */
+    /* KAMUS*/
     int i;
+
+    /* ALGORITMA */
     CreateListStatik(Dest);
     NEFFSTAT(*Dest) = NEFFSTAT(Source);
     for (i = 0; i < NEFFSTAT(Source); i++) {
@@ -89,6 +94,10 @@ boolean isFullStat(ListStatik l) {
 }
 
 void printListString(ListStatik l) {
+    /* I.S. l boleh kosong */
+    /* F.S. Jika l tidak kosong tercetak semua informasi string yang ada di
+     * dalam l */
+    /* KAMUS */
     IdxType i;
 
     /* ALGORITMA */
@@ -298,7 +307,7 @@ void deleteFirstStat(ListStatik *l, ElTypeStat *val) {
 
     /* ALGORITMA */
     *val = ELMTSTAT(*l, 0);
-    for (i = IDX_MIN; i < listLengthStat(*l)-1; i++) {
+    for (i = IDX_MIN; i < listLengthStat(*l) - 1; i++) {
         ELMTSTAT(*l, i) = ELMTSTAT(*l, i + 1);
     }
     NEFFSTAT(*l)--;
@@ -346,7 +355,7 @@ void loadMakanan(ListStatik *l) {
     String Nmakanan, id, nama, kadal, command, del, act, w, h;
     int N;  // Jumlah makanan
     int i, idx;
-    char *filename = "../../pita.txt";
+    char *filename = "./pita.txt";
 
     /* ALGORITMA */
     CreateListStatik(l);
@@ -356,8 +365,12 @@ void loadMakanan(ListStatik *l) {
     } else {
         Nmakanan = createString(currentWord.TabWord);
         N = stringToInt(Nmakanan);
-        if (N > CAPACITYSTAT) { // Jika jumlah makanan yang mau dibaca > kapasitas
-            printf("Maksimal hanya boleh ada %d makanan. Pembacaan dibatasi sampai %d makanan.\n", CAPACITYSTAT, CAPACITYSTAT);
+        if (N >
+            CAPACITYSTAT) {  // Jika jumlah makanan yang mau dibaca > kapasitas
+            printf(
+                "Maksimal hanya boleh ada %d makanan. Pembacaan dibatasi "
+                "sampai %d makanan.\n",
+                CAPACITYSTAT, CAPACITYSTAT);
             N = CAPACITYSTAT;
         }
         // Urutan pembacaan data (per baris) : id, nama, kedaluwarsa, delivery
@@ -399,7 +412,7 @@ void loadResep(ListStatik *l, ListStatik makan) {
     String NResep, NChild, IDParent, IDChild;
     int N, M;  // Jumlah resep dan bahan per makanan
     int i, j, k, idx;
-    char *filename = "../../pitaResep.txt";
+    char *filename = "./pitaResep.txt";
 
     /* ALGORITMA */
     CreateListStatik(l);
@@ -411,7 +424,10 @@ void loadResep(ListStatik *l, ListStatik makan) {
         NResep = createString(currentWord.TabWord);
         N = stringToInt(NResep);
         if (N > CAPACITYSTAT) {
-            printf("Maksimal hanya boleh ada %d resep. Pembacaan dibatasi sampai %d resep.\n", CAPACITYSTAT, CAPACITYSTAT);
+            printf(
+                "Maksimal hanya boleh ada %d resep. Pembacaan dibatasi sampai "
+                "%d resep.\n",
+                CAPACITYSTAT, CAPACITYSTAT);
             N = CAPACITYSTAT;
         }
         ADVWORD();
@@ -536,6 +552,8 @@ ListStatik listMakananCommand(String com, ListStatik l) {
 }
 
 ListStatik splitString(String str) {
+    /* Mengembalikan list statik yang berisi string satu kata yang berupa
+       setiap kata yang terpisah spasi pada str */
     /* KAMUS */
     ListStatik listStr;
     char c;

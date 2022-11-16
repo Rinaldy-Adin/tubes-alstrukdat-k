@@ -19,36 +19,40 @@ typedef struct {
 #define TAB(s) (s).Tab
 #define LEN(s) (s).Length
 
-// Baca string sampai menemukan karakter '\n'
-String readLine();
-
-// Membuat struktur data string dari array of characters
 String createString(char charArr[]);
+/* menghasilkan struktur data string dari array of characters */
 
 void copyString(String source, String *dest);
+/* I.S. source terdefinisi, dest bebas */
+/* F.S. string dest memiliki nilai yang sama dengan source */
 
-// Membandingkan kesamaan dari dua string
+String readLine();
+/* Baca string sampai menemukan karakter '\n' */
+
 boolean stringsAreEqual(String s1, String s2);
+/* Membandingkan kesamaan dari dua string */
 
 String concatString(String s1, String s2);
+/* Menghasilkan string berupa penggabungan dari
+   dua string dengan dipisahkan spasi */
 
-// Menghilangkan leading dan trailing zero, serta mereduksi
-// Nilai Spasi yang panjang menjadi hanya satu karakter spasi
 String removeLongSpaces(String str);
+/* Mengembalikan str tanpa leading dan trailing zero,
+   serta mereduksi Spasi yang panjang menjadi hanya satu
+   karakter spasi */
 
-// Print string ke terminal tanpa ada penambahan karakter
 void printString(String str);
+/* I.S. str terdefinisi */
+/* F.S. string str ditampilkan tanpa ada karakter tambahan */
 
-/* Konversi String ke bentuk lain */
 int stringToInt(String s);
 /* Mengubah String s menjadi int. Prekondisi : String s hanya berisi angka */
+
+boolean stringIsIntParsable(String s);
+/* Melakukan evaluasi apakah string hanya berisi angka */
 
 TIME stringToTime(String s);
 /* Mengubah String s menjadi TIME. Prekondisi : String s memiliki format D H M
  */
-
-/* Konversi bentuk lain ke string */
-String wordToString(Word w);
-/* Mengubah Word w menjadi String. */
 
 #endif

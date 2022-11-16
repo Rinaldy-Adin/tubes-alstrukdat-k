@@ -35,6 +35,11 @@ void CreateSimulator(Simulator* sim, String nama, POINT pos, TIME time,
 /* F.S. seluruh komponen sim terisi sesuai masukan. */
 
 void CopySimulator(Simulator sim, Simulator* newSim);
+/* I.S. sim terdefinisi, newSim sembarang */
+/* F.S. seluruh komponen newSim terisi dengan nilai yang sama
+        dengan sim; */
+/* Proses: deep copy dengan memanggil fungsi
+           copy untuk tipe data yang mengandung pointer */
 
 PrioQueue AdvInventory(PrioQueue inventory);
 /* Mengembalikan state inventory dimana semua makanan kadaluarsanya sudah "maju"

@@ -26,6 +26,11 @@ void CopySimulator(Simulator sim, Simulator* newSim) {
     CopyPrioqueue(DeliverySim(sim), &DeliverySim(*newSim));
     CopyListStatikString(EventsSim(sim), &EventsSim(*newSim));
 }
+/* I.S. sim terdefinisi, newSim sembarang */
+/* F.S. seluruh komponen newSim terisi dengan nilai yang sama
+        dengan sim; */
+/* Proses: deep copy dengan memanggil fungsi
+           copy untuk tipe data yang mengandung pointer */
 
 PrioQueue AdvInventory(PrioQueue inventory) {
     /* KAMUS */

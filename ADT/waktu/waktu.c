@@ -83,6 +83,8 @@ void TulisTIME(TIME T) {
 }
 
 void TulisTIMEShort(TIME T) {
+    /* I.S. : T sembarang */
+    /* F.S. : Nilai T ditulis dg format D hari H jam M menit secara singkat */
     int DD, HH, MM;
 
     DD = Hari(T);

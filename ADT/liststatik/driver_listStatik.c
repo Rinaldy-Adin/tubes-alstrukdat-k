@@ -8,11 +8,12 @@
 #include "listStatik.h"
 
 int main() {
-    ListStatik testMakanan, testResep, testMByCommand;
+    ListStatik testMakanan, testResep, testMByCommand, testString, testStringCopy;
     Makanan testM;
     Tree testR;
     TIME t;
-    ElTypeStat elM, elR;
+    ElTypeStat elM, elR, elS;
+    String str;
     int i;
 
     printf("========== MEMBUAT LIST STATIK KOSONG ==========\n");
@@ -20,6 +21,18 @@ int main() {
     CreateListStatik(&testMakanan);
     CreateListStatik(&testResep);
     printf("\n");
+
+    printf("========== MENYALIN ISI LIST STATIK STRING ==========\n");
+    CreateListStatik(&testString);
+    STRING(elS) = createString("satu");
+    insertLastStat(&testString, elS);
+    STRING(elS) = createString("dua");
+    insertLastStat(&testString, elS);
+    CopyListStatikString(testString, &testStringCopy);
+    printf("String awal:");
+    printListString(testString);
+    printf("String salinan:");
+    printListString(testStringCopy);
 
     printf("========== MELAKUKAN LOAD MAKANAN DAN RESEP DARI FILE KONFIGURASI ==========\n");
     loadMakanan(&testMakanan);
@@ -121,4 +134,10 @@ int main() {
     printf("\n");
 
     printf("========== MEMBAGI STRING ==========\n");
+    str = createString("satu dua tiga");
+    printf("String awal: ");
+    printString(str);
+    printf("\n");
+    testString = splitString(str);
+    printListString(testString);
 }

@@ -66,6 +66,8 @@ void CreateListStatik(ListStatik *l);
 /* F.S. Terbentuk List l kosong dengan kapasitas CAPACITYSTAT */
 
 void CopyListStatikString(ListStatik Source, ListStatik *Dest);
+/* I.S. Source terdefinisi dan Dest sembarang, kedua list berisi string */
+/* F.S. List Dest berisi nilai yang sama dengan Source */
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
@@ -96,6 +98,9 @@ boolean isFullStat(ListStatik l);
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 void printListString(ListStatik l);
+/* I.S. l boleh kosong */
+/* F.S. Jika l tidak kosong tercetak semua informasi string yang ada di
+ * dalam l */
 
 void printListMakanan(ListStatik l);
 /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung
@@ -195,5 +200,7 @@ ListStatik listMakananCommand(String com, ListStatik l);
  * dari list l */
 
 ListStatik splitString(String str);
+/* Mengembalikan list statik yang berisi string satu kata yang berupa
+   setiap kata yang terpisah spasi pada str */
 
 #endif

@@ -64,6 +64,8 @@ void MakeEmpty(PrioQueue *Q, int Max);
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 
 void CopyPrioqueue(PrioQueue Source, PrioQueue *Dest);
+/* I.S. Source terdefinisi dan Dest sembarang */
+/* F.S. List Dest berisi nilai yang sama dengan Source */
 
 /* *** Destruktor *** */
 void DeAlokasi(PrioQueue *Q);

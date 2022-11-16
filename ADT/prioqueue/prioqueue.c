@@ -34,7 +34,12 @@ void MakeEmpty(PrioQueue *Q, int Max) {
 }
 
 void CopyPrioqueue(PrioQueue Source, PrioQueue *Dest) {
+    /* I.S. Source terdefinisi dan Dest sembarang */
+    /* F.S. List Dest berisi nilai yang sama dengan Source */
+    /* KAMUS */
     int i;
+
+    /* ALGORITMA */
     MakeEmpty(Dest, MaxEl(Source));
     if (!IsEmpty(Source)) {
         i = Head(Source);

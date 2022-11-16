@@ -1,6 +1,5 @@
 #include "strlib.h"
 
-// Membuat struktur data string dari array of characters
 String createString(char charArr[]) {
     /* KAMUS */
     String str;
@@ -16,6 +15,7 @@ String createString(char charArr[]) {
 
     return str;
 }
+/* menghasilkan struktur data string dari array of characters */
 
 void copyString(String source, String *dest) {
     /* KAMUS */
@@ -27,8 +27,9 @@ void copyString(String source, String *dest) {
         TAB(*dest)[i] = TAB(source)[i];
     }
 }
+/* I.S. source terdefinisi, dest bebas */
+/* F.S. string dest memiliki nilai yang sama dengan source */
 
-// Baca string sampai menemukan karakter '\n'
 String readLine() {
     /* KAMUS */
     String str;
@@ -48,8 +49,8 @@ String readLine() {
 
     return str;
 }
+/* Baca string sampai menemukan karakter '\n' */
 
-// Membandingkan kesamaan dari dua string
 boolean stringsAreEqual(String s1, String s2) {
     /* KAMUS */
     int i;
@@ -65,6 +66,7 @@ boolean stringsAreEqual(String s1, String s2) {
 
     return true;
 }
+/* Membandingkan kesamaan dari dua string */
 
 String concatString(String s1, String s2) {
     /* KAMUS */
@@ -88,9 +90,9 @@ String concatString(String s1, String s2) {
 
     return str;
 }
+/* Menghasilkan string berupa penggabungan dari
+   dua string dengan dipisahkan */
 
-// Menghilangkan leading dan trailing zero, serta mereduksi
-// Nilai Spasi yang panjang menjadi hanya satu karakter spasi
 String removeLongSpaces(String str) {
     /* KAMUS */
     String removed;
@@ -121,8 +123,10 @@ String removeLongSpaces(String str) {
 
     return removed;
 }
+/* Mengembalikan str tanpa leading dan trailing zero,
+   serta mereduksi Spasi yang panjang menjadi hanya satu
+   karakter spasi */
 
-// Print string ke terminal tanpa ada penambahan karakter
 void printString(String str) {
     /* KAMUS */
     int i;
@@ -132,9 +136,10 @@ void printString(String str) {
         printf("%c", TAB(str)[i]);
     }
 }
+/* I.S. str terdefinisi */
+/* F.S. string str ditampilkan tanpa ada karakter tambahan */
 
 int stringToInt(String s) {
-    /* Mengubah String s menjadi integer */
     /* KAMUS LOKAL */
     int i;
     int result;
@@ -149,6 +154,20 @@ int stringToInt(String s) {
     }
     return result;
 }
+/* Mengubah String s menjadi int. Prekondisi : String s hanya berisi angka */
+
+boolean stringIsIntParsable(String s) {
+    /* KAMUS */
+    int i;
+
+    /* ALGORITMA */
+    for (i = 0; i < LEN(s); i++) {
+        if (TAB(s)[i] < '0' || TAB(s)[i] > '9')
+            return false;
+    }
+    return true;
+}
+/* Melakukan evaluasi apakah string hanya berisi angka */
 
 TIME stringToTime(String s) {
     /* Mengubah String s menjadi TIME */
@@ -187,19 +206,5 @@ TIME stringToTime(String s) {
     CreateTime(&result, d, h, m);
     return result;
 }
-
-String wordToString(Word w) {
-    /* KAMUS */
-    String str;
-    int i;
-
-    /* ALGORITMA */
-    for (i = 0; i < WordLength(w); i++) {
-        TAB(str)[i] = CharAt(w, i);
-    }
-
-    LEN(str) = WordLength(w);
-
-    return str;
-}
-/* Mengubah Word w menjadi String. */
+/* Mengubah String s menjadi TIME. Prekondisi : String s memiliki format D H M
+ */
