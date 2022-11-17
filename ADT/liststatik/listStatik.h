@@ -16,7 +16,7 @@
 #include "../wordmachine/wordmachine.h"
 
 /*  Kamus Umum */
-#define CAPACITYSTAT 100
+#define CAPACITYSTAT 20
 /* Kapasitas penyimpanan */
 #define IDX_MIN 0
 /* Indeks minimum list */

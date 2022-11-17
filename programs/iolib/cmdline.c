@@ -394,6 +394,7 @@ void runCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
     String cookbook = createString("COOKBOOK");
     String inventory = createString("INVENTORY");
     String delivery = createString("DELIVERY");
+    String recommend = createString("RECOMMEND");
 
     String wait = createString("WAIT");
     int x, y, minutes;
@@ -422,6 +423,8 @@ void runCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
         printResep(listResep);
     } else if (stringsAreEqual(command, inventory)) {
         displayInventory(InventorySim(*sim));
+    } else if (stringsAreEqual(command, recommend)) {
+        RecommendMakanan(InventorySim(*sim),listResep,listCatalog);
     } else if (stringsAreEqual(command, delivery)) {
         displayDelivery(DeliverySim(*sim));
     } else if (stringsAreEqual(command, undo)) {

@@ -10,6 +10,7 @@
 #include "../../ADT/simulator/simulator.h"
 #include "../../ADT/stack/stack.h"
 #include "../../ADT/strlib/strlib.h"
+#include "../../ADT/set/set.h"
 #include "../makanan/inventory.h"
 #include "../makanan/order.h"
 #include "../peta/cmdPeta.h"
