@@ -41,8 +41,4 @@ void CopySimulator(Simulator sim, Simulator* newSim);
 /* Proses: deep copy dengan memanggil fungsi
            copy untuk tipe data yang mengandung pointer */
 
-PrioQueue AdvInventory(PrioQueue inventory);
-/* Mengembalikan state inventory dimana semua makanan kadaluarsanya sudah "maju"
- */
-
 #endif
