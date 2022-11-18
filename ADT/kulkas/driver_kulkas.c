@@ -1,9 +1,11 @@
 #include "kulkas.h"
 
 // cd tubes-alstrukdat-j-priv
-// gcc driver_kulkas.c kulkas.c ../matrix/matrix.c ../strlib/strlib.c ../makanan/makanan.c ../liststatik/listStatik.c ../waktu/waktu.c ../charmachine/charmachine.c ../wordmachine/wordmachine.c ../tree/tree.c -o driver_kulkas 
+// gcc driver_kulkas.c kulkas.c ../matrix/matrix.c ../strlib/strlib.c
+// ../makanan/makanan.c ../liststatik/listStatik.c ../waktu/waktu.c
+// ../charmachine/charmachine.c ../wordmachine/wordmachine.c ../tree/tree.c -o
+// driver_kulkas
 // ./driver_kulkas
-
 
 int main() {
     Kulkas test;
@@ -14,7 +16,7 @@ int main() {
     ayam.id = id;
     ayam.height = 2;
     ayam.width = 3;
-    ayam.kadaluwarsa.DD =3;
+    ayam.kadaluwarsa.DD = 3;
     ayam.kadaluwarsa.HH = 2;
     ayam.kadaluwarsa.MM = 48;
 
@@ -40,16 +42,17 @@ int main() {
     sambal.kadaluwarsa.HH = 2;
     sambal.kadaluwarsa.MM = 1;
 
-    printf("Penjelasan makanan (berlaku driver ini saja sebagai contoh): \n" 
-            "1. ayam,  ID = 14, height: 2, width: 3, kadaluwarsa: (3,2,48)\n"
-            "2. bawang, ID = 123, height: 1, width: 1, kadaluwarsa: (1,4,0\n"
-            "3. sambal, ID: 56, height: 4; width: 4, kadaluwarsa: (0,2,1)\n\n");
+    printf(
+        "Penjelasan makanan (berlaku driver ini saja sebagai contoh): \n"
+        "1. ayam,  ID = 14, height: 2, width: 3, kadaluwarsa: (3,2,48)\n"
+        "2. bawang, ID = 123, height: 1, width: 1, kadaluwarsa: (1,4,0\n"
+        "3. sambal, ID: 56, height: 4; width: 4, kadaluwarsa: (0,2,1)\n\n");
 
     printf("A. CREATE EMPTY KULKAS\n\n");
     createEmptyKulkas(&test);
     displayKulkas(test);
     printf("\n");
-    
+
     printf("B. INSERT TO KULKAS \n\n");
     printf("1. MASUKKAN AYAM KE KULKAS\n");
     insertToKulkas(ayam, &test);
@@ -90,6 +93,4 @@ int main() {
     removeFromKulkas(&test, createString("99"), &temp);
     displayKulkas(test);
     printf("\n");
-   
 }
-
