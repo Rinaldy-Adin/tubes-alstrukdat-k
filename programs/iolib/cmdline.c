@@ -357,18 +357,16 @@ void redoCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
 
 void decrementSim(Simulator *sim, Simulator *nextSim, Stack *undoStack,
                   Stack *redoStack, int nMenit) {
-    /* KAMUS */
-    Simulator tmp;
-
     /* ALGORITMA */
     Push(undoStack, *sim);
 
     TimeSim(*nextSim) = NextNMenit(TimeSim(*nextSim), nMenit);
-    decrementTime(&DeliverySim(*nextSim), nMenit);
-    removeDelivered(&DeliverySim(*nextSim), &InventorySim(*nextSim),
-                    &EventsSim(*nextSim));
-    decrementTime(&InventorySim(*nextSim), nMenit);
-    removeExpired(&InventorySim(*nextSim), &EventsSim(*nextSim));
+    decrementTime(&DeliverySim(*nextSim), &InventorySim(*nextSim),
+                  &EventsSim(*nextSim), nMenit);
+    // removeDelivered(&DeliverySim(*nextSim), &InventorySim(*nextSim),
+    //                 &EventsSim(*nextSim));
+    // decrementTime(&InventorySim(*nextSim), nMenit);
+    // removeExpired(&InventorySim(*nextSim), &EventsSim(*nextSim));
 
     CopySimulator(*nextSim, sim);
     CreateListStatik(&EventsSim(*nextSim));
@@ -424,7 +422,7 @@ void runCommand(Matrix *peta, Simulator *sim, Simulator *nextSim,
     } else if (stringsAreEqual(command, inventory)) {
         displayInventory(InventorySim(*sim));
     } else if (stringsAreEqual(command, recommend)) {
-        RecommendMakanan(InventorySim(*sim),listResep,listCatalog);
+        RecommendMakanan(InventorySim(*sim), listResep, listCatalog);
     } else if (stringsAreEqual(command, delivery)) {
         displayDelivery(DeliverySim(*sim));
     } else if (stringsAreEqual(command, undo)) {

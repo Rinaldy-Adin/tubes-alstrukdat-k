@@ -11,66 +11,78 @@ void delivery(Makanan* makanan, PrioQueue* deliveryList) {
     Enqueue(deliveryList, X);
 }
 
-void buy(Makanan* makanan, PrioQueue* inventory) {
+void buy(Makanan makanan, int minutesOffset, PrioQueue* inventory) {
     // inventory mungkin kosong, 100 cukup lah ya
     if (!inventory) {
         MakeEmpty(inventory, 100);
     }
     infotype X;
-    Makanan(X) = *makanan;
-    Time(X) = Kadal(*makanan);
+    Makanan(X) = makanan;
+    Time(X) = MenitToTIME(TIMEToMenit(Kadal(makanan)) - minutesOffset);
     Enqueue(inventory, X);
 }
 
-void decrementTime(PrioQueue* deliveryList, int minuteSteps) {
+void decrementTime(PrioQueue* deliveryList, PrioQueue* inventoryList,
+                   ListStatik* eventList, int minuteSteps) {
     // Decrement waktu di deliveryList sesuai minuteSteps (kalo 1 berarti
     // dikurang 1 menit)
     int i, minutes;
-    for (i = 0; i < NBElmt(*deliveryList); i++) {
-        minutes = TIMEToMenit(Time(Elmt(*deliveryList, i))) - minuteSteps;
-        if (minutes < 0)
-            minutes = 0;
-        Time(Elmt(*deliveryList, i)) = MenitToTIME(minutes);
-    }
-}
-
-void removeDelivered(PrioQueue* deliveryList, PrioQueue* inventory,
-                     ListStatik* EventsList) {
-    // Remove dari deliveryList, di enqueue ke inventory
-    int i;
     infotype iType;
     ElTypeStat eType;
     String eventStr;
 
-    for (i = 0; i < NBElmt(*deliveryList); i++) {
-        while (TIMEToMenit(Time(Elmt(*deliveryList, i))) == 0 &&
-               NBElmt(*deliveryList) > 1) {
-            eventStr = createString("Deliv");
+    i = Head(*inventoryList);
+    while (!IsEmpty(*inventoryList) && i < NBElmt(*inventoryList)) {
+        minutes = TIMEToMenit(Time(Elmt(*inventoryList, i))) - minuteSteps;
+        printf("%ld\n", TIMEToMenit(Time(Elmt(*inventoryList, i))));
+        printf("%d\n", minutes);
+        if (minutes < 0)
+            minutes = 0;
+        Time(Elmt(*inventoryList, i)) = MenitToTIME(minutes);
+
+        if (TIMEToMenit(Time(Elmt(*inventoryList, i))) == 0) {
+            eventStr = createString("Exp");
             eventStr =
-                concatString(eventStr, ID(Makanan(Elmt(*deliveryList, i))));
+                concatString(eventStr, ID(Makanan(Elmt(*inventoryList, i))));
 
             STRING(eType) = eventStr;
-            insertLastStat(EventsList, eType);
+            insertLastStat(eventList, eType);
 
-            buy(&Makanan(Elmt(*deliveryList, i)), inventory);
-
-            int j;
-            for (j = 0; j < Tail(*deliveryList); j++) {
-                Elmt(*deliveryList, j) = Elmt(*deliveryList, j + 1);
-            }
-            Tail(*deliveryList)--;
+            Dequeue(inventoryList, &iType);
+        } else {
+            i++;
         }
-        if (TIMEToMenit(Time(Elmt(*deliveryList, i))) == 0 &&
-            NBElmt(*deliveryList) == 1) {
+    }
+
+    i = Head(*deliveryList);
+    while (!IsEmpty(*deliveryList) && i < NBElmt(*deliveryList)) {
+        minutes = TIMEToMenit(Time(Elmt(*deliveryList, i))) - minuteSteps;
+
+        if (minutes > 0) {
+            Time(Elmt(*deliveryList, i)) = MenitToTIME(minutes);
+            i++;
+        } else {
+            minutes *= -1;
+
             eventStr = createString("Deliv");
             eventStr =
                 concatString(eventStr, ID(Makanan(Elmt(*deliveryList, i))));
 
             STRING(eType) = eventStr;
-            insertLastStat(EventsList, eType);
+            insertLastStat(eventList, eType);
 
-            Dequeue(deliveryList, &iType);
-            buy(&Makanan(Elmt(*deliveryList, i)), inventory);
+            if (minutes < TIMEToMenit(Kadal(Makanan(Elmt(*deliveryList, i))))) {
+                buy(Makanan(Elmt(*deliveryList, i)), minutes, inventoryList);
+                Dequeue(deliveryList, &iType);
+            } else {
+                eventStr = createString("Exp");
+                eventStr =
+                    concatString(eventStr, ID(Makanan(Elmt(*deliveryList, i))));
+
+                STRING(eType) = eventStr;
+                insertLastStat(eventList, eType);
+                Dequeue(deliveryList, &iType);
+            }
         }
     }
 }

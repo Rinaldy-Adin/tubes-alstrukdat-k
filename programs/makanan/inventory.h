@@ -8,6 +8,4 @@
 
 void displayInventory(PrioQueue inventory);
 
-void removeExpired(PrioQueue *inventoryList, ListStatik *EventsList);
-
 #endif

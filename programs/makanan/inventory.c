@@ -25,38 +25,38 @@ void displayInventory(PrioQueue inventory) {
     }
 }
 
-void removeExpired(PrioQueue *inventoryList, ListStatik *EventsList) {
-    int i;
-    infotype iType;
-    ElTypeStat eType;
-    String eventStr;
+// void removeExpired(PrioQueue *inventoryList, ListStatik *EventsList) {
+//     int i;
+//     infotype iType;
+//     ElTypeStat eType;
+//     String eventStr;
 
-    for (i = 0; i < NBElmt(*inventoryList); i++) {
-        while (TIMEToMenit(Time(Elmt(*inventoryList, i))) == 0 &&
-               NBElmt(*inventoryList) > 1) {
-            eventStr = createString("Exp");
-            eventStr =
-                concatString(eventStr, ID(Makanan(Elmt(*inventoryList, i))));
+//     for (i = 0; i < NBElmt(*inventoryList); i++) {
+//         while (TIMEToMenit(Time(Elmt(*inventoryList, i))) == 0 &&
+//                NBElmt(*inventoryList) > 1) {
+//             eventStr = createString("Exp");
+//             eventStr =
+//                 concatString(eventStr, ID(Makanan(Elmt(*inventoryList, i))));
 
-            STRING(eType) = eventStr;
-            insertLastStat(EventsList, eType);
+//             STRING(eType) = eventStr;
+//             insertLastStat(EventsList, eType);
 
-            int j;
-            for (j = 0; j < Tail(*inventoryList); j++) {
-                Elmt(*inventoryList, j) = Elmt(*inventoryList, j + 1);
-            }
-            Tail(*inventoryList)--;
-        }
-        if (TIMEToMenit(Time(Elmt(*inventoryList, i))) == 0 &&
-            NBElmt(*inventoryList) == 1) {
-            eventStr = createString("Exp");
-            eventStr =
-                concatString(eventStr, ID(Makanan(Elmt(*inventoryList, i))));
+//             int j;
+//             for (j = 0; j < Tail(*inventoryList); j++) {
+//                 Elmt(*inventoryList, j) = Elmt(*inventoryList, j + 1);
+//             }
+//             Tail(*inventoryList)--;
+//         }
+//         if (TIMEToMenit(Time(Elmt(*inventoryList, i))) == 0 &&
+//             NBElmt(*inventoryList) == 1) {
+//             eventStr = createString("Exp");
+//             eventStr =
+//                 concatString(eventStr, ID(Makanan(Elmt(*inventoryList, i))));
 
-            STRING(eType) = eventStr;
-            insertLastStat(EventsList, eType);
+//             STRING(eType) = eventStr;
+//             insertLastStat(EventsList, eType);
 
-            Dequeue(inventoryList, &iType);
-        }
-    }
-}
+//             Dequeue(inventoryList, &iType);
+//         }
+//     }
+// }
