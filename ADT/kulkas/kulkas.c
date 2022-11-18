@@ -168,7 +168,7 @@ boolean cmpID(Kulkas K, String id, int i, int j) {
             return false;
         }
     }
-    return true;
+    return (ELMT(DISP(K), i, j + LEN(id)) == '|' || ELMT(DISP(K), i, j + LEN(id)) == '*' || ELMT(DISP(K), i, j + LEN(id)) == ' ') ;
 }
 
 void clearSpace(Kulkas *pK, int pos_row, int pos_col, int rowsCleared, int colsCleared) {
