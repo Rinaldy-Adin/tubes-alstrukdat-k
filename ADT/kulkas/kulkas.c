@@ -19,7 +19,7 @@ void createEmptyKulkas (Kulkas *pIn) {
             ELMT((DISP(*pIn)), i, j) = ' ';
         }
     }
-    CreateListStatik(&(CONT(*pIn)));
+    MakeEmpty(&(CONT(*pIn)), MAXKULKAS);
 }
 
 void displayKulkas(Kulkas K) {
@@ -40,18 +40,18 @@ void displayKulkas(Kulkas K) {
 
 
     printf(" ~~~~~~~~~~ APA SAJA YANG ADA DI KULKAS? ~~~~~~~~~~ \n");
-    if (isEmptyStat(CONT(K))) {
+    if (IsEmpty(CONT(K))) {
         printf("Kulkas kosong.\n");
     }
     else {
         printf("No | Nama Makanan | ID | Waktu kadaluarsa (jika dikeluarkan dari kulkas) \n");
-        for (int i = 0; i < NEFFSTAT(CONT(K)); i++) {
+        for (int i = 0; i < NBElmt(CONT(K)); i++) {
             printf("%d | ", i+1);
-            printString(ELMTSTAT(CONT(K), i).m.nama);
+            printString(Elmt(CONT(K), i).makanan.nama);
             printf(" | ");
-            printString(ELMTSTAT(CONT(K), i).m.id);
+            printString(Elmt(CONT(K), i).makanan.id);
             printf(" | ");
-            TulisTIME(ELMTSTAT(CONT(K), i).m.kadaluwarsa);
+            TulisTIME(Elmt(CONT(K), i).time);
             printf("\n");
         } 
     }
@@ -89,20 +89,21 @@ void findSpaceInKulkas(Kulkas K, int *upperRow, int *leftCol, int rowsReq, int c
     }
 }
 
-void insertToKulkas(Makanan in, Kulkas *pK) {
+void insertToKulkas(infotype in, Kulkas *pK) {
     // Baris dan kolom yang diperlukan untuk makanan:
     int rowsReq, colsReq;
     // Posisi makanan: 
     int upperRow, leftCol;
 
-    getSpaceRequired(in, &rowsReq, &colsReq);
+    getSpaceRequired(in.makanan, &rowsReq, &colsReq);
     findSpaceInKulkas(*pK, &upperRow, &leftCol, rowsReq, colsReq);
 
     if (upperRow != -1 && leftCol != -1) {
-        putInKulkas(pK, in, upperRow, leftCol, rowsReq, colsReq);
-        ElTypeStat temp;
-        temp.m = in;
-        insertLastStat(&CONT(*pK), temp);
+        putInKulkas(pK, in.makanan, upperRow, leftCol, rowsReq, colsReq);
+        Enqueue(&CONT(*pK), in);
+        // ElTypeStat temp;
+        // temp.m = in;
+        // insertLastStat(&CONT(*pK), temp);
     }
     else {
         printf("Kulkas penuh :(");
@@ -126,21 +127,23 @@ void putInKulkas(Kulkas *pK, Makanan M, int upperRow, int leftCol, int rowsReq, 
     }
 }
 
-void removeFromKulkas(Kulkas *pK, String id, Makanan *out) {
+void removeFromKulkas(Kulkas *pK, int idx, infotype *out) {
     int rowsCleared, colsCleared;
-    int idx;
     int pos_row, pos_col;
-    ElTypeStat temp;
+    String id;
+    infotype temp;
 
-    idx = indexOfMakanan(CONT(*pK), id);
-    if (idx == IDX_UNDEF) {
-        printf("Makanan tersebut tidak ada di kulkas.\n");
+    if (idx >= NBElmt(CONT(*pK)) || idx < 0) {
+        printf("Index makanan tidak valid.\n");
         return;
     }
     else {
-        deleteAtStat(&CONT(*pK), &temp, idx);
-        *out = temp.m;
-        getSpaceRequired(*out, &rowsCleared, &colsCleared);
+        temp = Elmt(CONT(*pK), idx);
+        id = temp.makanan.id;
+        Ambil(&CONT(*pK), temp, out);
+        // deleteAtStat(&CONT(*pK), &temp, idx);
+        // *out = temp.m;
+        getSpaceRequired(out->makanan, &rowsCleared, &colsCleared);
         findFoodPosition(*pK, &pos_row, &pos_col, id);
         clearSpace(pK, pos_row, pos_col, rowsCleared, colsCleared);
     }
