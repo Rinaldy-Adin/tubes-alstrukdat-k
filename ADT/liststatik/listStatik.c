@@ -245,7 +245,7 @@ int indexOfResep(ListStatik l, String searchID) {
 }
 
 /* ********** MENAMBAH ELEMEN ********** */
-/* *** Menambahkan elemen terakhir *** */
+/* *** Menambahkan elemen pertama *** */
 void insertFirstStat(ListStatik *l, ElTypeStat val) {
     /* Proses: Menambahkan val sebagai elemen pertama List */
     /* I.S. List l boleh kosong, tetapi tidak penuh */
