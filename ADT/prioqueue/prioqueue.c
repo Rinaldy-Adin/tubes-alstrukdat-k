@@ -163,9 +163,10 @@ boolean Cook(String IDMakanan, PrioQueue *Q, ListStatik resep) {
     /* F.S. Jika bahan dan resep ada, makanan dengan ID IDMakanan terbentuk.
      * Makanan di Q berkurang. Q mungkin kosong. */
     /* KAMUS LOKAL */
-    int idxResep, idxInv;
+    int idxResep, idxInv, i;
     Tree r;
-    infotype required, temp, cooked;
+    infotype temp, cooked;
+    PrioQueue required; // List bahan yang diperlukan
 
     /* ALGORITMA */
     if (IsEmpty(*Q)) {
@@ -173,6 +174,7 @@ boolean Cook(String IDMakanan, PrioQueue *Q, ListStatik resep) {
         return false;
     }
 
+    MakeEmpty(&required, 20);
     // Cari makanan di resep
     idxResep = indexOfResep(resep, IDMakanan);
     if (idxResep == IDX_UNDEF) {
@@ -190,9 +192,11 @@ boolean Cook(String IDMakanan, PrioQueue *Q, ListStatik resep) {
             printf("\n");
             return false;
         }
-        required = (*Q).T[idxInv];
-        Ambil(Q, required, &temp);
+        Enqueue(&required, (*Q).T[idxInv]);
         r = SIBLING(r);
+    }
+    for (i=0; i<NBElmt(required); i++) {
+        Ambil(Q, required.T[i], &temp);
     }
     Makanan(cooked) = MAKAN(TREE(ELMTSTAT(resep, idxResep)));
     Time(cooked) = Kadal(Makanan(cooked));

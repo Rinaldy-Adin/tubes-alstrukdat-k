@@ -126,7 +126,7 @@ void printListMakanan(ListStatik l) {
 
     /* ALGORITMA */
     if (isEmptyStat(l)) {
-        printf("List makanan kosong");
+        printf("List makanan kosong\n");
     } else {
         printf("Daftar Makanan\n");
         printf(
@@ -390,10 +390,8 @@ void loadMakanan(ListStatik *l, char *filename) {
             idx = indexOfMakanan(*l, id);
             if (idx != IDX_UNDEF) {
                 deleteAtStat(l, &temp, idx);
-                insertAtStat(l, e, idx);
-            } else {
-                insertLastStat(l, e);
-            }
+            } 
+            insertLastStat(l, e);
         }
     }
 }
@@ -497,23 +495,18 @@ void printResep(ListStatik resep) {
         p = TREE(ELMTSTAT(resep, i));
         printf("    %d. ", i + 1);
         printString(Nama(MAKAN(p)));
-        printf(" (");
+        printf("\n");
+        printf("       ");
         printString(Command(MAKAN(p)));
-        printf(")\n");
-        printf("       Dibuat memakai bahan : ");
+        printf(" - ");
         p = CHILD(p);
         while (SIBLING(p) != NULL) {
             printString(Nama(MAKAN(p)));
-            printf(" (");
-            printString(Command(MAKAN(p)));
-            printf(")");
-            printf(" dan ");
+            printf(" - ");
             p = SIBLING(p);
         }
         printString(Nama(MAKAN(p)));
-        printf(" (");
-        printString(Command(MAKAN(p)));
-        printf(")\n");
+        printf("\n");
     }
 }
 
