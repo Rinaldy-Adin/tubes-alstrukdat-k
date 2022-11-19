@@ -86,17 +86,9 @@ int main() {
                     redoCommand(&peta, &simulator, &nextSimulator, &undoStack, &redoStack);
                     isRedo = true;
                 } else if (stringsAreEqual(command, createString("KULKAS"))) {
-                    if (isAdjacent(PositionSim(simulator), peta, 'K')) {
-                        actTime = kulkasCommand(&simulator, &nextSimulator, &kulkas);
-                        if (actTime != -1)
-                            decrementSim(&simulator, &nextSimulator, &undoStack, &redoStack,
-                                         actTime);
-                    } else {
-                        printString(NamaSim(simulator));
-                        printf(
-                            " tidak berada di area "
-                            "kulkas\n");
-                    }
+                    actTime = kulkasCommand(&simulator, &nextSimulator, &kulkas);
+                    if (actTime != -1)
+                        decrementSim(&simulator, &nextSimulator, &undoStack, &redoStack, actTime);
                 } else if (stringsAreEqual(command, createString("BUY"))) {
                     if (isAdjacent(PositionSim(simulator), peta, 'T')) {
                         actTime = buyCommand(&simulator, &nextSimulator, listCatalog);
