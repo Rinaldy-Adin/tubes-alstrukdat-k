@@ -6,16 +6,18 @@
 #include "../strlib/strlib.h"
 #include "../matrix/matrix.h"
 #include "../../boolean.h"
+#include "../prioqueue/prioqueue.h"
 #include <stdio.h>
 
 /* DEFINISI DAN SPESIFIKASI ADT KULKAS */
 typedef struct {
     Matrix disp;
-    ListStatik contents;
+    PrioQueue contents;
 } Kulkas;
 
 #define KULKAS_ROWCAP 20
 #define KULKAS_COLCAP 30
+#define MAXKULKAS 50
 
 /* SELEKTOR */
 #define DISP(k) (k).disp
@@ -33,7 +35,7 @@ void findSpaceInKulkas(Kulkas K, int *upperRow, int *leftCol, int rowsReq, int c
 
 void putInKulkas(Kulkas *pK, Makanan M, int upperRow, int leftCol, int rowsReq, int colsReq);
 
-void insertToKulkas(Makanan in, Kulkas *pK);
+void insertToKulkas(infotype in, Kulkas *pK);
 
 void findFoodPosition(Kulkas K, int *pos_row, int *pos_col, String id);
 
@@ -41,7 +43,7 @@ boolean cmpID(Kulkas K, String id, int i, int j);
 
 void clearSpace(Kulkas *pK, int pos_row, int pos_col, int rowsCleared, int colsCleared);
 
-void removeFromKulkas(Kulkas *pK, String id, Makanan *out);
+void removeFromKulkas(Kulkas *pK, int idx, infotype *out);
 
 
 #endif

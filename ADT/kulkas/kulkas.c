@@ -1,59 +1,56 @@
 #include "kulkas.h"
 
-void createEmptyKulkas (Kulkas *pIn) {
+void createEmptyKulkas(Kulkas *pIn) {
     createMatrix(KULKAS_ROWCAP, KULKAS_COLCAP, &(DISP(*pIn)));
     // Frame kulkas
-    for (int j=0; j<KULKAS_COLCAP; j++) {
+    for (int j = 0; j < KULKAS_COLCAP; j++) {
         ELMT((DISP(*pIn)), 0, j) = '=';
-        ELMT((DISP(*pIn)), KULKAS_ROWCAP-1, j) = '=';
+        ELMT((DISP(*pIn)), KULKAS_ROWCAP - 1, j) = '=';
     }
 
-    for (int i=1; i<KULKAS_ROWCAP-1; i++) {
+    for (int i = 1; i < KULKAS_ROWCAP - 1; i++) {
         ELMT((DISP(*pIn)), i, 0) = '|';
-        ELMT((DISP(*pIn)), i, KULKAS_COLCAP-1) = '|';
+        ELMT((DISP(*pIn)), i, KULKAS_COLCAP - 1) = '|';
     }
 
     // Isi kulkas (kosong/blank)
-    for (int i=1; i<KULKAS_ROWCAP-1; i++) {
-        for (int j=1; j<KULKAS_COLCAP-1; j++) {
+    for (int i = 1; i < KULKAS_ROWCAP - 1; i++) {
+        for (int j = 1; j < KULKAS_COLCAP - 1; j++) {
             ELMT((DISP(*pIn)), i, j) = ' ';
         }
     }
-    CreateListStatik(&(CONT(*pIn)));
+    MakeEmpty(&(CONT(*pIn)), MAXKULKAS);
 }
 
 void displayKulkas(Kulkas K) {
     printf("~~~~~~~~~~ TAMPILAN KULKAS ~~~~~~~~~~ \n");
-    
-    for (int i=0; i<KULKAS_ROWCAP; i++) {
-        for (int j =0; j<KULKAS_COLCAP; j++) {
+
+    for (int i = 0; i < KULKAS_ROWCAP; i++) {
+        for (int j = 0; j < KULKAS_COLCAP; j++) {
             if (ELMT(DISP(K), i, j) == '*') {
                 printf(" ");
-            }
-            else {
+            } else {
                 printf("%c", ELMT(DISP(K), i, j));
             }
         }
         printf("\n");
-   }
+    }
     printf("\n");
 
-
     printf(" ~~~~~~~~~~ APA SAJA YANG ADA DI KULKAS? ~~~~~~~~~~ \n");
-    if (isEmptyStat(CONT(K))) {
+    if (IsEmpty(CONT(K))) {
         printf("Kulkas kosong.\n");
-    }
-    else {
+    } else {
         printf("No | Nama Makanan | ID | Waktu kadaluarsa (jika dikeluarkan dari kulkas) \n");
-        for (int i = 0; i < NEFFSTAT(CONT(K)); i++) {
-            printf("%d | ", i+1);
-            printString(ELMTSTAT(CONT(K), i).m.nama);
+        for (int i = 0; i < NBElmt(CONT(K)); i++) {
+            printf("%d | ", i + 1);
+            printString(Elmt(CONT(K), i).makanan.nama);
             printf(" | ");
-            printString(ELMTSTAT(CONT(K), i).m.id);
+            printString(Elmt(CONT(K), i).makanan.id);
             printf(" | ");
-            TulisTIME(ELMTSTAT(CONT(K), i).m.kadaluwarsa);
+            TulisTIME(Elmt(CONT(K), i).time);
             printf("\n");
-        } 
+        }
     }
 }
 
@@ -63,8 +60,8 @@ void getSpaceRequired(Makanan M, int *rows, int *cols) {
 }
 
 boolean isSpaceAvailable(Kulkas K, int upperRow, int leftCol, int rowsReq, int colsReq) {
-    for (int i=upperRow; i < upperRow + rowsReq; i++) {
-        for (int j=leftCol; j < leftCol + colsReq; j++) {
+    for (int i = upperRow; i < upperRow + rowsReq; i++) {
+        for (int j = leftCol; j < leftCol + colsReq; j++) {
             if (ELMT(DISP(K), i, j) != ' ') {
                 return false;
             }
@@ -78,8 +75,8 @@ void findSpaceInKulkas(Kulkas K, int *upperRow, int *leftCol, int rowsReq, int c
     *upperRow = -1;
     *leftCol = -1;
 
-    for (int i=1; i < KULKAS_ROWCAP - rowsReq; i++) {
-        for (int j=1; j < KULKAS_COLCAP - colsReq; j++) {
+    for (int i = 1; i < KULKAS_ROWCAP - rowsReq; i++) {
+        for (int j = 1; j < KULKAS_COLCAP - colsReq; j++) {
             if (isSpaceAvailable(K, i, j, rowsReq, colsReq)) {
                 *upperRow = i;
                 *leftCol = j;
@@ -89,22 +86,22 @@ void findSpaceInKulkas(Kulkas K, int *upperRow, int *leftCol, int rowsReq, int c
     }
 }
 
-void insertToKulkas(Makanan in, Kulkas *pK) {
+void insertToKulkas(infotype in, Kulkas *pK) {
     // Baris dan kolom yang diperlukan untuk makanan:
     int rowsReq, colsReq;
-    // Posisi makanan: 
+    // Posisi makanan:
     int upperRow, leftCol;
 
-    getSpaceRequired(in, &rowsReq, &colsReq);
+    getSpaceRequired(in.makanan, &rowsReq, &colsReq);
     findSpaceInKulkas(*pK, &upperRow, &leftCol, rowsReq, colsReq);
 
     if (upperRow != -1 && leftCol != -1) {
-        putInKulkas(pK, in, upperRow, leftCol, rowsReq, colsReq);
-        ElTypeStat temp;
-        temp.m = in;
-        insertLastStat(&CONT(*pK), temp);
-    }
-    else {
+        putInKulkas(pK, in.makanan, upperRow, leftCol, rowsReq, colsReq);
+        Enqueue(&CONT(*pK), in);
+        // ElTypeStat temp;
+        // temp.m = in;
+        // insertLastStat(&CONT(*pK), temp);
+    } else {
         printf("Kulkas penuh :(");
     }
 }
@@ -114,9 +111,8 @@ void putInKulkas(Kulkas *pK, Makanan M, int upperRow, int leftCol, int rowsReq, 
         for (int j = leftCol; j < leftCol + colsReq; j++) {
             int k = (j - leftCol + 1) % (LEN(ID(M)) + 1);
             if (k != 0) {
-                ELMT(DISP(*pK), i, j) = ID(M).Tab[k-1];
-            }
-            else {
+                ELMT(DISP(*pK), i, j) = ID(M).Tab[k - 1];
+            } else {
                 ELMT(DISP(*pK), i, j) = '*';
             }
         }
@@ -126,31 +122,33 @@ void putInKulkas(Kulkas *pK, Makanan M, int upperRow, int leftCol, int rowsReq, 
     }
 }
 
-void removeFromKulkas(Kulkas *pK, String id, Makanan *out) {
+void removeFromKulkas(Kulkas *pK, int idx, infotype *out) {
     int rowsCleared, colsCleared;
-    int idx;
     int pos_row, pos_col;
-    ElTypeStat temp;
+    String id;
+    infotype temp;
 
-    idx = indexOfMakanan(CONT(*pK), id);
-    if (idx == IDX_UNDEF) {
-        printf("Makanan tersebut tidak ada di kulkas.\n");
+    if (idx >= NBElmt(CONT(*pK)) || idx < 0) {
+        printf("Index makanan tidak valid.\n");
         return;
-    }
-    else {
-        deleteAtStat(&CONT(*pK), &temp, idx);
-        *out = temp.m;
-        getSpaceRequired(*out, &rowsCleared, &colsCleared);
+    } else {
+        temp = Elmt(CONT(*pK), idx);
+        id = temp.makanan.id;
+        Ambil(&CONT(*pK), temp, out);
+        // deleteAtStat(&CONT(*pK), &temp, idx);
+        // *out = temp.m;
+        getSpaceRequired(out->makanan, &rowsCleared, &colsCleared);
         findFoodPosition(*pK, &pos_row, &pos_col, id);
         clearSpace(pK, pos_row, pos_col, rowsCleared, colsCleared);
     }
-    
 }
 
 void findFoodPosition(Kulkas K, int *pos_row, int *pos_col, String id) {
     for (int i = 1; i < KULKAS_ROWCAP - 1; i++) {
-        for (int j = 1; j < KULKAS_COLCAP - LEN(id) ; j++) {
-            if (ELMT(DISP(K), i, j) == id.Tab[0] && (ELMT(DISP(K), i, j-1) == '|' || ELMT(DISP(K), i, j-1) == '*' || ELMT(DISP(K), i, j-1) == ' ')) {
+        for (int j = 1; j < KULKAS_COLCAP - LEN(id); j++) {
+            if (ELMT(DISP(K), i, j) == id.Tab[0] &&
+                (ELMT(DISP(K), i, j - 1) == '|' || ELMT(DISP(K), i, j - 1) == '*' ||
+                 ELMT(DISP(K), i, j - 1) == ' ')) {
                 if (cmpID(K, id, i, j)) {
                     // printf("posisi: %d %d\n", i, j);
                     *pos_row = i;
@@ -168,7 +166,8 @@ boolean cmpID(Kulkas K, String id, int i, int j) {
             return false;
         }
     }
-    return (ELMT(DISP(K), i, j + LEN(id)) == '|' || ELMT(DISP(K), i, j + LEN(id)) == '*' || ELMT(DISP(K), i, j + LEN(id)) == ' ') ;
+    return (ELMT(DISP(K), i, j + LEN(id)) == '|' || ELMT(DISP(K), i, j + LEN(id)) == '*' ||
+            ELMT(DISP(K), i, j + LEN(id)) == ' ');
 }
 
 void clearSpace(Kulkas *pK, int pos_row, int pos_col, int rowsCleared, int colsCleared) {
@@ -178,4 +177,3 @@ void clearSpace(Kulkas *pK, int pos_row, int pos_col, int rowsCleared, int colsC
         }
     }
 }
-

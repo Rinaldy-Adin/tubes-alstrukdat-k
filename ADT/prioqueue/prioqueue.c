@@ -96,8 +96,8 @@ void deleteAtPQ(PrioQueue *Q, infotype *val, IdxType idx) {
         Head(*Q) = Nil;
         Tail(*Q) = Nil;
     } else {
-        *val = Elmt(*Q, i);
-        for (i = idx; i < Tail(*Q); i++) {
+        *val = Elmt(*Q, idx + Head(*Q));
+        for (i = idx + Head(*Q); i < Tail(*Q); i++) {
             Elmt(*Q, i) = Elmt(*Q, i + 1);
         }
         Tail(*Q)--;
@@ -109,7 +109,6 @@ int idxInventory(PrioQueue Q, Makanan m) {
     /* Mengembalikan indeks Makanan m di inventory */
     /* KAMUS LOKAL */
     int i;
-    int length;
     boolean found;
 
     /* ALGORITMA */
@@ -117,9 +116,8 @@ int idxInventory(PrioQueue Q, Makanan m) {
         return IDX_UNDEF;
     } else {  // Skema searching dengan boolean
         found = false;
-        length = NBElmt(Q);
-        i = 0;
-        while (i < length && !(found)) {
+        i = Head(Q);
+        while (i <= Tail(Q) && !(found)) {
             if (isMakananEqual(m, Q.T[i].makanan)) {
                 found = true;
             } else {
@@ -154,12 +152,12 @@ void Ambil(PrioQueue *Q, infotype X, infotype *result) {
 
     /* ALGORITMA */
     if (NBElmt(*Q) == 1 && checkEq(InfoHead(*Q), X)) {
+        *result = InfoHead(*Q);
         Head(*Q) = Nil;
         Tail(*Q) = Nil;
-        *result = InfoHead(*Q);
     }
 
-    for (i = 0; i < NBElmt(*Q); i++) {
+    for (i = Head(*Q); i <= Tail(*Q); i++) {
         if (checkEq(Elmt(*Q, i), X)) {
             temp = Elmt(*Q, i);
             for (j = i; j < Tail(*Q); j++) {
@@ -178,9 +176,10 @@ boolean Cook(String IDMakanan, PrioQueue *Q, ListStatik resep) {
     /* F.S. Jika bahan dan resep ada, makanan dengan ID IDMakanan terbentuk.
      * Makanan di Q berkurang. Q mungkin kosong. */
     /* KAMUS LOKAL */
-    int idxResep, idxInv;
+    int idxResep, idxInv, i;
     Tree r;
-    infotype required, temp, cooked;
+    infotype temp, cooked;
+    PrioQueue required;  // List bahan yang diperlukan
 
     /* ALGORITMA */
     if (IsEmpty(*Q)) {
@@ -188,6 +187,7 @@ boolean Cook(String IDMakanan, PrioQueue *Q, ListStatik resep) {
         return false;
     }
 
+    MakeEmpty(&required, 20);
     // Cari makanan di resep
     idxResep = indexOfResep(resep, IDMakanan);
     if (idxResep == IDX_UNDEF) {
@@ -205,9 +205,11 @@ boolean Cook(String IDMakanan, PrioQueue *Q, ListStatik resep) {
             printf("\n");
             return false;
         }
-        required = (*Q).T[idxInv];
-        Ambil(Q, required, &temp);
+        Enqueue(&required, (*Q).T[idxInv]);
         r = SIBLING(r);
+    }
+    for (i = Head(*Q); i <= Tail(*Q); i++) {
+        Ambil(Q, required.T[i], &temp);
     }
     Makanan(cooked) = MAKAN(TREE(ELMTSTAT(resep, idxResep)));
     Time(cooked) = Kadal(Makanan(cooked));

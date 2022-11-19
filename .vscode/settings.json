@@ -15,7 +15,8 @@
         "cursed.h": "c",
         "inventory.h": "c",
         "order.h": "c",
-        "matrix.h": "c"
+        "matrix.h": "c",
+        "set.h": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }
