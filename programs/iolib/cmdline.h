@@ -16,7 +16,6 @@
 #include "../makanan/order.h"
 #include "../peta/cmdPeta.h"
 #include "boolean.h"
-#include "cursed.h"
 
 void displayCurrentState(Matrix peta, Simulator sim, ListStatik listCatalog, Stack undoStack,
                          Stack redoStack, boolean isRedo);

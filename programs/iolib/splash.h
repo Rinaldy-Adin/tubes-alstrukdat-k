@@ -1,5 +1,5 @@
-#ifndef __CURSED_H__
-#define __CURSED_H__
+#ifndef __SPLASH_H__
+#define __SPLASH_H__
 
 #include <stdio.h>
 

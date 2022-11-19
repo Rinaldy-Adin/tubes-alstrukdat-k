@@ -16,7 +16,9 @@
         "inventory.h": "c",
         "order.h": "c",
         "matrix.h": "c",
-        "set.h": "c"
+        "set.h": "c",
+        "kulkas.h": "c",
+        "splash.h": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }

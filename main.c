@@ -3,6 +3,7 @@
 #include "./ADT/matrix/matrix.h"
 #include "./ADT/prioqueue/prioqueue.h"
 #include "./programs/iolib/cmdline.h"
+#include "./programs/iolib/splash.h"
 
 int main() {
     /* KAMUS */
@@ -30,6 +31,7 @@ int main() {
 
     splashScreen();
 
+    printf("\n");
     printf("Enter START/EXIT: ");
     START();
     started = false;

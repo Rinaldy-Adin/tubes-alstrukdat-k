@@ -17,12 +17,12 @@ typedef struct {
     int Length;
 } Word;
 
-#define WordLength(W) (W).Length
-#define CharAt(W, idx) (W).TabWord[idx]
-
 /* State Mesin Word */
 extern boolean endWord;
 extern Word currentWord;
+
+#define WordLength(W) (W).Length
+#define CharAt(W, idx) (W).TabWord[idx]
 
 void IgnoreBlanks();
 /* Mengabaikan satu atau beberapa BLANK
@@ -55,11 +55,5 @@ void CopyWord();
           currentChar = BLANK atau currentChar = MARK;
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
-
-void duplicateWord(Word *word1, Word *word2);
-/* Duplicate word1 into word2 */
-
-int wordToInt(Word w);
-/* Mengubah Word w menjadi integer */
 
 #endif
