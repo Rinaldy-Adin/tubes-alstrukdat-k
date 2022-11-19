@@ -19,8 +19,8 @@
 
 /* Definisi elemen dan address */
 typedef struct {
-    TIME time; /* [1..100], waktu dengan nilai 1..100 (1 adalah waktu adalah
-                  terendah) */
+    TIME time;       /* [1..100], waktu dengan nilai 1..100 (1 adalah waktu adalah
+                        terendah) */
     Makanan makanan; /* elemen karakter */
 } infotype;
 typedef int address; /* indeks tabel */
@@ -84,6 +84,8 @@ void Dequeue(PrioQueue *Q, infotype *X);
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S.
         Q mungkin kosong */
+
+void deleteAtPQ(PrioQueue *Q, infotype *val, IdxType idx);
 
 /* *** Searching indeks makanan *** */
 int idxInventory(PrioQueue Q, Makanan m);

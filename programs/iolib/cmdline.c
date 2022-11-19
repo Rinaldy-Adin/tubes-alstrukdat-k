@@ -278,6 +278,112 @@ int cookCommand(Simulator *sim, Simulator *nextSim, ListStatik listCatalog, List
     return -1;
 }
 
+int kulkasCommand(Simulator *sim, Simulator *nextSim, Kulkas *kulkas) {
+    /* KAMUS */
+    ListStatik list;
+    Makanan chosenMakanan;
+    infotype inventoryItem;
+    String eventStr, commandStr;
+    ElTypeStat eType;
+    int command;
+    boolean correctCommand;
+
+    /* ALGORITMA */
+    displayKulkas(*kulkas);
+
+    printf("Enter command (INSERT/TAKE/EXIT): ");
+    commandStr = removeLongSpaces(readLine());
+    printf("\n");
+
+    correctCommand = false;
+    while (!stringsAreEqual(commandStr, createString("EXIT"))) {
+        if (stringsAreEqual(commandStr, createString("INSERT"))) {
+            displayInventory(InventorySim(*sim));
+            correctCommand = true;
+
+            if (NBElmt(InventorySim(*sim)) > 0) {
+                printf("\nMasukkan nomor makanan yang ingin dimasukan ke kulkas: ");
+                commandStr = removeLongSpaces(readLine());
+                printf("\n");
+
+                while (true) {
+                    if (stringIsIntParsable(commandStr)) {
+                        command = stringToInt(commandStr);
+                        if (command >= 0 && command <= NBElmt(InventorySim(*sim)))
+                            break;
+                    }
+                    printf("Masukkan command yang valid (angka 0 - %d)\n\n",
+                           NBElmt(InventorySim(*sim)));
+                    printf("Masukkan nomor makanan yang ingin dimasukan ke kulkas: ");
+                    commandStr = removeLongSpaces(readLine());
+                    printf("\n");
+                }
+
+                if (command > 0) {
+                    deleteAtPQ(&InventorySim(*nextSim), &inventoryItem, command - 1);
+                    insertToKulkas(Makanan(inventoryItem), kulkas);
+
+                    printf("Berhasil memasukan ");
+                    printString(Nama(Makanan(inventoryItem)));
+                    printf(" ke dalam kulkas.\n");
+
+                    eventStr = concatString(createString("Ins"), ID(Makanan(inventoryItem)));
+
+                    STRING(eType) = eventStr;
+                    insertLastStat(&EventsSim(*nextSim), eType);
+                    return 1;
+                }
+            }
+        } else if (stringsAreEqual(commandStr, createString("TAKE"))) {
+            correctCommand = true;
+            if (NEFFSTAT(CONT(*kulkas)) > 0) {
+                printf("Masukkan nomor makanan yang ingin diambil dari kulkas: ");
+                commandStr = removeLongSpaces(readLine());
+                printf("\n");
+
+                while (true) {
+                    if (stringIsIntParsable(commandStr)) {
+                        command = stringToInt(commandStr);
+                        if (command >= 0 && command <= NEFFSTAT(CONT(*kulkas)))
+                            break;
+                    }
+                    printf("Masukkan command yang valid (angka 0 - %d)\n\n",
+                           NEFFSTAT(CONT(*kulkas)));
+                    printf("Masukkan nomor makanan yang ingin dimasukan k kulkas: ");
+                    commandStr = removeLongSpaces(readLine());
+                    printf("\n");
+                }
+
+                if (command > 0) {
+                    removeFromKulkas(kulkas, commandStr, &chosenMakanan);
+
+                    Makanan(inventoryItem) = chosenMakanan;
+                    Time(inventoryItem) = Kadal(chosenMakanan);
+                    Enqueue(&InventorySim(*nextSim), inventoryItem);
+
+                    printf("Berhasil mengambil ");
+                    printString(Nama(Makanan(inventoryItem)));
+                    printf(" dari kulkas.\n");
+
+                    eventStr = concatString(createString("Take"), ID(chosenMakanan));
+
+                    STRING(eType) = eventStr;
+                    insertLastStat(&EventsSim(*nextSim), eType);
+                    return 1;
+                }
+            }
+        }
+        if (!correctCommand)
+            printf("Command yang dimasukkan salah\n\n");
+        correctCommand = false;
+        printf("Enter command (INSERT/TAKE/EXIT): ");
+        commandStr = removeLongSpaces(readLine());
+        printf("\n");
+    }
+
+    return -1;
+}
+
 void removeActions(Simulator *sim) {
     /* KAMUS */
     int i;

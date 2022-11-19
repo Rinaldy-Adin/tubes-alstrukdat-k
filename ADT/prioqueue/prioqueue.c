@@ -64,8 +64,7 @@ void Enqueue(PrioQueue *Q, infotype X) {
         Tail(*Q)++;
         int i;
         for (i = 0; i < NBElmt(*Q); i++) {
-            if (TIMEToMenit(Time(X)) < TIMEToMenit(Time(Elmt(*Q, i))) ||
-                i == NBElmt(*Q) - 1) {
+            if (TIMEToMenit(Time(X)) < TIMEToMenit(Time(Elmt(*Q, i))) || i == NBElmt(*Q) - 1) {
                 int j;
                 for (j = Tail(*Q); j > i; j--) {
                     Elmt(*Q, j) = Elmt(*Q, j - 1);
@@ -85,6 +84,23 @@ void Dequeue(PrioQueue *Q, infotype *X) {
     } else {
         *X = InfoHead(*Q);
         Head(*Q)++;
+    }
+}
+
+void deleteAtPQ(PrioQueue *Q, infotype *val, IdxType idx) {
+    IdxType i;
+
+    /* ALGORITMA */
+    if (NBElmt(*Q) == 1) {
+        *val = InfoHead(*Q);
+        Head(*Q) = Nil;
+        Tail(*Q) = Nil;
+    } else {
+        *val = Elmt(*Q, i);
+        for (i = idx; i < Tail(*Q); i++) {
+            Elmt(*Q, i) = Elmt(*Q, i + 1);
+        }
+        Tail(*Q)--;
     }
 }
 
@@ -124,8 +140,7 @@ boolean checkEq(infotype x, infotype y) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    return (TEQ(Time(x), Time(y)) &&
-            stringsAreEqual(ID(Makanan(x)), ID(Makanan(y))));
+    return (TEQ(Time(x), Time(y)) && stringsAreEqual(ID(Makanan(x)), ID(Makanan(y))));
 }
 
 void Ambil(PrioQueue *Q, infotype X, infotype *result) {

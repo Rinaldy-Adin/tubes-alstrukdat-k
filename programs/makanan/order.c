@@ -22,8 +22,8 @@ void buy(Makanan makanan, int minutesOffset, PrioQueue* inventory) {
     Enqueue(inventory, X);
 }
 
-void decrementTime(PrioQueue* deliveryList, PrioQueue* inventoryList,
-                   ListStatik* eventList, int minuteSteps) {
+void decrementTime(PrioQueue* deliveryList, PrioQueue* inventoryList, ListStatik* eventList,
+                   int minuteSteps) {
     // Decrement waktu di deliveryList sesuai minuteSteps (kalo 1 berarti
     // dikurang 1 menit)
     int i, minutes;
@@ -31,42 +31,33 @@ void decrementTime(PrioQueue* deliveryList, PrioQueue* inventoryList,
     ElTypeStat eType;
     String eventStr;
 
-    i = Head(*inventoryList);
-    while (!IsEmpty(*inventoryList) && i < NBElmt(*inventoryList)) {
+    for (i = Head(*inventoryList); !IsEmpty(*inventoryList) && i <= Tail(*inventoryList); i++) {
         minutes = TIMEToMenit(Time(Elmt(*inventoryList, i))) - minuteSteps;
-        printf("%ld\n", TIMEToMenit(Time(Elmt(*inventoryList, i))));
-        printf("%d\n", minutes);
         if (minutes < 0)
             minutes = 0;
         Time(Elmt(*inventoryList, i)) = MenitToTIME(minutes);
 
         if (TIMEToMenit(Time(Elmt(*inventoryList, i))) == 0) {
             eventStr = createString("Exp");
-            eventStr =
-                concatString(eventStr, ID(Makanan(Elmt(*inventoryList, i))));
+            eventStr = concatString(eventStr, ID(Makanan(Elmt(*inventoryList, i))));
 
             STRING(eType) = eventStr;
             insertLastStat(eventList, eType);
 
             Dequeue(inventoryList, &iType);
-        } else {
-            i++;
         }
     }
 
-    i = Head(*deliveryList);
-    while (!IsEmpty(*deliveryList) && i < NBElmt(*deliveryList)) {
+    for (i = Head(*deliveryList); !IsEmpty(*deliveryList) && i <= Tail(*deliveryList); i++) {
         minutes = TIMEToMenit(Time(Elmt(*deliveryList, i))) - minuteSteps;
 
         if (minutes > 0) {
             Time(Elmt(*deliveryList, i)) = MenitToTIME(minutes);
-            i++;
         } else {
             minutes *= -1;
 
             eventStr = createString("Deliv");
-            eventStr =
-                concatString(eventStr, ID(Makanan(Elmt(*deliveryList, i))));
+            eventStr = concatString(eventStr, ID(Makanan(Elmt(*deliveryList, i))));
 
             STRING(eType) = eventStr;
             insertLastStat(eventList, eType);
@@ -76,8 +67,7 @@ void decrementTime(PrioQueue* deliveryList, PrioQueue* inventoryList,
                 Dequeue(deliveryList, &iType);
             } else {
                 eventStr = createString("Exp");
-                eventStr =
-                    concatString(eventStr, ID(Makanan(Elmt(*deliveryList, i))));
+                eventStr = concatString(eventStr, ID(Makanan(Elmt(*deliveryList, i))));
 
                 STRING(eType) = eventStr;
                 insertLastStat(eventList, eType);
