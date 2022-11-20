@@ -26,7 +26,7 @@ int main() {
     }
     printf("Set test sudah diisi dengan seluruh makanan katalog.\n");
 
-    printf("========== UJI SUBSET DAN KESAMAAN DUA SET ==========\n");
+    printf("========== UJI SUBSET DUA SET ==========\n");
     CreateSet(&test2, katalog);
     for (i=0; i<NEFFSTAT(katalog)-1; i++) {
         AddElmtSet(&test2, ELMTSTAT(katalog,i), katalog);
