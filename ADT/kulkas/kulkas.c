@@ -157,6 +157,7 @@ void removeFromKulkas(Kulkas *pK, int idx, infotype *out) {
         temp = Elmt(CONT(*pK), idx);
         id = temp.makanan.id;
         Ambil(&CONT(*pK), temp, out);
+        Time(*out) = MenitToTIME(TIMEToMenit(Time(*out)) + 1);
         // deleteAtStat(&CONT(*pK), &temp, idx);
         // *out = temp.m;
         getSpaceRequired(out->makanan, &rowsCleared, &colsCleared);

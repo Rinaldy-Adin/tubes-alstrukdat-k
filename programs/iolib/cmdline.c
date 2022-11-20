@@ -483,8 +483,8 @@ void initializeSimulator(Simulator *sim, Matrix peta) {
 
     /* ALGORITMA */
     pos = currentPosition(peta);
-    MakeEmpty(&inventory, 100);
-    MakeEmpty(&delivery, 100);
+    MakeEmpty(&inventory, 50);
+    MakeEmpty(&delivery, 50);
     CreateTime(&time, 0, 0, 0);
     CreateListStatik(&events);
     createEmptyKulkas(&kulkas);
