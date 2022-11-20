@@ -367,7 +367,7 @@ int kulkasCommand(Simulator *sim, Simulator *nextSim) {
                     printf("Masukkan command yang valid (angka 0 - %d)\n\n",
                            NBElmt(CONT(KulkasSim(*sim))));
                     printf("\n");
-                    printf("Masukkan nomor makanan yang ingin dimasukan k kulkas: ");
+                    printf("Masukkan nomor makanan yang ingin diambil dari kulkas: ");
                     commandStr = removeLongSpaces(readLine());
                 }
 
