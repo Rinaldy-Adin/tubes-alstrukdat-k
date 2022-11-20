@@ -17,15 +17,6 @@ void CreateSet(Set *s, ListStatik makanan);
 /* I.S. s sembarang */
 /* F.S. s terbentuk menjadi Set "kosong" dengan jumlah indeks yang dipakai sesuai indeks pada ListStatik makanan */
 
-boolean isSetEmpty(Set s);
-/* Mengembalikan true jika s kosong (seluruh makanan berjumlah 0) */
-
-boolean isInSet(Set s, ElTypeStat e, ListStatik makanan);
-/* Mengembalikan true jika e ada di s (jumlah makanan e tidak 0) */
-
-boolean isSetEqual(Set s1, Set s2);
-/* Mengembalikan true jika s1 sama dengan s2 */
-
 boolean isSubset(Set s1, Set s2);
 /* Mengembalikan true jika s2 adalah subset dari s1 */
 
@@ -36,9 +27,6 @@ void AddElmtSet(Set *s, ElTypeStat e, ListStatik makanan);
 void RemoveElmtSet(Set *s, ElTypeStat e, ListStatik makanan);
 /* I.S. s terdefinisi, tidak kosong */
 /* F.S. e dithapus dari s (jika ada) */
-
-Set Union(Set s1, Set s2, ListStatik katalog);
-/* Menghasilkan Set hasil union s1 dan s2 */
 
 boolean CompareInvWTree(Set *S, Set inv, Tree T, ListStatik katalog);
 /* Mengembalikan true jika makanan di inventory bisa membuat makanan di resep T */
