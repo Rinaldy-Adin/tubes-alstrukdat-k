@@ -36,7 +36,7 @@ void undoCommand(Matrix *peta, Simulator *sim, Simulator *nextSim, Stack *undoSt
 void redoCommand(Matrix *peta, Simulator *sim, Simulator *nextSim, Stack *undoStack,
                  Stack *redoStack);
 
-int kulkasCommand(Simulator *sim, Simulator *nextSim, Kulkas *kulkas);
+int kulkasCommand(Simulator *sim, Simulator *nextSim);
 
 void decrementSim(Simulator *sim, Simulator *nextSim, Stack *undoStack, Stack *redoStack,
                   int nMenit);

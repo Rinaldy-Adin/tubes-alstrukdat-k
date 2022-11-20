@@ -11,6 +11,7 @@ int main() {
     TIME t;
     Makanan testM;
     infotype ifM;
+    Kulkas kulkas;
 
     /* ALGORITMA */
     printf("========== MEMBUAT SIMULATOR BARU ==========\n");
@@ -19,8 +20,8 @@ int main() {
     MakeEmpty(&inventory, 100);
     MakeEmpty(&delivery, 100);
     CreateListStatik(&events);
-    CreateSimulator(&sim, createString("BNMO"), loc, t, inventory, delivery,
-                    events);
+    createEmptyKulkas(&kulkas);
+    CreateSimulator(&sim, createString("BNMO"), loc, t, inventory, delivery, events, kulkas);
     printf("Nama Simulator : ");
     printString(NamaSim(sim));
     printf("\n");
@@ -39,8 +40,8 @@ int main() {
     CreatePoint(&PositionSim(copySim), 2, 2);
     CreateTime(&TimeSim(copySim), 2, 2, 2);
     CreateTime(&t, 10, 10, 10);
-    makeMakanan(&testM, createString("100"), createString("Makanan test"), t, t,
-                t, createString("Buy"), 10, 10);
+    makeMakanan(&testM, createString("100"), createString("Makanan test"), t, t, t,
+                createString("Buy"), 10, 10);
     Makanan(ifM) = testM;
     Time(ifM) = t;
     Enqueue(&InventorySim(copySim), ifM);

@@ -13,7 +13,6 @@ int main() {
     String command, exit, start;
     Simulator simulator, nextSimulator;
     Stack undoStack, redoStack;
-    Kulkas kulkas;
     boolean started, isRedo;
     int actTime, x, y, minutes;
 
@@ -27,7 +26,6 @@ int main() {
     start = createString("START");
     CreateEmptyStack(&undoStack);
     CreateEmptyStack(&redoStack);
-    createEmptyKulkas(&kulkas);
 
     splashScreen();
 
@@ -88,7 +86,7 @@ int main() {
                     redoCommand(&peta, &simulator, &nextSimulator, &undoStack, &redoStack);
                     isRedo = true;
                 } else if (stringsAreEqual(command, createString("KULKAS"))) {
-                    actTime = kulkasCommand(&simulator, &nextSimulator, &kulkas);
+                    actTime = kulkasCommand(&simulator, &nextSimulator);
                     if (actTime != -1)
                         decrementSim(&simulator, &nextSimulator, &undoStack, &redoStack, actTime);
                 } else if (stringsAreEqual(command, createString("BUY"))) {

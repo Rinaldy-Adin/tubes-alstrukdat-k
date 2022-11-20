@@ -4,6 +4,7 @@
 #ifndef __SIMULATOR_H__
 #define __SIMULATOR_H__
 
+#include "../kulkas/kulkas.h"
 #include "../liststatik/listStatik.h"
 #include "../point/point.h"
 #include "../prioqueue/prioqueue.h"
@@ -17,6 +18,7 @@ typedef struct {
     PrioQueue delivery;
     ListStatik events;
     TIME time;
+    Kulkas kulkas;
 } Simulator;
 
 /* *** Notasi Akses: selektor Simulator *** */
@@ -26,11 +28,11 @@ typedef struct {
 #define TimeSim(s) (s).time
 #define DeliverySim(s) (s).delivery
 #define EventsSim(s) (s).events
+#define KulkasSim(s) (s).kulkas
 
 /*** KONSTRUKTOR ***/
-void CreateSimulator(Simulator* sim, String nama, POINT pos, TIME time,
-                     PrioQueue inventory, PrioQueue delivery,
-                     ListStatik events);
+void CreateSimulator(Simulator* sim, String nama, POINT pos, TIME time, PrioQueue inventory,
+                     PrioQueue delivery, ListStatik events, Kulkas kulkas);
 /* I.S. sim sembarang */
 /* F.S. seluruh komponen sim terisi sesuai masukan. */
 

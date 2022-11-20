@@ -22,6 +22,28 @@ void createEmptyKulkas(Kulkas *pIn) {
     MakeEmpty(&(CONT(*pIn)), MAXKULKAS);
 }
 
+void copyKulkas(Kulkas Src, Kulkas *Dest) {
+    createMatrix(KULKAS_ROWCAP, KULKAS_COLCAP, &(DISP(*Dest)));
+    // Frame kulkas
+    for (int j = 0; j < KULKAS_COLCAP; j++) {
+        ELMT((DISP(*Dest)), 0, j) = ELMT((DISP(Src)), 0, j);
+        ELMT((DISP(*Dest)), KULKAS_ROWCAP - 1, j) = ELMT((DISP(Src)), KULKAS_ROWCAP - 1, j);
+    }
+
+    for (int i = 1; i < KULKAS_ROWCAP - 1; i++) {
+        ELMT((DISP(*Dest)), i, 0) = ELMT((DISP(Src)), i, 0);
+        ELMT((DISP(*Dest)), i, KULKAS_COLCAP - 1) = ELMT((DISP(Src)), i, KULKAS_COLCAP - 1);
+    }
+
+    // Isi kulkas (kosong/blank)
+    for (int i = 1; i < KULKAS_ROWCAP - 1; i++) {
+        for (int j = 1; j < KULKAS_COLCAP - 1; j++) {
+            ELMT((DISP(*Dest)), i, j) = ELMT((DISP(Src)), i, j);
+        }
+    }
+    CopyPrioqueue(CONT(Src), &(CONT(*Dest)));
+}
+
 void displayKulkas(Kulkas K) {
     printf("~~~~~~~~~~ TAMPILAN KULKAS ~~~~~~~~~~ \n");
 

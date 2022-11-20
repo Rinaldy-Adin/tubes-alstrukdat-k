@@ -1,13 +1,14 @@
 #ifndef KULKAS_H
 #define KULKAS_H
 
-#include "../makanan/makanan.h"
-#include "../liststatik/listStatik.h"
-#include "../strlib/strlib.h"
-#include "../matrix/matrix.h"
-#include "../../boolean.h"
-#include "../prioqueue/prioqueue.h"
 #include <stdio.h>
+
+#include "../../boolean.h"
+#include "../liststatik/listStatik.h"
+#include "../makanan/makanan.h"
+#include "../matrix/matrix.h"
+#include "../prioqueue/prioqueue.h"
+#include "../strlib/strlib.h"
 
 /* DEFINISI DAN SPESIFIKASI ADT KULKAS */
 typedef struct {
@@ -23,7 +24,9 @@ typedef struct {
 #define DISP(k) (k).disp
 #define CONT(k) (k).contents
 
-void createEmptyKulkas (Kulkas *pIn);
+void createEmptyKulkas(Kulkas *pIn);
+
+void copyKulkas(Kulkas Src, Kulkas *Dest);
 
 void displayKulkas(Kulkas K);
 
@@ -44,6 +47,5 @@ boolean cmpID(Kulkas K, String id, int i, int j);
 void clearSpace(Kulkas *pK, int pos_row, int pos_col, int rowsCleared, int colsCleared);
 
 void removeFromKulkas(Kulkas *pK, int idx, infotype *out);
-
 
 #endif

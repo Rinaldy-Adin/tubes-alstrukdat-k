@@ -4,9 +4,8 @@
 #include "simulator.h"
 
 /*** KONSTRUKTOR ***/
-void CreateSimulator(Simulator* sim, String nama, POINT pos, TIME time,
-                     PrioQueue inventory, PrioQueue delivery,
-                     ListStatik events) {
+void CreateSimulator(Simulator* sim, String nama, POINT pos, TIME time, PrioQueue inventory,
+                     PrioQueue delivery, ListStatik events, Kulkas kulkas) {
     /* ALGORITMA */
     NamaSim(*sim) = nama;
     PositionSim(*sim) = pos;
@@ -14,6 +13,7 @@ void CreateSimulator(Simulator* sim, String nama, POINT pos, TIME time,
     Time(*sim) = time;
     DeliverySim(*sim) = delivery;
     EventsSim(*sim) = events;
+    KulkasSim(*sim) = kulkas;
 }
 /* I.S. sim sembarang */
 /* F.S. seluruh komponen sim terisi sesuai masukan. */
@@ -25,6 +25,7 @@ void CopySimulator(Simulator sim, Simulator* newSim) {
     Time(*newSim) = Time(sim);
     CopyPrioqueue(DeliverySim(sim), &DeliverySim(*newSim));
     CopyListStatikString(EventsSim(sim), &EventsSim(*newSim));
+    copyKulkas(KulkasSim(sim), &KulkasSim(*newSim));
 }
 /* I.S. sim terdefinisi, newSim sembarang */
 /* F.S. seluruh komponen newSim terisi dengan nilai yang sama

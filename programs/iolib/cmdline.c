@@ -99,6 +99,14 @@ void displayCurrentState(Matrix peta, Simulator sim, ListStatik listCatalog, Sta
                     eventMakanan = MAKANAN(ELMTSTAT(listCatalog, indexOfMakanan(listCatalog, id)));
                     printf("Dilakukan pemotongan ");
                     printString(Nama(eventMakanan));
+                } else if (stringsAreEqual(event, createString("Ins"))) {
+                    eventMakanan = MAKANAN(ELMTSTAT(listCatalog, indexOfMakanan(listCatalog, id)));
+                    printString(Nama(eventMakanan));
+                    printf(" dimasukkan ke dalam kulkas");
+                } else if (stringsAreEqual(event, createString("Take"))) {
+                    eventMakanan = MAKANAN(ELMTSTAT(listCatalog, indexOfMakanan(listCatalog, id)));
+                    printString(Nama(eventMakanan));
+                    printf(" diambil dari kulkas");
                 }
             } else {
                 printf("\n");
@@ -142,6 +150,14 @@ void displayCurrentState(Matrix peta, Simulator sim, ListStatik listCatalog, Sta
                     eventMakanan = MAKANAN(ELMTSTAT(listCatalog, indexOfMakanan(listCatalog, id)));
                     printString(Nama(eventMakanan));
                     printf(" dihapus dari inventory");
+                } else if (stringsAreEqual(event, createString("Ins"))) {
+                    eventMakanan = MAKANAN(ELMTSTAT(listCatalog, indexOfMakanan(listCatalog, id)));
+                    printString(Nama(eventMakanan));
+                    printf(" dikembalikan ke inventory dari kulkas");
+                } else if (stringsAreEqual(event, createString("Take"))) {
+                    eventMakanan = MAKANAN(ELMTSTAT(listCatalog, indexOfMakanan(listCatalog, id)));
+                    printString(Nama(eventMakanan));
+                    printf(" dikembalikan ke ke kulkas");
                 }
             }
 
@@ -278,7 +294,7 @@ int cookCommand(Simulator *sim, Simulator *nextSim, ListStatik listCatalog, List
     return -1;
 }
 
-int kulkasCommand(Simulator *sim, Simulator *nextSim, Kulkas *kulkas) {
+int kulkasCommand(Simulator *sim, Simulator *nextSim) {
     /* KAMUS */
     ListStatik list;
     Makanan chosenMakanan;
@@ -289,10 +305,10 @@ int kulkasCommand(Simulator *sim, Simulator *nextSim, Kulkas *kulkas) {
     boolean correctCommand;
 
     /* ALGORITMA */
-    displayKulkas(*kulkas);
+    displayKulkas(KulkasSim(*sim));
+    printf("\n");
     printf("Enter command (INSERT/TAKE/EXIT): ");
     commandStr = removeLongSpaces(readLine());
-    printf("\n");
 
     correctCommand = false;
     while (!stringsAreEqual(commandStr, createString("EXIT"))) {
@@ -303,7 +319,6 @@ int kulkasCommand(Simulator *sim, Simulator *nextSim, Kulkas *kulkas) {
             if (NBElmt(InventorySim(*sim)) > 0) {
                 printf("\nMasukkan nomor makanan yang ingin dimasukan ke kulkas: ");
                 commandStr = removeLongSpaces(readLine());
-                printf("\n");
 
                 while (true) {
                     if (stringIsIntParsable(commandStr)) {
@@ -312,18 +327,17 @@ int kulkasCommand(Simulator *sim, Simulator *nextSim, Kulkas *kulkas) {
                             break;
                     }
                     displayInventory(InventorySim(*sim));
-                    printf("Masukkan command yang valid (angka 0 - %d)\n\n",
+                    printf("\nMasukkan command yang valid (angka 0 - %d)\n\n",
                            NBElmt(InventorySim(*sim)));
                     printf("Masukkan nomor makanan yang ingin dimasukan ke kulkas: ");
                     commandStr = removeLongSpaces(readLine());
-                    printf("\n");
                 }
 
                 if (command > 0) {
                     deleteAtPQ(&InventorySim(*nextSim), &inventoryItem, command - 1);
-                    insertToKulkas(inventoryItem, kulkas);
+                    insertToKulkas(inventoryItem, &KulkasSim(*nextSim));
 
-                    printf("Berhasil memasukan ");
+                    printf("\nBerhasil memasukan ");
                     printString(Nama(Makanan(inventoryItem)));
                     printf(" ke dalam kulkas.\n");
 
@@ -336,31 +350,33 @@ int kulkasCommand(Simulator *sim, Simulator *nextSim, Kulkas *kulkas) {
             }
         } else if (stringsAreEqual(commandStr, createString("TAKE"))) {
             correctCommand = true;
-            displayKulkas(*kulkas);
-            if (NBElmt(CONT(*kulkas)) > 0) {
+            displayKulkas(KulkasSim(*sim));
+            if (NBElmt(CONT(KulkasSim(*sim))) > 0) {
+                printf("\n");
                 printf("Masukkan nomor makanan yang ingin diambil dari kulkas: ");
                 commandStr = removeLongSpaces(readLine());
-                printf("\n");
 
                 while (true) {
                     if (stringIsIntParsable(commandStr)) {
                         command = stringToInt(commandStr);
-                        if (command >= 0 && command <= NBElmt(CONT(*kulkas)))
+                        if (command >= 0 && command <= NBElmt(CONT(KulkasSim(*sim))))
                             break;
                     }
-                    displayKulkas(*kulkas);
-                    printf("Masukkan command yang valid (angka 0 - %d)\n\n", NBElmt(CONT(*kulkas)));
+                    displayKulkas(KulkasSim(*sim));
+                    printf("\n");
+                    printf("Masukkan command yang valid (angka 0 - %d)\n\n",
+                           NBElmt(CONT(KulkasSim(*sim))));
+                    printf("\n");
                     printf("Masukkan nomor makanan yang ingin dimasukan k kulkas: ");
                     commandStr = removeLongSpaces(readLine());
-                    printf("\n");
                 }
 
                 if (command > 0) {
-                    removeFromKulkas(kulkas, command - 1, &inventoryItem);
+                    removeFromKulkas(&KulkasSim(*nextSim), command - 1, &inventoryItem);
 
                     Enqueue(&InventorySim(*nextSim), inventoryItem);
 
-                    printf("Berhasil mengambil ");
+                    printf("\nBerhasil mengambil ");
                     printString(Nama(Makanan(inventoryItem)));
                     printf(" dari kulkas.\n");
 
@@ -372,7 +388,8 @@ int kulkasCommand(Simulator *sim, Simulator *nextSim, Kulkas *kulkas) {
                 }
             }
         }
-        displayKulkas(*kulkas);
+        displayKulkas(KulkasSim(*sim));
+        printf("\n");
         if (!correctCommand)
             printf("Command yang dimasukkan salah\n\n");
         correctCommand = false;
@@ -462,6 +479,7 @@ void initializeSimulator(Simulator *sim, Matrix peta) {
     PrioQueue inventory, delivery;
     ListStatik events;
     TIME time;
+    Kulkas kulkas;
 
     /* ALGORITMA */
     pos = currentPosition(peta);
@@ -469,6 +487,7 @@ void initializeSimulator(Simulator *sim, Matrix peta) {
     MakeEmpty(&delivery, 100);
     CreateTime(&time, 0, 0, 0);
     CreateListStatik(&events);
+    createEmptyKulkas(&kulkas);
 
     printf("\n");
     printf("=========================================");
@@ -477,5 +496,5 @@ void initializeSimulator(Simulator *sim, Matrix peta) {
     nama = readLine();
     nama = removeLongSpaces(nama);
 
-    CreateSimulator(sim, nama, pos, time, inventory, delivery, events);
+    CreateSimulator(sim, nama, pos, time, inventory, delivery, events, kulkas);
 }
