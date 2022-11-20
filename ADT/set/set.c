@@ -167,7 +167,7 @@ void RecommendMakanan(PrioQueue inventory, ListStatik resep, ListStatik katalog)
         CreateSet(&setResep, katalog);
         recommended = CompareInvWTree(&setResep, inv, CHILD(TREE(ELMTSTAT(resep,i))), katalog);
         if (recommended) {
-            if (i > 0) {
+            if (i > 0 && anyRecomm) {
                 printf(", ");
             }
             printString(Nama(MAKAN(TREE(ELMTSTAT(resep,i)))));
